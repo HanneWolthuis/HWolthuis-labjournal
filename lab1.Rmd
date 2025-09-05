@@ -41,7 +41,7 @@ You can journal the assignments of the first day here.
 
 ```{r}
 print("Hello Lab Journal")
-print("Just playing around")
+print("Just playing around, Hay")
 ```
 
 
