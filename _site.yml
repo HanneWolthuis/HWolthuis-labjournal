@@ -1,6 +1,6 @@
-name: "Example Lab Journal"
+name: "HWolthuis-labjournal"
 author: 
-  - 'Your Name'
+  - 'Hanne Wolthuis'
 output_dir: "docs"
 exclude: 
   - "data"
@@ -20,7 +20,7 @@ navbar:
 
   right:
   - icon: fab fa-github
-    href: https://github.com/JochemTolsma/labjournal
+    href: https://github.com/HanneWolthuis/HWolthuis-labjournal
 output:
   html_document:
     theme: flatly

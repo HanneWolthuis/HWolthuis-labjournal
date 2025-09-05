@@ -6,11 +6,14 @@ bibliography: references.bib
  
 ---
 
+```{r}
+2+2
+```
 
 
 
 ```{r, install remotely, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
-# install.packages("remotes")
+#install.packages("remotes")
 #remotes::install_github("rlesur/klippy")
 ``` 
 
@@ -36,6 +39,9 @@ klippy::klippy(position = c('top', 'right'))
 
 
 
+```{r}
+2+3
+```
 
 ----
 

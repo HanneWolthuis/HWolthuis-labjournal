@@ -1,7 +1,7 @@
 ---
 title: "Journal 1"
 #bibliography: references.bib
-author: "Your Name"
+author: "Hanne Wolthuis"
 ---
 
 
@@ -20,7 +20,7 @@ colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", co
 
 ```
 
-```{r klippy, echo=FALSE, include=TRUE}
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
 klippy::klippy(position = c('top', 'right'))
 #klippy::klippy(color = 'darkred')
 #klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
