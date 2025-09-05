@@ -40,7 +40,11 @@ klippy::klippy(position = c('top', 'right'))
 
 
 ```{r}
+
 2 + 3
+
+2+3
+
 ```
 
 ----
@@ -79,7 +83,7 @@ We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network An
 
 
 
-![](images/cover.jpg)
+![](images/Network.png)
 
 
 :::
