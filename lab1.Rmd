@@ -64,13 +64,13 @@ Campbell et al. (2011) study the emergence of a new interdisciplinary research c
 # References
 
 
-- Haines, V. A., Godley, J., & Hawe, P. (2010). Understanding interdisciplinary collaborations as social networks. *American Journal of Community Psychology, 47*(1–2), 1–11. https://doi.org/10.1007/s10464-010-9374-1
+Haines, V. A., Godley, J., & Hawe, P. (2010). Understanding interdisciplinary collaborations as social networks. *American Journal of Community Psychology, 47*(1–2), 1–11. https://doi.org/10.1007/s10464-010-9374-1
 
-- Queupil, J. P., & Muñoz-García, A. L. (2018). The role of women scholars in the Chilean collaborative educational research: a social network analysis. *Higher Education, 78*(1), 115–131. https://doi.org/10.1007/s10734-018-0333-3
+Queupil, J. P., & Muñoz-García, A. L. (2018). The role of women scholars in the Chilean collaborative educational research: a social network analysis. *Higher Education, 78*(1), 115–131. https://doi.org/10.1007/s10734-018-0333-3
 
-- Wang, Y. S., Lee, C. J., West, J. D., Bergstrom, C. T., & Erosheva, E. A. (2023). Gender-based homophily in collaborations across a heterogeneous scholarly landscape. *PLoS ONE, 18*(4), e0283106. https://doi.org/10.1371/journal.pone.0283106
+Wang, Y. S., Lee, C. J., West, J. D., Bergstrom, C. T., & Erosheva, E. A. (2023). Gender-based homophily in collaborations across a heterogeneous scholarly landscape. *PLoS ONE, 18*(4), e0283106. https://doi.org/10.1371/journal.pone.0283106
 
-- Zheng, J., Zhang, K., Han, B., & Hou, J. (2023). Research Interdisciplinarity and Citation Impact: A network analysis of social networking sites research. *SAGE Open, 13*(3). https://doi.org/10.1177/21582440231193472
+Zheng, J., Zhang, K., Han, B., & Hou, J. (2023). Research Interdisciplinarity and Citation Impact: A network analysis of social networking sites research. *SAGE Open, 13*(3). https://doi.org/10.1177/21582440231193472
 
 
 ----
