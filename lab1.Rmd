@@ -1,5 +1,5 @@
 ---
-title: "Journal 1"
+title: "Journal Week 1"
 #bibliography: references.bib
 author: "Hanne Wolthuis"
 ---
@@ -31,10 +31,47 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 <br>
 
 ----
+
+# Lab Journal Week 1
   
-This is just an example page of your `r colorize("lab journal", "red")`.
-You can journal the assignments of the first day here.
-  
+
+`r colorize("**Research question 1: To what extent do researchers prefer to collaborate with others of the same gender?**", "orange")`
+
+- Does this differ based on the gender composition of the department?
+- To what extent can observed gender homophily in research collaborations be explained by selection processes
+- Has this changed over time
+- Is there a cohort/age effect?
+- How do same-gendered ties affect the overall network structure (density, clustering, centralization)
+
+The study of academic collaboration has increasingly used social network analysis (SNA) to uncover how ties between scholars form and how gender shapes these patterns. Wang et al. (2023) construct large-scale co-authorship networks from the JSTOR corpus and apply assortativity measures to examine gender homophily. By separating structural, compositional, and behavioral components, they show that men and women collaborate with same-gender colleagues more often than expected from structural availability alone. Their findings provide clear evidence of behavioral gender homophily, highlighting the role of selection processes in shaping collaboration.
+
+Queupil and Muñoz-García (2019) take a complementary perspective by analyzing Chilean educational research networks using centrality measures and network density. They find that although women have historically been underrepresented, they collaborate more than men and increasingly serve as bridgers, linking disconnected clusters and enhancing network cohesion. While not measuring homophily directly, this study shows how gender differences in network position and collaboration style affect the structure of academic networks. Taken together, these works demonstrate how SNA can address gendered collaboration both in terms of preference for same-gender ties and the structural roles researchers play, directly supporting the relevance of RQ1.
+
+
+`r colorize("**Research question 2: To what extent do researchers collaborate within their own department compared to across departments?**", "orange")`
+
+- Has this changed over time
+- To what extent is inter-department collaboration driven by similarity in research topics (selection process)
+- What is the influence of cross-department collaboration (positive/negative/positive feedback influence?)
+- How do inter-department ties affect the overall network structure (density, clustering, centralization)
+
+Zheng et al. (2023) use social network analysis (SNA) to study interdisciplinarity in the field of social networking sites research. They constructed author co-citation networks, where ties reflect how often two scholars are cited together. They measure interdisciplinarity using betweenness centrality (the extent to which a scholar brokers between otherwise separate clusters) and constraint (the degree to which a scholar’s ties are limited to dense, redundant connections). Their findings show that high betweenness centrality predicts greater academic impact, while constraint does not. Scholars who bridge across disciplinary boundaries gain more visibility and influence. For RQ2, this supports the idea that cross-department collaboration creates brokerage advantages.
+
+Campbell et al. (2011) study the emergence of a new interdisciplinary research collaboration on complex health interventions, involving nineteen scholars across four countries. They construct multiple overlapping networks—formal co-authorship, citation, email communication, visits, and joint grant applications. By examining changes in network density, reciprocity, betweenness centralization, and subgroup structure over 18 months, they trace how interdisciplinary ties evolve. The study shows that interdisciplinary collaboration became more intense and diverse, while key gatekeepers maintained strategic roles.
+
+----
+
+# References
+
+
+- Haines, V. A., Godley, J., & Hawe, P. (2010). Understanding interdisciplinary collaborations as social networks. *American Journal of Community Psychology, 47*(1–2), 1–11. https://doi.org/10.1007/s10464-010-9374-1
+
+- Queupil, J. P., & Muñoz-García, A. L. (2018). The role of women scholars in the Chilean collaborative educational research: a social network analysis. *Higher Education, 78*(1), 115–131. https://doi.org/10.1007/s10734-018-0333-3
+
+- Wang, Y. S., Lee, C. J., West, J. D., Bergstrom, C. T., & Erosheva, E. A. (2023). Gender-based homophily in collaborations across a heterogeneous scholarly landscape. *PLoS ONE, 18*(4), e0283106. https://doi.org/10.1371/journal.pone.0283106
+
+- Zheng, J., Zhang, K., Han, B., & Hou, J. (2023). Research Interdisciplinarity and Citation Impact: A network analysis of social networking sites research. *SAGE Open, 13*(3). https://doi.org/10.1177/21582440231193472
+
 
 ----
 
