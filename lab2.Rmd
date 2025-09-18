@@ -1,5 +1,5 @@
 ---
-title: "Journal 1"
+title: "Journal week 2"
 #bibliography: references.bib
 author: "Hanne Wolthuis"
 ---
@@ -30,19 +30,131 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 <br>
 
-----
   
-This is just an example page of your `r colorize("lab journal", "red")`.
-You can journal the assignments of the first day here.
-  
-
 ----
 
+# Project week 2
+  
+
+`r colorize("**Introduction and research questions?**", "orange")`
+
+Interdisciplinary collaboration has become increasingly recognized as vital for advancing knowledge and addressing complex social phenomena. While the growing specialization of disciplines fosters depth, it often risks fragmentation and limits broader understanding, making cross-disciplinary linkages essential (Leahey et al., 2017). Recent research highlights that interdisciplinarity can be observed not only across subject categories but also at the scholar level, where collaborative practices and citation patterns reveal new forms of knowledge integration (Zheng et al., 2023). Moreover, network analyses show that interdisciplinary ties strengthen collaboration structures, reduce dependence on gatekeepers, and increase reciprocity among scholars (Haines, Godley, & Hawe, 2010). Against this backdrop, my study examines interdisciplinary collaboration specifically between the political science and sociology departments in the Netherlands, exploring both its extent and its evolution over time. By adopting a social network perspective, this study provides insights into how interdepartmental collaboration shapes network structures and researcher positions, offering a more nuanced understanding of interdisciplinarity within the social sciences.
+
+RQ1: To what extent does interdisciplinary collaboration takes place between the political science department and the sociology department?
+
+RQ2: Has the extend in which interdisciplinary collaboration takes place changed over time?
+
+RQ3: To what extent is interdisciplinary collaboration driven by similarity in research topics (selection process)
+
+RQ4: How do inter-department ties affect the overall network structure (density, clustering, centralization)
+
+Or 
+
+RQ4: How does inter-department collaboration effect the researchers position in the network. (centrality, brokerage, etc.)
+
+
+`r colorize("**Type of data needed**", "orange")`
+
+actor characteristics 
+
+- Department (e.g., Political Science / Sociology)  
+- Research topics (for RQ3)  
+- Career success indicators such as citations (for RQ4b)  
+
+tie characteristics 
+
+- Collaboration (e.g., co-authorship)  
+  - Each tie should be coded as intra-department vs. inter-department  
+- Collaboration ties over the years  
+- Collaboration based on co-authorship with topic similarity scores  
+
+
+`r colorize("**Relavent literature**", "orange")`
+
+Haines et at (2010) in their study looked at how interdisciplinary collaborations can be understood as social networks. They use the case of the International Collaboration Complex Interventions which is a group of 19 scholars with 9 different disciplines, from 4 countries spread out over 10 institutions. The aim of the study is to see how the relationships among members changed over 18 months of collaboration. It was a complete network as all 19 ICCI members were included. The data collection was done at two timepoints, at the beginning and end of the 18 month time period. 13 different types of ties were measured  Email contact, meeting professionally outside ICCI, visiting each other’s institution, citing one another’s work, submitting grants together, working on research projects/papers/chapters, co-teaching or co-presenting, helping with students/trainees, co-organizing workshops, etc. For the analysis they made visualizations for all 13 networks (one for each type of tie) at time point 0 and 1. Second they did an analysis of properties of all thirteen networks and actors' positions in these networks. Network level properties: density, reciprocity, betweenness centralization, cliques. Actor level properties: betweenness centrality, how often an actor lies on the shortest path between two others (their brokerage/gatekeeping role) and Subgroup membership, how many cliques each person belonged to. 
+Their findings show that network density increased significantly, especially in the key ties. Reciprocity increased, meaning members were more likely to cite or work with those who reciprocated. Betweenness centralization declined slightly, showing that dependence on one or two “gatekeepers” decreased as more ties formed directly. And at last did More subgroups (cliques) emerge over time, suggesting richer collaboration structures.
+
+Zhen et al. (2023) examine whether interdisciplinarity in social networking sites (SNS) research influences later academic impact. Unlike many earlier studies that looked at journals or institutions, this study focuses on individual scholars and their positions in citation networks. 
+The data consisted out of 2489 articles retrieved from the web of science 2014-2016. The actors are the authors and ties the co citation. To measure  later academic impact the citation count of those 611 authors was used, based on articles from 2017-2019.
+For the analysis clustering within the co-citation network revealed four main sub-disciplines of SNS research (network theory, health behavior, political participation, youth & SNS use). Interdisciplinarity was measured through betweenness centrality, the ability of an author to bridge different knowledge clusters. And second constraint, how restricted an author is by tightly knit ties. 
+Their findings show that authors bridging across different clusters received more citations in the following 3 years. Constraint did not matter, less constraint didn’t predict citation impact. And at last that Citation practices reveal cross-disciplinary linkages that don’t always align with formal subject categories. However I’ll be studying organizational interdisciplinarity, not citation-based interdisciplinarity.
+
+
+# References
+
+
+Haines, V. A., Godley, J., & Hawe, P. (2010). Understanding interdisciplinary collaborations as social networks. *American Journal of Community Psychology, 47*(1–2), 1–11. https://doi.org/10.1007/s10464-010-9374-1
+
+Guerreiro, J. A. (2016, May). Interdisciplinary research in social sciences: A two-way process. In *Proceedings of the International Congress on Interdisciplinarity in Social and Human Sciences* (pp. 209–213).
+
+Zheng, J., Zhang, K., Han, B., & Hou, J. (2023). Research Interdisciplinarity and Citation Impact: A network analysis of social networking sites research. *SAGE Open, 13*(3). https://doi.org/10.1177/21582440231193472
+
+
+---- 
+
+----
+# Some crazy R shit from class
 
 ```{r}
-print("Hello Lab Journal")
-print("Just playing around, Hay")
+Mymatrix2 <- matrix(0, nrow = 10, ncol = 10)
+Mymatrix2
 ```
 
+```{r}
+Mymatrix4 <- matrix(sample(c(0, 1), size = 16, replace = TRUE), nrow = 4, ncol = 4)
+Mymatrix4
+```
+
+```{r}
+# grootte van de matrix
+n <- 4  
+
+# random waarden (0 of 1 met gelijke kans)
+Mymatrix5 <- matrix(sample(c(0,1), size = n*n, replace = TRUE), nrow = n, ncol = n)
+
+# diagonaal op 0 zetten
+diag(Mymatrix5) <- 0  
+
+Mymatrix5
+```
+
+```{r}
+TransposeMymatrix5 <- t(Mymatrix5)
+TransposeMymatrix5
+```
+
+```{r}
+
+Mymatrix5[upper.tri(Mymatrix5)] <- TransposeMymatrix5[upper.tri(TransposeMymatrix5)]
+Mymatrix5
+
+``` 
+
+```{r}
+require("igraph")
+
+Mymatrix6 <- matrix(sample(c(0: 1), size = 100, replace = TRUE), nrow = 10, ncol = 10)
+Mymatrix6
+
+net_un6 <- Mymatrix6 + t(Mymatrix6)
+net_un6 [net_un6 ==2] <- 1
+diag(net_un6) <- 0
+net_un6
+netG <- graph_from_adjacency_matrix(net_un6)
+class(netG)
+plot(netG)
+igraph::transitivity(netG, type = "undirected")
+
+```
+
+```{r}
+# dyad census
+dyad_census(netG)
+```
+
+```{r}
+# tryad census 
+triad_census(netG)
+```
 
 
