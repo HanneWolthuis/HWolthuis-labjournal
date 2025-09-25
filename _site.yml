@@ -16,6 +16,8 @@ navbar:
         href: lab1.html
       - text: "Week 2"
         href: lab2.html
+      - text: "Week 3"
+        href: lab3.html       
     - text: "Final paper"
       menu:
         # here, other .Rmds can be added

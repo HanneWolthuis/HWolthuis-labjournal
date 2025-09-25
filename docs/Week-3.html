@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Hanne Wolthuis" />
+
+
+<title>Journal week 3</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="lab2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="lab3.html">Week 3</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown-header">Final paper</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/HanneWolthuis/HWolthuis-labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Journal week 3</h1>
+<h4 class="author">Hanne Wolthuis</h4>
+
+</div>
+
+
+<p>Last compiled on september, 2025</p>
+<p><br></p>
+<pre class="r test"><code>rm(list = ls())
+gc()</code></pre>
+<pre class="test2"><code>#&gt;           used (Mb) gc trigger  (Mb) max used  (Mb)
+#&gt; Ncells 1196646 64.0    2304490 123.1  2138754 114.3
+#&gt; Vcells 2001757 15.3    8388608  64.0  3103778  23.7</code></pre>
+<pre class="r test"><code>fpackage.check &lt;- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave &lt;- function(x, file = NULL, location = &quot;./data/processed/&quot;) {
+    ifelse(!dir.exists(&quot;data&quot;), dir.create(&quot;data&quot;), FALSE)
+    ifelse(!dir.exists(&quot;data/processed&quot;), dir.create(&quot;data/processed&quot;), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename &lt;- substr(gsub(&quot;[:-]&quot;, &quot;&quot;, Sys.time()), 1, 8)
+    totalname &lt;- paste(location, datename, file, &quot;.rda&quot;, sep = &quot;&quot;)
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload &lt;- function(filename) {
+    load(filename)
+    get(ls()[ls() != &quot;filename&quot;])
+}
+
+fshowdf &lt;- function(x, ...) {
+    knitr::kable(x, digits = 2, &quot;html&quot;, ...) %&gt;%
+        kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;)) %&gt;%
+        kableExtra::scroll_box(width = &quot;100%&quot;, height = &quot;300px&quot;)
+}</code></pre>
+<pre class="r test"><code># packages 
+library(tidyverse)
+library(scholar)
+library(openalexR)
+library(rvest)
+library(jsonlite)
+library(ggraph)
+
+
+packages &lt;- c(&quot;tidyverse&quot;, &quot;scholar&quot;, &quot;openalexR&quot;, &quot;rvest&quot;, &quot;jsonlite&quot;)
+fpackage.check(packages)</code></pre>
+<pre class="test2"><code>#&gt; [[1]]
+#&gt; NULL
+#&gt; 
+#&gt; [[2]]
+#&gt; NULL
+#&gt; 
+#&gt; [[3]]
+#&gt; NULL
+#&gt; 
+#&gt; [[4]]
+#&gt; NULL
+#&gt; 
+#&gt; [[5]]
+#&gt; NULL</code></pre>
+<pre class="r test"><code># make yourself known to openAlex
+options(openalexR.mailto = &quot;hanne.wolthuis@ru.nl&quot;)</code></pre>
+<pre class="r test"><code>url &lt;- &quot;https://api.openalex.org/authors?search=Jochem Tolsma&quot;
+# based on what you have learned so far, you would probably first try:
+jt &lt;- read_html(&quot;https://api.openalex.org/authors?search=Jochem+Tolsma&quot;) %&gt;%
+  html_text2()
+
+substr(jt, 1, 100)</code></pre>
+<pre class="test2"><code>#&gt; [1] &quot;{\&quot;meta\&quot;:{\&quot;count\&quot;:1,\&quot;db_response_time_ms\&quot;:217,\&quot;page\&quot;:1,\&quot;per_page\&quot;:25,\&quot;groups_count\&quot;:null},\&quot;results\&quot;:[&quot;</code></pre>
+<pre class="r test"><code>jt_json &lt;- fromJSON(&quot;https://api.openalex.org/authors?search=Jochem+Tolsma&quot;, simplifyVector = FALSE)
+glimpse(jt_json, max.level = 1)</code></pre>
+<pre class="test2"><code>#&gt; List of 3
+#&gt;  $ meta    :List of 5
+#&gt;  $ results :List of 1
+#&gt;  $ group_by: list()</code></pre>
+<pre class="r test"><code>jt_json[[&quot;results&quot;]][[1]][[&quot;display_name&quot;]]</code></pre>
+<pre class="test2"><code>#&gt; [1] &quot;Jochem Tolsma&quot;</code></pre>
+<pre class="r test"><code>df_jt &lt;- jt_json %&gt;%
+    .$results %&gt;%
+    .[[1]] %&gt;%
+    discard(is_empty)</code></pre>
+<pre class="r test"><code>df &lt;- oa_fetch(entity = &quot;author&quot;, search = &quot;Jochem Tolsma&quot;)
+fshowdf(df)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+id
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+display_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+display_name_alternatives
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+relevance_score
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ids
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+orcid
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+works_count
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+cited_by_count
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+counts_by_year
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+2yr_mean_citedness
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+h_index
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+i10_index
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+last_known_institutions
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+topics
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+works_api_url
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://openalex.org/A5087380803"
+class="uri">https://openalex.org/A5087380803</a>
+</td>
+<td style="text-align:left;">
+Jochem Tolsma
+</td>
+<td style="text-align:left;">
+J. Tolsma , Jochem Tolsma, J L Tolsma
+</td>
+<td style="text-align:right;">
+8980.66
+</td>
+<td style="text-align:left;">
+<a href="https://openalex.org/A5087380803"
+class="uri">https://openalex.org/A5087380803</a> , <a
+href="https://orcid.org/0000-0002-4411-6932"
+class="uri">https://orcid.org/0000-0002-4411-6932</a>
+</td>
+<td style="text-align:left;">
+<a href="https://orcid.org/0000-0002-4411-6932"
+class="uri">https://orcid.org/0000-0002-4411-6932</a>
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+2116
+</td>
+<td style="text-align:left;">
+2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014,
+2013, 2012, 2, 9, 5, 4, 4, 0, 4, 3, 3, 13, 4, 8, 6, 2, 1, 6, 4, 4, 4, 0,
+3, 3, 2, 6, 3, 4, 4, 2, 167, 269, 255, 192, 245, 221, 179, 180, 114,
+167, 135, 99, 77, 51
+</td>
+<td style="text-align:right;">
+2.89
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+<a href="https://openalex.org/I145872427"
+class="uri">https://openalex.org/I145872427</a>, <a
+href="https://openalex.org/I169381384"
+class="uri">https://openalex.org/I169381384</a>, <a
+href="https://ror.org/016xsfp80"
+class="uri">https://ror.org/016xsfp80</a> , <a
+href="https://ror.org/012p63287"
+class="uri">https://ror.org/012p63287</a> , Radboud University Nijmegen
+, University of Groningen , NL , NL , funder , funder , <a
+href="https://openalex.org/I145872427"
+class="uri">https://openalex.org/I145872427</a>, <a
+href="https://openalex.org/I169381384"
+class="uri">https://openalex.org/I169381384</a>
+</td>
+<td style="text-align:left;">
+1 , 1 , 1 , 1 , 2 , 2 , 2 , 2 , 3 , 3 , 3 , 3 , 4 , 4 , 4 , 4 , 5 , 5 ,
+5 , 5 , 6 , 6 , 6 , 6 , 7 , 7 , 7 , 7 , 8 , 8 , 8 , 8 , 9 , 9 , 9 , 9 ,
+10 , 10 , 10 , 10 , 11 , 11 , 11 , 11 , 12 , 12 , 12 , 12 , 13 , 13 , 13
+, 13 , 14 , 14 , 14 , 14 , 15 , 15 , 15 , 15 , 16 , 16 , 16 , 16 , 17 ,
+17 , 17 , 17 , 18 , 18 , 18 , 18 , 19 , 19 , 19 , 19 , 20 , 20 , 20 , 20
+, 21 , 21 , 21 , 21 , 22 , 22 , 22 , 22 , 23 , 23 , 23 , 23 , 24 , 24 ,
+24 , 24 , 25 , 25 , 25 , 25 , 15 , 15 , 15 , 15 , 12 , 12 , 12 , 12 , 10
+, 10 , 10 , 10 , 10 , 10 , 10 , 10 , 10 , 10 , 10 , 10 , 8 , 8 , 8 , 8 ,
+7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 6 , 6 , 6 , 6 , 5 , 5 ,
+5 , 5 , 5 , 5 , 5 , 5 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 ,
+4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 ,
+3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 , 3 ,
+2 , 2 , 2 , 2 , <a href="https://openalex.org/T11239"
+class="uri">https://openalex.org/T11239</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T11645"
+class="uri">https://openalex.org/T11645</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10314"
+class="uri">https://openalex.org/T10314</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T12088"
+class="uri">https://openalex.org/T12088</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10108"
+class="uri">https://openalex.org/T10108</a> , <a
+href="https://openalex.org/subfields/3320"
+class="uri">https://openalex.org/subfields/3320</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10349"
+class="uri">https://openalex.org/T10349</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10557"
+class="uri">https://openalex.org/T10557</a> , <a
+href="https://openalex.org/subfields/3315"
+class="uri">https://openalex.org/subfields/3315</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10216"
+class="uri">https://openalex.org/T10216</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10235"
+class="uri">https://openalex.org/T10235</a> , <a
+href="https://openalex.org/subfields/3306"
+class="uri">https://openalex.org/subfields/3306</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T13064"
+class="uri">https://openalex.org/T13064</a> , <a
+href="https://openalex.org/subfields/3304"
+class="uri">https://openalex.org/subfields/3304</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10762"
+class="uri">https://openalex.org/T10762</a> , <a
+href="https://openalex.org/subfields/3203"
+class="uri">https://openalex.org/subfields/3203</a> , <a
+href="https://openalex.org/fields/32"
+class="uri">https://openalex.org/fields/32</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10574"
+class="uri">https://openalex.org/T10574</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T12592"
+class="uri">https://openalex.org/T12592</a> , <a
+href="https://openalex.org/subfields/3109"
+class="uri">https://openalex.org/subfields/3109</a> , <a
+href="https://openalex.org/fields/31"
+class="uri">https://openalex.org/fields/31</a> , <a
+href="https://openalex.org/domains/3"
+class="uri">https://openalex.org/domains/3</a> , <a
+href="https://openalex.org/T10443"
+class="uri">https://openalex.org/T10443</a> , <a
+href="https://openalex.org/subfields/3320"
+class="uri">https://openalex.org/subfields/3320</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T13709"
+class="uri">https://openalex.org/T13709</a> , <a
+href="https://openalex.org/subfields/3304"
+class="uri">https://openalex.org/subfields/3304</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T11397"
+class="uri">https://openalex.org/T11397</a> , <a
+href="https://openalex.org/subfields/3320"
+class="uri">https://openalex.org/subfields/3320</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10674"
+class="uri">https://openalex.org/T10674</a> , <a
+href="https://openalex.org/subfields/3304"
+class="uri">https://openalex.org/subfields/3304</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10843"
+class="uri">https://openalex.org/T10843</a> , <a
+href="https://openalex.org/subfields/3318"
+class="uri">https://openalex.org/subfields/3318</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10208"
+class="uri">https://openalex.org/T10208</a> , <a
+href="https://openalex.org/subfields/2002"
+class="uri">https://openalex.org/subfields/2002</a> , <a
+href="https://openalex.org/fields/20"
+class="uri">https://openalex.org/fields/20</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10182"
+class="uri">https://openalex.org/T10182</a> , <a
+href="https://openalex.org/subfields/3203"
+class="uri">https://openalex.org/subfields/3203</a> , <a
+href="https://openalex.org/fields/32"
+class="uri">https://openalex.org/fields/32</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T13532"
+class="uri">https://openalex.org/T13532</a> , <a
+href="https://openalex.org/subfields/3304"
+class="uri">https://openalex.org/subfields/3304</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T11076"
+class="uri">https://openalex.org/T11076</a> , <a
+href="https://openalex.org/subfields/3320"
+class="uri">https://openalex.org/subfields/3320</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10652"
+class="uri">https://openalex.org/T10652</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , <a
+href="https://openalex.org/T10064"
+class="uri">https://openalex.org/T10064</a> , <a
+href="https://openalex.org/subfields/3109"
+class="uri">https://openalex.org/subfields/3109</a> , <a
+href="https://openalex.org/fields/31"
+class="uri">https://openalex.org/fields/31</a> , <a
+href="https://openalex.org/domains/3"
+class="uri">https://openalex.org/domains/3</a> , <a
+href="https://openalex.org/T11120"
+class="uri">https://openalex.org/T11120</a> , <a
+href="https://openalex.org/subfields/3312"
+class="uri">https://openalex.org/subfields/3312</a> , <a
+href="https://openalex.org/fields/33"
+class="uri">https://openalex.org/fields/33</a> , <a
+href="https://openalex.org/domains/2"
+class="uri">https://openalex.org/domains/2</a> , Social Capital and
+Networks , Sociology and Political Science , Social Sciences , Social
+Sciences , Urban, Neighborhood, and Segregation Studies , Sociology and
+Political Science , Social Sciences , Social Sciences , Social and
+Intergroup Psychology , Sociology and Political Science , Social
+Sciences , Social Sciences , Intergenerational and Educational
+Inequality Studies , Sociology and Political Science , Social Sciences ,
+Social Sciences , Electoral Systems and Political Participation ,
+Political Science and International Relations , Social Sciences , Social
+Sciences , Migration and Labor Dynamics , Sociology and Political
+Science , Social Sciences , Social Sciences , Social Media and Politics
+, Communication , Social Sciences , Social Sciences , Migration,
+Refugees, and Integration , Sociology and Political Science , Social
+Sciences , Social Sciences , Health disparities and outcomes , Health ,
+Social Sciences , Social Sciences , Dutch Social and Cultural Studies ,
+Education , Social Sciences , Social Sciences , Migration, Health and
+Trauma , Clinical Psychology , Psychology , Social Sciences , Crime
+Patterns and Interventions , Sociology and Political Science , Social
+Sciences , Social Sciences , Opinion Dynamics and Social Influence ,
+Statistical and Nonlinear Physics , Physics and Astronomy , Physical
+Sciences , Social Policy and Reform Studies , Political Science and
+International Relations , Social Sciences , Social Sciences , Education
+in Diverse Contexts , Education , Social Sciences , Social Sciences ,
+Populism, Right-Wing Movements , Political Science and International
+Relations , Social Sciences , Social Sciences , School Choice and
+Performance , Education , Social Sciences , Social Sciences , Diversity
+and Career in Medicine , Gender Studies , Social Sciences , Social
+Sciences , Labor market dynamics and wage inequality , Economics and
+Econometrics , Economics, Econometrics and Finance , Social Sciences ,
+Child and Adolescent Psychosocial and Emotional Development, Clinical
+Psychology , Psychology , Social Sciences , Education Systems and Policy
+, Education , Social Sciences , Social Sciences , Policing Practices and
+Perceptions , Political Science and International Relations , Social
+Sciences , Social Sciences , Racial and Ethnic Identity Research ,
+Sociology and Political Science , Social Sciences , Social Sciences ,
+Complex Network Analysis Techniques , Statistical and Nonlinear Physics
+, Physics and Astronomy , Physical Sciences , Nonprofit Sector and
+Volunteering , Sociology and Political Science , Social Sciences ,
+Social Sciences , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain , topic , subfield ,
+field , domain , topic , subfield , field , domain
+</td>
+<td style="text-align:left;">
+<a href="https://api.openalex.org/works?filter=author.id:A5087380803"
+class="uri">https://api.openalex.org/works?filter=author.id:A5087380803</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r test"><code>df_papers &lt;- oa_fetch(entity = &quot;works&quot;, author.id = df$id)
+df_papers$authorships[[1]]$author</code></pre>
+<pre class="test2"><code>#&gt; NULL</code></pre>
+<pre class="r test"><code>library(dplyr)
+library(tidyr)
+
+df_authors &lt;- df_papers %&gt;%
+  select(id, display_name, publication_year, authorships) %&gt;%
+  unnest(authorships, names_sep = &quot;_&quot;) %&gt;%
+  select(paper_id = id, paper_title = display_name, year = publication_year,
+         author_name = authorships_display_name, author_position = authorships_author_position)
+
+head(df_authors)</code></pre>
+<pre class="test2"><code>#&gt; # A tibble: 6 × 5
+#&gt;   paper_id                         paper_title                      year author_name author_position
+#&gt;   &lt;chr&gt;                            &lt;chr&gt;                           &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;          
+#&gt; 1 https://openalex.org/W2067927337 Ethnic Diversity and Its Effec…  2014 Tom van de… first          
+#&gt; 2 https://openalex.org/W2067927337 Ethnic Diversity and Its Effec…  2014 Jochem Tol… last           
+#&gt; 3 https://openalex.org/W2155408835 Anti-Muslim Attitudes in The N…  2010 Michael Sa… first          
+#&gt; 4 https://openalex.org/W2155408835 Anti-Muslim Attitudes in The N…  2010 Peer Schee… middle         
+#&gt; 5 https://openalex.org/W2155408835 Anti-Muslim Attitudes in The N…  2010 Jochem Tol… middle         
+#&gt; 6 https://openalex.org/W2155408835 Anti-Muslim Attitudes in The N…  2010 Louk Hagen… last</code></pre>
+<pre class="r test"><code>library(jsonlite)</code></pre>
+<pre class="r test"><code>author_name &lt;- &quot;Nella Geurts&quot;
+
+# Fetch data from OpenAlex
+url &lt;- paste0(&quot;https://api.openalex.org/authors?search=&quot;, gsub(&quot; &quot;, &quot;+&quot;, author_name))
+jt_json &lt;- fromJSON(url, simplifyVector = FALSE)
+
+# Check the first result&#39;s display name
+jt_json[[&quot;results&quot;]][[1]][[&quot;display_name&quot;]]</code></pre>
+<pre class="test2"><code>#&gt; [1] &quot;Nella Geurts&quot;</code></pre>
+<pre class="r test"><code># Get the author ID
+author_id &lt;- jt_json[[&quot;results&quot;]][[1]][[&quot;id&quot;]]
+author_id</code></pre>
+<pre class="test2"><code>#&gt; [1] &quot;https://openalex.org/A5016107698&quot;</code></pre>
+<pre class="r test"><code># Fetch papers for this author
+papers_url &lt;- paste0(&quot;https://api.openalex.org/works?filter=author.id:&quot;, author_id)
+papers_json &lt;- fromJSON(papers_url, simplifyVector = FALSE)
+
+# Extract the results
+papers &lt;- papers_json[[&quot;results&quot;]]
+
+# Turn into a dataframe
+df_papers &lt;- bind_rows(lapply(papers, function(x) {
+  data.frame(
+    paper_id = x$id,
+    paper_title = x$display_name,
+    publication_year = x$publication_year,
+    stringsAsFactors = FALSE
+  )
+}))
+head(df_papers)</code></pre>
+<pre class="test2"><code>#&gt;                           paper_id
+#&gt; 1 https://openalex.org/W4410463393
+#&gt; 2 https://openalex.org/W4410463485
+#&gt; 3 https://openalex.org/W3032478847
+#&gt; 4 https://openalex.org/W2536682329
+#&gt; 5 https://openalex.org/W4399763921
+#&gt; 6 https://openalex.org/W2980529039
+#&gt;                                                                                                                                     paper_title
+#&gt; 1                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 2    Mixed methods, mixed feelings: a review of hurdles faced and vaulting poles to apply when wanting to do and publish mixed methods research
+#&gt; 3 The lived experience of an integration paradox: why high-skilled migrants from Turkey experience little national belonging in the Netherlands
+#&gt; 4                                       Dynamics in intention to stay and changes in language proficiency of recent migrants in the Netherlands
+#&gt; 5                       How do minoritized migrant-background citizens perceive their political representation? An intracategorical perspective
+#&gt; 6                            Structural position and relative deprivation among recent migrants: a longitudinal take on the integration paradox
+#&gt;   publication_year
+#&gt; 1             2025
+#&gt; 2             2025
+#&gt; 3             2020
+#&gt; 4             2016
+#&gt; 5             2024
+#&gt; 6             2019</code></pre>
+<pre class="r test"><code>df_authors &lt;- bind_rows(lapply(papers, function(p) {
+  authors &lt;- p$authorships
+  data.frame(
+    paper_id = p$id,
+    paper_title = p$display_name,
+    year = p$publication_year,
+    author_name = sapply(authors, function(a) a$author$display_name),
+    author_position = sapply(authors, function(a) a$author_position),
+    stringsAsFactors = FALSE
+  )
+}))
+
+head(df_authors)</code></pre>
+<pre class="test2"><code>#&gt;                           paper_id
+#&gt; 1 https://openalex.org/W4410463393
+#&gt; 2 https://openalex.org/W4410463393
+#&gt; 3 https://openalex.org/W4410463393
+#&gt; 4 https://openalex.org/W4410463485
+#&gt; 5 https://openalex.org/W4410463485
+#&gt; 6 https://openalex.org/W3032478847
+#&gt;                                                                                                                                     paper_title
+#&gt; 1                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 2                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 3                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 4    Mixed methods, mixed feelings: a review of hurdles faced and vaulting poles to apply when wanting to do and publish mixed methods research
+#&gt; 5    Mixed methods, mixed feelings: a review of hurdles faced and vaulting poles to apply when wanting to do and publish mixed methods research
+#&gt; 6 The lived experience of an integration paradox: why high-skilled migrants from Turkey experience little national belonging in the Netherlands
+#&gt;   year     author_name author_position
+#&gt; 1 2025    Nella Geurts           first
+#&gt; 2 2025     Tine Davids          middle
+#&gt; 3 2025 Niels Spierings            last
+#&gt; 4 2025 Niels Spierings           first
+#&gt; 5 2025    Nella Geurts            last
+#&gt; 6 2020    Nella Geurts           first</code></pre>
+<pre class="r test"><code>author_list &lt;- c(&quot;Nella Geurts&quot;, &quot;Niels Spierings&quot;, &quot;Margriet van Hek&quot;, &quot;Saskia Glas&quot;, &quot;Jochem Tolsma&quot;, &quot;Peer Scheepers&quot;, &quot;Gerbert Kraaykamp&quot; )
+
+all_authors_df &lt;- bind_rows(lapply(author_list, function(author_name) {
+  # Get author ID
+  url &lt;- paste0(&quot;https://api.openalex.org/authors?search=&quot;, gsub(&quot; &quot;, &quot;+&quot;, author_name))
+  author_json &lt;- fromJSON(url, simplifyVector = FALSE)
+  
+  if(length(author_json$results) == 0) return(NULL)  # skip if not found
+  
+  author_id &lt;- author_json$results[[1]]$id
+  
+  # Get papers
+  papers_url &lt;- paste0(&quot;https://api.openalex.org/works?filter=author.id:&quot;, author_id)
+  papers_json &lt;- fromJSON(papers_url, simplifyVector = FALSE)
+  papers &lt;- papers_json$results
+  
+  # Extract co-authors
+  bind_rows(lapply(papers, function(p) {
+    authors &lt;- p$authorships
+    data.frame(
+      paper_id = p$id,
+      paper_title = p$display_name,
+      year = p$publication_year,
+      author_name = sapply(authors, function(a) a$author$display_name),
+      author_position = sapply(authors, function(a) a$author_position),
+      stringsAsFactors = FALSE
+    )
+  }))
+}))
+
+head(all_authors_df)</code></pre>
+<pre class="test2"><code>#&gt;                           paper_id
+#&gt; 1 https://openalex.org/W4410463393
+#&gt; 2 https://openalex.org/W4410463393
+#&gt; 3 https://openalex.org/W4410463393
+#&gt; 4 https://openalex.org/W4410463485
+#&gt; 5 https://openalex.org/W4410463485
+#&gt; 6 https://openalex.org/W3032478847
+#&gt;                                                                                                                                     paper_title
+#&gt; 1                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 2                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 3                                                                         Two peas in a pod? How to mix methods in ethnic and migration studies
+#&gt; 4    Mixed methods, mixed feelings: a review of hurdles faced and vaulting poles to apply when wanting to do and publish mixed methods research
+#&gt; 5    Mixed methods, mixed feelings: a review of hurdles faced and vaulting poles to apply when wanting to do and publish mixed methods research
+#&gt; 6 The lived experience of an integration paradox: why high-skilled migrants from Turkey experience little national belonging in the Netherlands
+#&gt;   year     author_name author_position
+#&gt; 1 2025    Nella Geurts           first
+#&gt; 2 2025     Tine Davids          middle
+#&gt; 3 2025 Niels Spierings            last
+#&gt; 4 2025 Niels Spierings           first
+#&gt; 5 2025    Nella Geurts            last
+#&gt; 6 2020    Nella Geurts           first</code></pre>
+<pre class="r test"><code>view(all_authors_df)</code></pre>
+<pre class="r test"><code>library(dplyr)
+
+# Step 1: Filter only your authors and unique combinations
+df_filtered &lt;- all_authors_df %&gt;%
+  filter(author_name %in% author_list) %&gt;%
+  select(paper_id, author_name) %&gt;%
+  distinct()
+
+# Step 2: Initialize adjacency matrix
+adj_matrix &lt;- matrix(0, 
+                     nrow = length(author_list), 
+                     ncol = length(author_list),
+                     dimnames = list(author_list, author_list))
+
+# Step 3: Fill in 1 if authors collaborated on a paper
+for(paper in unique(df_filtered$paper_id)) {
+  authors &lt;- df_filtered %&gt;% filter(paper_id == paper) %&gt;% pull(author_name)
+  if(length(authors) &gt; 1) {
+    # all pairs get 1
+    combs &lt;- t(combn(authors, 2))
+    for(i in 1:nrow(combs)) {
+      a1 &lt;- combs[i,1]
+      a2 &lt;- combs[i,2]
+      adj_matrix[a1, a2] &lt;- 1
+      adj_matrix[a2, a1] &lt;- 1  # symmetric
+    }
+  }
+}
+
+# Check
+adj_matrix</code></pre>
+<pre class="test2"><code>#&gt;                   Nella Geurts Niels Spierings Margriet van Hek Saskia Glas Jochem Tolsma
+#&gt; Nella Geurts                 0               1                0           1             0
+#&gt; Niels Spierings              1               0                0           1             1
+#&gt; Margriet van Hek             0               0                0           0             0
+#&gt; Saskia Glas                  1               1                0           0             0
+#&gt; Jochem Tolsma                0               1                0           0             0
+#&gt; Peer Scheepers               0               1                0           1             1
+#&gt; Gerbert Kraaykamp            0               1                1           0             1
+#&gt;                   Peer Scheepers Gerbert Kraaykamp
+#&gt; Nella Geurts                   0                 0
+#&gt; Niels Spierings                1                 1
+#&gt; Margriet van Hek               0                 1
+#&gt; Saskia Glas                    1                 0
+#&gt; Jochem Tolsma                  1                 1
+#&gt; Peer Scheepers                 0                 0
+#&gt; Gerbert Kraaykamp              0                 0</code></pre>
+<pre class="r test"><code>require(&quot;igraph&quot;)
+
+
+net_un &lt;- adj_matrix + t(adj_matrix)
+net_un[net_un &gt; 1] &lt;- 1  # ensure 1/0
+diag(net_un) &lt;- 0         # remove self-loops
+
+netG &lt;- graph_from_adjacency_matrix(net_un, mode = &quot;undirected&quot;)
+plot(netG, vertex.size = 30, vertex.color = &quot;skyblue&quot;, vertex.label.cex = 0.8)</code></pre>
+<p><img src="Week-3_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r test"><code>igraph::transitivity(netG, type = &quot;undirected&quot;)</code></pre>
+<pre class="test2"><code>#&gt; [1] 0.5217391</code></pre>
+<pre class="r test"><code>plot(netG)</code></pre>
+<p><img src="Week-3_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgd2VlayAzIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIkhhbm5lIFdvbHRodWlzIg0KLS0tDQoNCg0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGV2YWwgPSBGQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiNrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrcmVkJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgDQoNCjxicj4NCg0KDQoNCmBgYHtyfQ0KDQpybShsaXN0ID0gbHMoKSkNCmdjKCkNCmBgYA0KDQpgYGB7cn0NCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogICAgbGFwcGx5KHBhY2thZ2VzLCBGVU4gPSBmdW5jdGlvbih4KSB7DQogICAgICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICAgICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICAgICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICAgICAgfQ0KICAgIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL2RhdGEvcHJvY2Vzc2VkLyIpIHsNCiAgICBpZmVsc2UoIWRpci5leGlzdHMoImRhdGEiKSwgZGlyLmNyZWF0ZSgiZGF0YSIpLCBGQUxTRSkNCiAgICBpZmVsc2UoIWRpci5leGlzdHMoImRhdGEvcHJvY2Vzc2VkIiksIGRpci5jcmVhdGUoImRhdGEvcHJvY2Vzc2VkIiksIEZBTFNFKQ0KICAgIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgICAgICBmaWxlID0gZGVwYXJzZShzdWJzdGl0dXRlKHgpKQ0KICAgIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICAgIHRvdGFsbmFtZSA8LSBwYXN0ZShsb2NhdGlvbiwgZGF0ZW5hbWUsIGZpbGUsICIucmRhIiwgc2VwID0gIiIpDQogICAgc2F2ZSh4LCBmaWxlID0gdG90YWxuYW1lKSAgI25lZWQgdG8gZml4IGlmIGZpbGUgaXMgcmVsb2FkZWQgYXMgaW5wdXQgbmFtZSwgbm90IGFzIHguIA0KfQ0KDQpmbG9hZCA8LSBmdW5jdGlvbihmaWxlbmFtZSkgew0KICAgIGxvYWQoZmlsZW5hbWUpDQogICAgZ2V0KGxzKClbbHMoKSAhPSAiZmlsZW5hbWUiXSkNCn0NCg0KZnNob3dkZiA8LSBmdW5jdGlvbih4LCAuLi4pIHsNCiAgICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pICU+JQ0KICAgICAgICBrYWJsZUV4dHJhOjprYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIpKSAlPiUNCiAgICAgICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCmBgYA0KDQoNCmBgYHtyfQ0KDQpgYGANCg0KYGBge3J9DQoNCiMgcGFja2FnZXMgDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoc2Nob2xhcikNCmxpYnJhcnkob3BlbmFsZXhSKQ0KbGlicmFyeShydmVzdCkNCmxpYnJhcnkoanNvbmxpdGUpDQpsaWJyYXJ5KGdncmFwaCkNCg0KDQpwYWNrYWdlcyA8LSBjKCJ0aWR5dmVyc2UiLCAic2Nob2xhciIsICJvcGVuYWxleFIiLCAicnZlc3QiLCAianNvbmxpdGUiKQ0KZnBhY2thZ2UuY2hlY2socGFja2FnZXMpDQpgYGANCmBgYHtyfQ0KIyBtYWtlIHlvdXJzZWxmIGtub3duIHRvIG9wZW5BbGV4DQpvcHRpb25zKG9wZW5hbGV4Ui5tYWlsdG8gPSAiaGFubmUud29sdGh1aXNAcnUubmwiKQ0KYGBgDQoNCg0KDQoNCg0KYGBge3J9DQp1cmwgPC0gImh0dHBzOi8vYXBpLm9wZW5hbGV4Lm9yZy9hdXRob3JzP3NlYXJjaD1Kb2NoZW0gVG9sc21hIg0KIyBiYXNlZCBvbiB3aGF0IHlvdSBoYXZlIGxlYXJuZWQgc28gZmFyLCB5b3Ugd291bGQgcHJvYmFibHkgZmlyc3QgdHJ5Og0KanQgPC0gcmVhZF9odG1sKCJodHRwczovL2FwaS5vcGVuYWxleC5vcmcvYXV0aG9ycz9zZWFyY2g9Sm9jaGVtK1RvbHNtYSIpICU+JQ0KICBodG1sX3RleHQyKCkNCg0Kc3Vic3RyKGp0LCAxLCAxMDApDQpgYGANCg0KYGBge3J9DQpqdF9qc29uIDwtIGZyb21KU09OKCJodHRwczovL2FwaS5vcGVuYWxleC5vcmcvYXV0aG9ycz9zZWFyY2g9Sm9jaGVtK1RvbHNtYSIsIHNpbXBsaWZ5VmVjdG9yID0gRkFMU0UpDQpnbGltcHNlKGp0X2pzb24sIG1heC5sZXZlbCA9IDEpDQpgYGANCmBgYHtyfQ0KanRfanNvbltbInJlc3VsdHMiXV1bWzFdXVtbImRpc3BsYXlfbmFtZSJdXQ0KYGBgDQpgYGB7cn0NCmRmX2p0IDwtIGp0X2pzb24gJT4lDQogICAgLiRyZXN1bHRzICU+JQ0KICAgIC5bWzFdXSAlPiUNCiAgICBkaXNjYXJkKGlzX2VtcHR5KQ0KYGBgDQoNCmBgYHtyfQ0KZGYgPC0gb2FfZmV0Y2goZW50aXR5ID0gImF1dGhvciIsIHNlYXJjaCA9ICJKb2NoZW0gVG9sc21hIikNCmZzaG93ZGYoZGYpDQpgYGANCmBgYHtyfQ0KZGZfcGFwZXJzIDwtIG9hX2ZldGNoKGVudGl0eSA9ICJ3b3JrcyIsIGF1dGhvci5pZCA9IGRmJGlkKQ0KZGZfcGFwZXJzJGF1dGhvcnNoaXBzW1sxXV0kYXV0aG9yDQpgYGANCmBgYHtyfQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkodGlkeXIpDQoNCmRmX2F1dGhvcnMgPC0gZGZfcGFwZXJzICU+JQ0KICBzZWxlY3QoaWQsIGRpc3BsYXlfbmFtZSwgcHVibGljYXRpb25feWVhciwgYXV0aG9yc2hpcHMpICU+JQ0KICB1bm5lc3QoYXV0aG9yc2hpcHMsIG5hbWVzX3NlcCA9ICJfIikgJT4lDQogIHNlbGVjdChwYXBlcl9pZCA9IGlkLCBwYXBlcl90aXRsZSA9IGRpc3BsYXlfbmFtZSwgeWVhciA9IHB1YmxpY2F0aW9uX3llYXIsDQogICAgICAgICBhdXRob3JfbmFtZSA9IGF1dGhvcnNoaXBzX2Rpc3BsYXlfbmFtZSwgYXV0aG9yX3Bvc2l0aW9uID0gYXV0aG9yc2hpcHNfYXV0aG9yX3Bvc2l0aW9uKQ0KDQpoZWFkKGRmX2F1dGhvcnMpDQoNCg0KYGBgDQpgYGB7cn0NCmxpYnJhcnkoanNvbmxpdGUpDQpgYGANCmBgYHtyfQ0KYXV0aG9yX25hbWUgPC0gIk5lbGxhIEdldXJ0cyINCg0KIyBGZXRjaCBkYXRhIGZyb20gT3BlbkFsZXgNCnVybCA8LSBwYXN0ZTAoImh0dHBzOi8vYXBpLm9wZW5hbGV4Lm9yZy9hdXRob3JzP3NlYXJjaD0iLCBnc3ViKCIgIiwgIisiLCBhdXRob3JfbmFtZSkpDQpqdF9qc29uIDwtIGZyb21KU09OKHVybCwgc2ltcGxpZnlWZWN0b3IgPSBGQUxTRSkNCg0KIyBDaGVjayB0aGUgZmlyc3QgcmVzdWx0J3MgZGlzcGxheSBuYW1lDQpqdF9qc29uW1sicmVzdWx0cyJdXVtbMV1dW1siZGlzcGxheV9uYW1lIl1dDQpgYGANCg0KDQpgYGB7cn0NCg0KIyBHZXQgdGhlIGF1dGhvciBJRA0KYXV0aG9yX2lkIDwtIGp0X2pzb25bWyJyZXN1bHRzIl1dW1sxXV1bWyJpZCJdXQ0KYXV0aG9yX2lkDQoNCg0KIyBGZXRjaCBwYXBlcnMgZm9yIHRoaXMgYXV0aG9yDQpwYXBlcnNfdXJsIDwtIHBhc3RlMCgiaHR0cHM6Ly9hcGkub3BlbmFsZXgub3JnL3dvcmtzP2ZpbHRlcj1hdXRob3IuaWQ6IiwgYXV0aG9yX2lkKQ0KcGFwZXJzX2pzb24gPC0gZnJvbUpTT04ocGFwZXJzX3VybCwgc2ltcGxpZnlWZWN0b3IgPSBGQUxTRSkNCg0KIyBFeHRyYWN0IHRoZSByZXN1bHRzDQpwYXBlcnMgPC0gcGFwZXJzX2pzb25bWyJyZXN1bHRzIl1dDQoNCiMgVHVybiBpbnRvIGEgZGF0YWZyYW1lDQpkZl9wYXBlcnMgPC0gYmluZF9yb3dzKGxhcHBseShwYXBlcnMsIGZ1bmN0aW9uKHgpIHsNCiAgZGF0YS5mcmFtZSgNCiAgICBwYXBlcl9pZCA9IHgkaWQsDQogICAgcGFwZXJfdGl0bGUgPSB4JGRpc3BsYXlfbmFtZSwNCiAgICBwdWJsaWNhdGlvbl95ZWFyID0geCRwdWJsaWNhdGlvbl95ZWFyLA0KICAgIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRQ0KICApDQp9KSkNCmhlYWQoZGZfcGFwZXJzKQ0KDQoNCg0KYGBgDQoNCmBgYHtyfQ0KZGZfYXV0aG9ycyA8LSBiaW5kX3Jvd3MobGFwcGx5KHBhcGVycywgZnVuY3Rpb24ocCkgew0KICBhdXRob3JzIDwtIHAkYXV0aG9yc2hpcHMNCiAgZGF0YS5mcmFtZSgNCiAgICBwYXBlcl9pZCA9IHAkaWQsDQogICAgcGFwZXJfdGl0bGUgPSBwJGRpc3BsYXlfbmFtZSwNCiAgICB5ZWFyID0gcCRwdWJsaWNhdGlvbl95ZWFyLA0KICAgIGF1dGhvcl9uYW1lID0gc2FwcGx5KGF1dGhvcnMsIGZ1bmN0aW9uKGEpIGEkYXV0aG9yJGRpc3BsYXlfbmFtZSksDQogICAgYXV0aG9yX3Bvc2l0aW9uID0gc2FwcGx5KGF1dGhvcnMsIGZ1bmN0aW9uKGEpIGEkYXV0aG9yX3Bvc2l0aW9uKSwNCiAgICBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UNCiAgKQ0KfSkpDQoNCmhlYWQoZGZfYXV0aG9ycykNCg0KYGBgDQoNCmBgYHtyfQ0KYXV0aG9yX2xpc3QgPC0gYygiTmVsbGEgR2V1cnRzIiwgIk5pZWxzIFNwaWVyaW5ncyIsICJNYXJncmlldCB2YW4gSGVrIiwgIlNhc2tpYSBHbGFzIiwgIkpvY2hlbSBUb2xzbWEiLCAiUGVlciBTY2hlZXBlcnMiLCAiR2VyYmVydCBLcmFheWthbXAiICkNCg0KYWxsX2F1dGhvcnNfZGYgPC0gYmluZF9yb3dzKGxhcHBseShhdXRob3JfbGlzdCwgZnVuY3Rpb24oYXV0aG9yX25hbWUpIHsNCiAgIyBHZXQgYXV0aG9yIElEDQogIHVybCA8LSBwYXN0ZTAoImh0dHBzOi8vYXBpLm9wZW5hbGV4Lm9yZy9hdXRob3JzP3NlYXJjaD0iLCBnc3ViKCIgIiwgIisiLCBhdXRob3JfbmFtZSkpDQogIGF1dGhvcl9qc29uIDwtIGZyb21KU09OKHVybCwgc2ltcGxpZnlWZWN0b3IgPSBGQUxTRSkNCiAgDQogIGlmKGxlbmd0aChhdXRob3JfanNvbiRyZXN1bHRzKSA9PSAwKSByZXR1cm4oTlVMTCkgICMgc2tpcCBpZiBub3QgZm91bmQNCiAgDQogIGF1dGhvcl9pZCA8LSBhdXRob3JfanNvbiRyZXN1bHRzW1sxXV0kaWQNCiAgDQogICMgR2V0IHBhcGVycw0KICBwYXBlcnNfdXJsIDwtIHBhc3RlMCgiaHR0cHM6Ly9hcGkub3BlbmFsZXgub3JnL3dvcmtzP2ZpbHRlcj1hdXRob3IuaWQ6IiwgYXV0aG9yX2lkKQ0KICBwYXBlcnNfanNvbiA8LSBmcm9tSlNPTihwYXBlcnNfdXJsLCBzaW1wbGlmeVZlY3RvciA9IEZBTFNFKQ0KICBwYXBlcnMgPC0gcGFwZXJzX2pzb24kcmVzdWx0cw0KICANCiAgIyBFeHRyYWN0IGNvLWF1dGhvcnMNCiAgYmluZF9yb3dzKGxhcHBseShwYXBlcnMsIGZ1bmN0aW9uKHApIHsNCiAgICBhdXRob3JzIDwtIHAkYXV0aG9yc2hpcHMNCiAgICBkYXRhLmZyYW1lKA0KICAgICAgcGFwZXJfaWQgPSBwJGlkLA0KICAgICAgcGFwZXJfdGl0bGUgPSBwJGRpc3BsYXlfbmFtZSwNCiAgICAgIHllYXIgPSBwJHB1YmxpY2F0aW9uX3llYXIsDQogICAgICBhdXRob3JfbmFtZSA9IHNhcHBseShhdXRob3JzLCBmdW5jdGlvbihhKSBhJGF1dGhvciRkaXNwbGF5X25hbWUpLA0KICAgICAgYXV0aG9yX3Bvc2l0aW9uID0gc2FwcGx5KGF1dGhvcnMsIGZ1bmN0aW9uKGEpIGEkYXV0aG9yX3Bvc2l0aW9uKSwNCiAgICAgIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRQ0KICAgICkNCiAgfSkpDQp9KSkNCg0KaGVhZChhbGxfYXV0aG9yc19kZikNCnZpZXcoYWxsX2F1dGhvcnNfZGYpDQoNCmBgYA0KDQoNCg0KYGBge3J9DQpsaWJyYXJ5KGRwbHlyKQ0KDQojIFN0ZXAgMTogRmlsdGVyIG9ubHkgeW91ciBhdXRob3JzIGFuZCB1bmlxdWUgY29tYmluYXRpb25zDQpkZl9maWx0ZXJlZCA8LSBhbGxfYXV0aG9yc19kZiAlPiUNCiAgZmlsdGVyKGF1dGhvcl9uYW1lICVpbiUgYXV0aG9yX2xpc3QpICU+JQ0KICBzZWxlY3QocGFwZXJfaWQsIGF1dGhvcl9uYW1lKSAlPiUNCiAgZGlzdGluY3QoKQ0KDQojIFN0ZXAgMjogSW5pdGlhbGl6ZSBhZGphY2VuY3kgbWF0cml4DQphZGpfbWF0cml4IDwtIG1hdHJpeCgwLCANCiAgICAgICAgICAgICAgICAgICAgIG5yb3cgPSBsZW5ndGgoYXV0aG9yX2xpc3QpLCANCiAgICAgICAgICAgICAgICAgICAgIG5jb2wgPSBsZW5ndGgoYXV0aG9yX2xpc3QpLA0KICAgICAgICAgICAgICAgICAgICAgZGltbmFtZXMgPSBsaXN0KGF1dGhvcl9saXN0LCBhdXRob3JfbGlzdCkpDQoNCiMgU3RlcCAzOiBGaWxsIGluIDEgaWYgYXV0aG9ycyBjb2xsYWJvcmF0ZWQgb24gYSBwYXBlcg0KZm9yKHBhcGVyIGluIHVuaXF1ZShkZl9maWx0ZXJlZCRwYXBlcl9pZCkpIHsNCiAgYXV0aG9ycyA8LSBkZl9maWx0ZXJlZCAlPiUgZmlsdGVyKHBhcGVyX2lkID09IHBhcGVyKSAlPiUgcHVsbChhdXRob3JfbmFtZSkNCiAgaWYobGVuZ3RoKGF1dGhvcnMpID4gMSkgew0KICAgICMgYWxsIHBhaXJzIGdldCAxDQogICAgY29tYnMgPC0gdChjb21ibihhdXRob3JzLCAyKSkNCiAgICBmb3IoaSBpbiAxOm5yb3coY29tYnMpKSB7DQogICAgICBhMSA8LSBjb21ic1tpLDFdDQogICAgICBhMiA8LSBjb21ic1tpLDJdDQogICAgICBhZGpfbWF0cml4W2ExLCBhMl0gPC0gMQ0KICAgICAgYWRqX21hdHJpeFthMiwgYTFdIDwtIDEgICMgc3ltbWV0cmljDQogICAgfQ0KICB9DQp9DQoNCiMgQ2hlY2sNCmFkal9tYXRyaXgNCg0KYGBgDQoNCmBgYHtyfQ0KcmVxdWlyZSgiaWdyYXBoIikNCg0KDQpuZXRfdW4gPC0gYWRqX21hdHJpeCArIHQoYWRqX21hdHJpeCkNCm5ldF91bltuZXRfdW4gPiAxXSA8LSAxICAjIGVuc3VyZSAxLzANCmRpYWcobmV0X3VuKSA8LSAwICAgICAgICAgIyByZW1vdmUgc2VsZi1sb29wcw0KDQpuZXRHIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChuZXRfdW4sIG1vZGUgPSAidW5kaXJlY3RlZCIpDQpwbG90KG5ldEcsIHZlcnRleC5zaXplID0gMzAsIHZlcnRleC5jb2xvciA9ICJza3libHVlIiwgdmVydGV4LmxhYmVsLmNleCA9IDAuOCkNCmlncmFwaDo6dHJhbnNpdGl2aXR5KG5ldEcsIHR5cGUgPSAidW5kaXJlY3RlZCIpDQoNCnBsb3QobmV0RykNCmBgYA0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Week 3.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

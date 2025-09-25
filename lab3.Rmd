@@ -1,0 +1,293 @@
+---
+title: "Journal week 3"
+#bibliography: references.bib
+author: "Hanne Wolthuis"
+---
+
+
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+
+
+```{r}
+
+rm(list = ls())
+gc()
+```
+
+```{r}
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, datename, file, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+```
+
+
+```{r}
+
+```
+
+```{r}
+
+# packages 
+library(tidyverse)
+library(scholar)
+library(openalexR)
+library(rvest)
+library(jsonlite)
+library(ggraph)
+
+
+packages <- c("tidyverse", "scholar", "openalexR", "rvest", "jsonlite")
+fpackage.check(packages)
+```
+```{r}
+# make yourself known to openAlex
+options(openalexR.mailto = "hanne.wolthuis@ru.nl")
+```
+
+
+
+
+
+```{r}
+url <- "https://api.openalex.org/authors?search=Jochem Tolsma"
+# based on what you have learned so far, you would probably first try:
+jt <- read_html("https://api.openalex.org/authors?search=Jochem+Tolsma") %>%
+  html_text2()
+
+substr(jt, 1, 100)
+```
+
+```{r}
+jt_json <- fromJSON("https://api.openalex.org/authors?search=Jochem+Tolsma", simplifyVector = FALSE)
+glimpse(jt_json, max.level = 1)
+```
+```{r}
+jt_json[["results"]][[1]][["display_name"]]
+```
+```{r}
+df_jt <- jt_json %>%
+    .$results %>%
+    .[[1]] %>%
+    discard(is_empty)
+```
+
+```{r}
+df <- oa_fetch(entity = "author", search = "Jochem Tolsma")
+fshowdf(df)
+```
+```{r}
+df_papers <- oa_fetch(entity = "works", author.id = df$id)
+df_papers$authorships[[1]]$author
+```
+```{r}
+library(dplyr)
+library(tidyr)
+
+df_authors <- df_papers %>%
+  select(id, display_name, publication_year, authorships) %>%
+  unnest(authorships, names_sep = "_") %>%
+  select(paper_id = id, paper_title = display_name, year = publication_year,
+         author_name = authorships_display_name, author_position = authorships_author_position)
+
+head(df_authors)
+
+
+```
+```{r}
+library(jsonlite)
+```
+```{r}
+author_name <- "Nella Geurts"
+
+# Fetch data from OpenAlex
+url <- paste0("https://api.openalex.org/authors?search=", gsub(" ", "+", author_name))
+jt_json <- fromJSON(url, simplifyVector = FALSE)
+
+# Check the first result's display name
+jt_json[["results"]][[1]][["display_name"]]
+```
+
+
+```{r}
+
+# Get the author ID
+author_id <- jt_json[["results"]][[1]][["id"]]
+author_id
+
+
+# Fetch papers for this author
+papers_url <- paste0("https://api.openalex.org/works?filter=author.id:", author_id)
+papers_json <- fromJSON(papers_url, simplifyVector = FALSE)
+
+# Extract the results
+papers <- papers_json[["results"]]
+
+# Turn into a dataframe
+df_papers <- bind_rows(lapply(papers, function(x) {
+  data.frame(
+    paper_id = x$id,
+    paper_title = x$display_name,
+    publication_year = x$publication_year,
+    stringsAsFactors = FALSE
+  )
+}))
+head(df_papers)
+
+
+
+```
+
+```{r}
+df_authors <- bind_rows(lapply(papers, function(p) {
+  authors <- p$authorships
+  data.frame(
+    paper_id = p$id,
+    paper_title = p$display_name,
+    year = p$publication_year,
+    author_name = sapply(authors, function(a) a$author$display_name),
+    author_position = sapply(authors, function(a) a$author_position),
+    stringsAsFactors = FALSE
+  )
+}))
+
+head(df_authors)
+
+```
+
+```{r}
+author_list <- c("Nella Geurts", "Niels Spierings", "Margriet van Hek", "Saskia Glas", "Jochem Tolsma", "Peer Scheepers", "Gerbert Kraaykamp" )
+
+all_authors_df <- bind_rows(lapply(author_list, function(author_name) {
+  # Get author ID
+  url <- paste0("https://api.openalex.org/authors?search=", gsub(" ", "+", author_name))
+  author_json <- fromJSON(url, simplifyVector = FALSE)
+  
+  if(length(author_json$results) == 0) return(NULL)  # skip if not found
+  
+  author_id <- author_json$results[[1]]$id
+  
+  # Get papers
+  papers_url <- paste0("https://api.openalex.org/works?filter=author.id:", author_id)
+  papers_json <- fromJSON(papers_url, simplifyVector = FALSE)
+  papers <- papers_json$results
+  
+  # Extract co-authors
+  bind_rows(lapply(papers, function(p) {
+    authors <- p$authorships
+    data.frame(
+      paper_id = p$id,
+      paper_title = p$display_name,
+      year = p$publication_year,
+      author_name = sapply(authors, function(a) a$author$display_name),
+      author_position = sapply(authors, function(a) a$author_position),
+      stringsAsFactors = FALSE
+    )
+  }))
+}))
+
+head(all_authors_df)
+view(all_authors_df)
+
+```
+
+
+
+```{r}
+library(dplyr)
+
+# Step 1: Filter only your authors and unique combinations
+df_filtered <- all_authors_df %>%
+  filter(author_name %in% author_list) %>%
+  select(paper_id, author_name) %>%
+  distinct()
+
+# Step 2: Initialize adjacency matrix
+adj_matrix <- matrix(0, 
+                     nrow = length(author_list), 
+                     ncol = length(author_list),
+                     dimnames = list(author_list, author_list))
+
+# Step 3: Fill in 1 if authors collaborated on a paper
+for(paper in unique(df_filtered$paper_id)) {
+  authors <- df_filtered %>% filter(paper_id == paper) %>% pull(author_name)
+  if(length(authors) > 1) {
+    # all pairs get 1
+    combs <- t(combn(authors, 2))
+    for(i in 1:nrow(combs)) {
+      a1 <- combs[i,1]
+      a2 <- combs[i,2]
+      adj_matrix[a1, a2] <- 1
+      adj_matrix[a2, a1] <- 1  # symmetric
+    }
+  }
+}
+
+# Check
+adj_matrix
+
+```
+
+```{r}
+require("igraph")
+
+
+net_un <- adj_matrix + t(adj_matrix)
+net_un[net_un > 1] <- 1  # ensure 1/0
+diag(net_un) <- 0         # remove self-loops
+
+netG <- graph_from_adjacency_matrix(net_un, mode = "undirected")
+plot(netG, vertex.size = 30, vertex.color = "skyblue", vertex.label.cex = 0.8)
+igraph::transitivity(netG, type = "undirected")
+
+plot(netG)
+```
