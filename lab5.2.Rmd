@@ -1,0 +1,569 @@
+---
+title: "lab5.2"
+output: html_document
+date: "2025-10-27"
+---
+
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+```{r}
+rm(list = ls())
+
+
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, file, "_", datename, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+packages <- c("tidyverse", "scholar", "openalexR", "rvest", "jsonlite")
+fpackage.check(packages)
+
+library(igraph)
+
+```
+
+```{r}
+scholars <- fload("C:/Users/hanne/Downloads/scholars_20240924.rda")
+```
+
+```{r}
+fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
+    2018), c(2019, 2023)), type = c("first")) {
+
+    # step 1
+    demographics <- do.call(rbind.data.frame, data$demographics)
+    demographics <- demographics %>%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+
+    sample <- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) & (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc <- demographics[sample, ]
+    scholars_sel <- lapply(scholars, "[", sample)
+
+    # step 2
+    ids <- demographics_soc$au_id
+    nwaves <- length(waves)
+    nets <- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works <- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works <- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == "first") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- df_works_w$works_author[i][[1]]$au_id[1]
+                alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "last") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "all") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos <- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) > 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+                }
+            }
+        }
+    }
+    output <- list()
+    output$data <- scholars_sel
+    output$nets <- nets
+    return(output)
+}
+```
+
+```{r}
+#save the output of your function
+test <- fcolnet(data = scholars, 
+                university = "RU", 
+                discipline = "sociology", 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c("first"))
+
+
+
+
+test_w1 <- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,], #for this example I take the first wave of data. (thus I select the array of networks and take the first matrix)
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL,
+  add.rownames = NULL
+)
+
+plot(test_w1,
+  vertex.label = NA,
+  edge.width = 0.2,
+  edge.arrow.size =0.2)
+
+```
+
+
+```{r}
+test2 <- fcolnet(
+  data = scholars,
+  university = c("RU","UvT","UU","RUG","VU"),   # or "all" you want
+  discipline = c("sociology", "political science"),
+  waves = list(c(2015,2018), c(2019,2023)),    # time periods
+  type = "all"                                 # first / last / all authorship
+)
+
+test2_w1 <- igraph::graph_from_adjacency_matrix(
+  test2$nets[1, , ],   # first wave matrix
+  mode = "undirected", # "all" → usually undirected ties
+  diag = FALSE
+)
+
+plot(
+  test2_w1,
+  vertex.label = NA,
+  edge.width = 0.2,
+  edge.arrow.size = 0.2
+)
+
+```
+
+
+
+```{r}
+test <- fcolnet(data = scholars, 
+                university = c("RU", "UvT"), 
+                discipline = c("sociology", "political science"), 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c("all"))
+
+test_w2 <- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,], #now, I take the second wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#Let us find ego characteristics. 
+#first fish out the data
+df <- test$data
+
+#same complicated structure as 'scholars' thus first make a dataframe from the list in which all info was saved. 
+df_ego <- do.call(rbind.data.frame, df$demographics)
+
+#DO NOT MESS UP THE ORDER! THUS IF YOU JOIN THIS DATA WITH YOUR OWN DATA CHECK THAT ORDER REMAINED THE SAME!! 
+
+plot(test_w2,
+  vertex.color = ifelse(df_ego$discipline.24 == "sociology", "red", "blue"), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 0.5,
+  edge.arrow.size =0.5)
+```
+
+```{r}
+# Use second-wave university column for coloring
+
+test3 <- fcolnet(
+  data = scholars, 
+  university = c("RU"), 
+  discipline = c("sociology", "political science"), 
+  waves = list(c(2015, 2018), c(2019, 2023)), 
+  type = "all"
+)
+
+test3_w2 <- igraph::graph_from_adjacency_matrix(
+  test3$nets[2,,],  # <-- use test3, not test
+  mode = "directed",
+  diag = FALSE
+)
+
+df3 <- test3$data
+df3_ego <- do.call(rbind.data.frame, df3$demographics)
+
+# Use a nicer layout (Fruchterman-Reingold)
+layout_fr <- layout_with_fr(test3_w2)
+
+plot(
+  test3_w2,
+  layout = layout_fr,
+  vertex.color = ifelse(df3_ego$discipline.24 == "sociology", "red", "blue"),
+  vertex.size = 6,       # smaller nodes
+  vertex.label = NA,     # hide labels
+  edge.width = 0.3,      # thinner edges
+  edge.arrow.size = 0.2  # smaller arrows
+)
+
+
+```
+
+```{r}
+# Maak het netwerk (all-to-all, alleen RU)
+test_ru <- fcolnet(
+  data = scholars,
+  university = c("RU"),       # alleen Radboud University
+  discipline = c("sociology", "political science"),
+  waves = list(c(2015,2018), c(2019,2023)),
+  type = "all"
+)
+
+# Pak bv. de 2e wave (2019–2023)
+test_ru_w2 <- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[2,,],
+  mode = "undirected",
+  diag = FALSE
+)
+
+# Ego-data
+df_ru <- test_ru$data
+df_ru_ego <- do.call(rbind.data.frame, df_ru$demographics)
+
+# Layout & plot
+set.seed(123)   # voor herhaalbaarheid
+layout_fr <- igraph::layout_with_fr(test_ru_w2)
+
+plot(
+  test_ru_w2,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == "sociology", "red", "blue"),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = "RU Co-authorship Network (2019–2023)"
+)
+
+
+```
+
+```{r}
+# Maak het netwerk (all-to-all, alleen RU)
+test_ru <- fcolnet(
+  data = scholars,
+  university = c("RU"),       # alleen Radboud University
+  discipline = c("sociology", "political science"),
+  waves = list(c(2015,2018), c(2019,2023)),
+  type = "all"
+)
+
+# Pak bv. de 2e wave (2019–2023)
+test_ru_w1 <- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[1,,],
+  mode = "undirected",
+  diag = FALSE
+)
+
+# Ego-data
+df_ru <- test_ru$data
+df_ru_ego <- do.call(rbind.data.frame, df_ru$demographics)
+
+# Layout & plot
+set.seed(123)   # voor herhaalbaarheid
+layout_fr <- igraph::layout_with_fr(test_ru_w2)
+
+plot(
+  test_ru_w1,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == "sociology", "red", "blue"),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = "RU Co-authorship Network (2015–2018)"
+)
+
+```
+
+```{r}
+# Maak netwerken (alleen RU, sociologie + politicologie)
+test_ru <- fcolnet(
+  data = scholars,
+  university = c("RU"),
+  discipline = c("sociology", "political science"),
+  waves = list(c(2015,2018), c(2019,2023)),
+  type = "all"
+)
+
+# Haal beide waves eruit
+test_ru_w1 <- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[1,,],
+  mode = "undirected",
+  diag = FALSE
+)
+
+test_ru_w2 <- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[2,,],
+  mode = "undirected",
+  diag = FALSE
+)
+
+# Ego-data
+df_ru <- test_ru$data
+df_ru_ego <- do.call(rbind.data.frame, df_ru$demographics)
+
+# Zelfde layout voor beide netwerken
+set.seed(123)
+layout_fr <- igraph::layout_with_fr(test_ru_w1)
+
+# Zet 2 plots naast elkaar
+par(mfrow = c(1,2), mar = c(1,1,3,1))  
+
+plot(
+  test_ru_w1,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == "sociology", "red", "blue"),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = "Wave 1: 2015–2018"
+)
+
+plot(
+  test_ru_w2,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == "sociology", "red", "blue"),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = "Wave 2: 2019–2023"
+)
+
+# Voeg legenda toe (aparte stap!)
+par(mfrow = c(1,1))  
+plot.new()
+legend(
+  "center",
+  legend = c("Sociology", "Political Science"),
+  col = c("red", "blue"),
+  pch = 19,
+  pt.cex = 1.5,
+  bty = "n",
+  title = "Discipline"
+)
+
+```
+
+```{r}
+# some descriptives from the second wave
+# number of nodes
+vcount(test_ru_w2)
+# number of edges
+ecount(test_ru_w2)
+```
+
+```{r}
+igraph::degree(test_ru_w2)
+# hist(table(degree(g)), xlab='indegree', main= 'Histogram of indegree')
+```
+
+```{r}
+colnames(df_ru_ego)
+head(df_ru_ego)
+
+
+```
+
+```{r}
+library(igraph)
+
+# --- 1. Layout & netwerk ---
+set.seed(123)
+layout_fr <- igraph::layout_with_fr(test_ru_w2)
+
+# --- 2. Geef elke scholar een eenvoudig nummer als label ---
+V(test_ru_w2)$label <- 1:vcount(test_ru_w2)
+
+# --- 3. Bereken graad per scholar ---
+degree_df <- data.frame(
+  scholar_number = V(test_ru_w2)$label,
+  degree = igraph::degree(test_ru_w2)
+)
+
+# Sorteer van hoogste naar laagste graad
+degree_df <- degree_df[order(-degree_df$degree), ]
+print(degree_df)
+
+# --- 4. Plot netwerk ---
+plot(
+  test_ru_w2,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == "sociology", "red", "blue"),
+  vertex.label = V(test_ru_w2)$label,
+  vertex.label.cex = 0.7,
+  edge.width = 0.3,
+  main = "RU Co-authorship Network (2019–2023)"
+)
+
+
+```
+
+```{r}
+# 1. Zet labels op simpele nummers (als nog niet gedaan)
+V(test_ru_w2)$label <- 1:vcount(test_ru_w2)
+
+# 2. Bereken de graad
+degree_df <- data.frame(
+  scholar_number = V(test_ru_w2)$label,
+  degree = igraph::degree(test_ru_w2)
+)
+
+# 3. Bekijk resultaat
+degree_df <- degree_df[order(-degree_df$degree), ]
+print(degree_df)
+
+
+```
+
+
+```{r}
+# 1. Geef nodes eenvoudige nummers als label
+V(test_ru_w2)$label <- 1:vcount(test_ru_w2)
+
+# 2. Bereken lokale clustering
+clustering_local <- igraph::transitivity(
+  test_ru_w2,
+  type = "localundirected",
+  isolates = "zero"
+)
+
+# 3. Stop in een overzichtelijke dataframe
+clustering_df <- data.frame(
+  scholar_number = V(test_ru_w2)$label,
+  clustering = clustering_local
+)
+
+# Bekijk eerste 10 waarden
+head(clustering_df, 101)
+
+
+```
+
+```{r}
+clustering_global <- igraph::transitivity(
+  test_ru_w2,
+  type = "global"
+)
+print(clustering_global)
+
+```
+
+
+```{r}
+# Bereken betweenness voor elke node
+betweenness_values <- igraph::betweenness(
+  test_ru_w2,
+  directed = FALSE
+)
+
+# Stop in een overzichtelijke dataframe met simpele scholar nummers
+betweenness_df <- data.frame(
+  scholar_number = 1:vcount(test_ru_w2),
+  betweenness = betweenness_values
+)
+
+# Sorteer van hoog naar laag
+betweenness_df <- betweenness_df[order(-betweenness_df$betweenness), ]
+print(betweenness_df)
+
+```
+
+```{r}
+igraph::dyad_census(test_ru_w2)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

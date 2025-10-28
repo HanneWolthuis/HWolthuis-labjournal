@@ -17,9 +17,27 @@ navbar:
       - text: "Week 2"
         href: lab2.html
       - text: "Week 3"
-        href: lab3.html       
+        href: lab3.html 
+      - text: "Week 4"
+        href: lab4.html 
+      - text: "Week 5"
+        href: lab5.2.html
+      - text: "Week 6"
+        href: lab6.html
+      - text: "Week 7"
+        href: Lab7.html
+      - text: "Week 7.2"
+        href: lab7.2.html
+      - text: "Week 8"
+        href: Lab8.html
     - text: "Final paper"
       menu:
+      - text: "Introduction"
+        href: project3.html
+      - text: "Theory and hypothesis "
+        href: project4.html        
+      - text: "Methods and analytical strategy"
+        href: project2.html
         # here, other .Rmds can be added
 
 

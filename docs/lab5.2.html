@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2025-10-27" />
+
+<title>lab5.2</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="lab2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="lab3.html">Week 3</a>
+    </li>
+    <li>
+      <a href="lab4.html">Week 4</a>
+    </li>
+    <li>
+      <a href="lab5.2.html">Week 5</a>
+    </li>
+    <li>
+      <a href="lab6.html">Week 6</a>
+    </li>
+    <li>
+      <a href="Lab7.html">Week 7</a>
+    </li>
+    <li>
+      <a href="lab7.2.html">Week 7.2</a>
+    </li>
+    <li>
+      <a href="Lab8.html">Week 8</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final paper
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project3.html">Introduction</a>
+    </li>
+    <li>
+      <a href="project4.html">Theory and hypothesis </a>
+    </li>
+    <li>
+      <a href="project2.html">Methods and analytical strategy</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/HanneWolthuis/HWolthuis-labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">lab5.2</h1>
+<h4 class="date">2025-10-27</h4>
+
+</div>
+
+
+<p>Last compiled on oktober, 2025</p>
+<p><br></p>
+<pre class="r test"><code>rm(list = ls())
+
+
+fpackage.check &lt;- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave &lt;- function(x, file = NULL, location = &quot;./data/processed/&quot;) {
+    ifelse(!dir.exists(&quot;data&quot;), dir.create(&quot;data&quot;), FALSE)
+    ifelse(!dir.exists(&quot;data/processed&quot;), dir.create(&quot;data/processed&quot;), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename &lt;- substr(gsub(&quot;[:-]&quot;, &quot;&quot;, Sys.time()), 1, 8)
+    totalname &lt;- paste(location, file, &quot;_&quot;, datename, &quot;.rda&quot;, sep = &quot;&quot;)
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload &lt;- function(filename) {
+    load(filename)
+    get(ls()[ls() != &quot;filename&quot;])
+}
+
+fshowdf &lt;- function(x, ...) {
+    knitr::kable(x, digits = 2, &quot;html&quot;, ...) %&gt;%
+        kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;)) %&gt;%
+        kableExtra::scroll_box(width = &quot;100%&quot;, height = &quot;300px&quot;)
+}
+
+packages &lt;- c(&quot;tidyverse&quot;, &quot;scholar&quot;, &quot;openalexR&quot;, &quot;rvest&quot;, &quot;jsonlite&quot;)
+fpackage.check(packages)</code></pre>
+<pre class="test2"><code>#&gt; [[1]]
+#&gt; NULL
+#&gt; 
+#&gt; [[2]]
+#&gt; NULL
+#&gt; 
+#&gt; [[3]]
+#&gt; NULL
+#&gt; 
+#&gt; [[4]]
+#&gt; NULL
+#&gt; 
+#&gt; [[5]]
+#&gt; NULL</code></pre>
+<pre class="r test"><code>library(igraph)</code></pre>
+<pre class="r test"><code>scholars &lt;- fload(&quot;C:/Users/hanne/Downloads/scholars_20240924.rda&quot;)</code></pre>
+<pre class="r test"><code>fcolnet &lt;- function(data = scholars, university = &quot;RU&quot;, discipline = &quot;sociology&quot;, waves = list(c(2015,
+    2018), c(2019, 2023)), type = c(&quot;first&quot;)) {
+
+    # step 1
+    demographics &lt;- do.call(rbind.data.frame, data$demographics)
+    demographics &lt;- demographics %&gt;%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), &quot;&quot;), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), &quot;&quot;), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            &quot;&quot;), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), &quot;&quot;), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), &quot;&quot;), discipline.24 = replace(discipline.24, is.na(discipline.24), &quot;&quot;))
+
+    sample &lt;- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) &amp; (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc &lt;- demographics[sample, ]
+    scholars_sel &lt;- lapply(scholars, &quot;[&quot;, sample)
+
+    # step 2
+    ids &lt;- demographics_soc$au_id
+    nwaves &lt;- length(waves)
+    nets &lt;- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works &lt;- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works &lt;- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == &quot;first&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego &lt;- df_works_w$works_author[i][[1]]$au_id[1]
+                alters &lt;- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;last&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;all&quot;) {
+        for (j in 1:nwaves) {
+            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos &lt;- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) &gt; 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] &lt;- 1
+                }
+            }
+        }
+    }
+    output &lt;- list()
+    output$data &lt;- scholars_sel
+    output$nets &lt;- nets
+    return(output)
+}</code></pre>
+<pre class="r test"><code>#save the output of your function
+test &lt;- fcolnet(data = scholars, 
+                university = &quot;RU&quot;, 
+                discipline = &quot;sociology&quot;, 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c(&quot;first&quot;))
+
+
+
+
+test_w1 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,], #for this example I take the first wave of data. (thus I select the array of networks and take the first matrix)
+  mode = c(&quot;directed&quot;),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL,
+  add.rownames = NULL
+)
+
+plot(test_w1,
+  vertex.label = NA,
+  edge.width = 0.2,
+  edge.arrow.size =0.2)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r test"><code>test2 &lt;- fcolnet(
+  data = scholars,
+  university = c(&quot;RU&quot;,&quot;UvT&quot;,&quot;UU&quot;,&quot;RUG&quot;,&quot;VU&quot;),   # or &quot;all&quot; you want
+  discipline = c(&quot;sociology&quot;, &quot;political science&quot;),
+  waves = list(c(2015,2018), c(2019,2023)),    # time periods
+  type = &quot;all&quot;                                 # first / last / all authorship
+)
+
+test2_w1 &lt;- igraph::graph_from_adjacency_matrix(
+  test2$nets[1, , ],   # first wave matrix
+  mode = &quot;undirected&quot;, # &quot;all&quot; → usually undirected ties
+  diag = FALSE
+)
+
+plot(
+  test2_w1,
+  vertex.label = NA,
+  edge.width = 0.2,
+  edge.arrow.size = 0.2
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r test"><code>test &lt;- fcolnet(data = scholars, 
+                university = c(&quot;RU&quot;, &quot;UvT&quot;), 
+                discipline = c(&quot;sociology&quot;, &quot;political science&quot;), 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c(&quot;all&quot;))
+
+test_w2 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,], #now, I take the second wave
+  mode = c(&quot;directed&quot;),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#Let us find ego characteristics. 
+#first fish out the data
+df &lt;- test$data
+
+#same complicated structure as &#39;scholars&#39; thus first make a dataframe from the list in which all info was saved. 
+df_ego &lt;- do.call(rbind.data.frame, df$demographics)
+
+#DO NOT MESS UP THE ORDER! THUS IF YOU JOIN THIS DATA WITH YOUR OWN DATA CHECK THAT ORDER REMAINED THE SAME!! 
+
+plot(test_w2,
+  vertex.color = ifelse(df_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 0.5,
+  edge.arrow.size =0.5)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r test"><code># Use second-wave university column for coloring
+
+test3 &lt;- fcolnet(
+  data = scholars, 
+  university = c(&quot;RU&quot;), 
+  discipline = c(&quot;sociology&quot;, &quot;political science&quot;), 
+  waves = list(c(2015, 2018), c(2019, 2023)), 
+  type = &quot;all&quot;
+)
+
+test3_w2 &lt;- igraph::graph_from_adjacency_matrix(
+  test3$nets[2,,],  # &lt;-- use test3, not test
+  mode = &quot;directed&quot;,
+  diag = FALSE
+)
+
+df3 &lt;- test3$data
+df3_ego &lt;- do.call(rbind.data.frame, df3$demographics)
+
+# Use a nicer layout (Fruchterman-Reingold)
+layout_fr &lt;- layout_with_fr(test3_w2)
+
+plot(
+  test3_w2,
+  layout = layout_fr,
+  vertex.color = ifelse(df3_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;),
+  vertex.size = 6,       # smaller nodes
+  vertex.label = NA,     # hide labels
+  edge.width = 0.3,      # thinner edges
+  edge.arrow.size = 0.2  # smaller arrows
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r test"><code># Maak het netwerk (all-to-all, alleen RU)
+test_ru &lt;- fcolnet(
+  data = scholars,
+  university = c(&quot;RU&quot;),       # alleen Radboud University
+  discipline = c(&quot;sociology&quot;, &quot;political science&quot;),
+  waves = list(c(2015,2018), c(2019,2023)),
+  type = &quot;all&quot;
+)
+
+# Pak bv. de 2e wave (2019–2023)
+test_ru_w2 &lt;- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[2,,],
+  mode = &quot;undirected&quot;,
+  diag = FALSE
+)
+
+# Ego-data
+df_ru &lt;- test_ru$data
+df_ru_ego &lt;- do.call(rbind.data.frame, df_ru$demographics)
+
+# Layout &amp; plot
+set.seed(123)   # voor herhaalbaarheid
+layout_fr &lt;- igraph::layout_with_fr(test_ru_w2)
+
+plot(
+  test_ru_w2,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = &quot;RU Co-authorship Network (2019–2023)&quot;
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r test"><code># Maak het netwerk (all-to-all, alleen RU)
+test_ru &lt;- fcolnet(
+  data = scholars,
+  university = c(&quot;RU&quot;),       # alleen Radboud University
+  discipline = c(&quot;sociology&quot;, &quot;political science&quot;),
+  waves = list(c(2015,2018), c(2019,2023)),
+  type = &quot;all&quot;
+)
+
+# Pak bv. de 2e wave (2019–2023)
+test_ru_w1 &lt;- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[1,,],
+  mode = &quot;undirected&quot;,
+  diag = FALSE
+)
+
+# Ego-data
+df_ru &lt;- test_ru$data
+df_ru_ego &lt;- do.call(rbind.data.frame, df_ru$demographics)
+
+# Layout &amp; plot
+set.seed(123)   # voor herhaalbaarheid
+layout_fr &lt;- igraph::layout_with_fr(test_ru_w2)
+
+plot(
+  test_ru_w1,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = &quot;RU Co-authorship Network (2015–2018)&quot;
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r test"><code># Maak netwerken (alleen RU, sociologie + politicologie)
+test_ru &lt;- fcolnet(
+  data = scholars,
+  university = c(&quot;RU&quot;),
+  discipline = c(&quot;sociology&quot;, &quot;political science&quot;),
+  waves = list(c(2015,2018), c(2019,2023)),
+  type = &quot;all&quot;
+)
+
+# Haal beide waves eruit
+test_ru_w1 &lt;- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[1,,],
+  mode = &quot;undirected&quot;,
+  diag = FALSE
+)
+
+test_ru_w2 &lt;- igraph::graph_from_adjacency_matrix(
+  test_ru$nets[2,,],
+  mode = &quot;undirected&quot;,
+  diag = FALSE
+)
+
+# Ego-data
+df_ru &lt;- test_ru$data
+df_ru_ego &lt;- do.call(rbind.data.frame, df_ru$demographics)
+
+# Zelfde layout voor beide netwerken
+set.seed(123)
+layout_fr &lt;- igraph::layout_with_fr(test_ru_w1)
+
+# Zet 2 plots naast elkaar
+par(mfrow = c(1,2), mar = c(1,1,3,1))  
+
+plot(
+  test_ru_w1,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = &quot;Wave 1: 2015–2018&quot;
+)
+
+plot(
+  test_ru_w2,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;),
+  vertex.label = NA,
+  edge.width = 0.3,
+  main = &quot;Wave 2: 2019–2023&quot;
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r test"><code># Voeg legenda toe (aparte stap!)
+par(mfrow = c(1,1))  
+plot.new()
+legend(
+  &quot;center&quot;,
+  legend = c(&quot;Sociology&quot;, &quot;Political Science&quot;),
+  col = c(&quot;red&quot;, &quot;blue&quot;),
+  pch = 19,
+  pt.cex = 1.5,
+  bty = &quot;n&quot;,
+  title = &quot;Discipline&quot;
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<pre class="r test"><code># some descriptives from the second wave
+# number of nodes
+vcount(test_ru_w2)</code></pre>
+<pre class="test2"><code>#&gt; [1] 101</code></pre>
+<pre class="r test"><code># number of edges
+ecount(test_ru_w2)</code></pre>
+<pre class="test2"><code>#&gt; [1] 118</code></pre>
+<pre class="r test"><code>igraph::degree(test_ru_w2)</code></pre>
+<pre class="test2"><code>#&gt; https://openalex.org/A5011326378 https://openalex.org/A5014129369 https://openalex.org/A5023395007 
+#&gt;                                0                                2                                1 
+#&gt; https://openalex.org/A5068642001 https://openalex.org/A5074062335 https://openalex.org/A5018242597 
+#&gt;                                1                                1                                8 
+#&gt; https://openalex.org/A5030977100 https://openalex.org/A5007673492 https://openalex.org/A5016107698 
+#&gt;                                3                                9                                5 
+#&gt; https://openalex.org/A5062608377 https://openalex.org/A5002388922 https://openalex.org/A5023494442 
+#&gt;                                5                                2                                3 
+#&gt; https://openalex.org/A5046746723 https://openalex.org/A5017382943 https://openalex.org/A5035350135 
+#&gt;                                3                                0                               15 
+#&gt; https://openalex.org/A5079372810 https://openalex.org/A5048988743 https://openalex.org/A5027461314 
+#&gt;                                4                                7                               14 
+#&gt; https://openalex.org/A5035502020 https://openalex.org/A5087380803 https://openalex.org/A5066699568 
+#&gt;                               15                                8                                6 
+#&gt; https://openalex.org/A5060015711 https://openalex.org/A5017017044 https://openalex.org/A5050987926 
+#&gt;                                7                                3                                2 
+#&gt; https://openalex.org/A5019030264 https://openalex.org/A5009655338 https://openalex.org/A5026217132 
+#&gt;                                0                                2                                2 
+#&gt; https://openalex.org/A5001803910 https://openalex.org/A5030092568 https://openalex.org/A5050683616 
+#&gt;                                4                                2                                1 
+#&gt; https://openalex.org/A5031371982 https://openalex.org/A5023362052 https://openalex.org/A5071959536 
+#&gt;                                2                                2                                2 
+#&gt; https://openalex.org/A5093927073 https://openalex.org/A5055096981 https://openalex.org/A5031002485 
+#&gt;                                0                                4                                3 
+#&gt; https://openalex.org/A5020765315 https://openalex.org/A5065130106 https://openalex.org/A5080235042 
+#&gt;                                4                                3                                3 
+#&gt; https://openalex.org/A5038009917 https://openalex.org/A5047687982 https://openalex.org/A5057934803 
+#&gt;                                1                                1                                1 
+#&gt; https://openalex.org/A5063338887 https://openalex.org/A5045572082 https://openalex.org/A5085493990 
+#&gt;                                2                                4                                3 
+#&gt; https://openalex.org/A5003892082 https://openalex.org/A5059896113 https://openalex.org/A5040189434 
+#&gt;                               15                                0                                2 
+#&gt; https://openalex.org/A5005730087 https://openalex.org/A5030570203 https://openalex.org/A5040048804 
+#&gt;                                1                                0                                1 
+#&gt; https://openalex.org/A5093934510 https://openalex.org/A5071355463 https://openalex.org/A5040273574 
+#&gt;                                0                                1                                1 
+#&gt; https://openalex.org/A5031128137 https://openalex.org/A5029519225 https://openalex.org/A5071625615 
+#&gt;                                7                                0                                0 
+#&gt; https://openalex.org/A5002941700 https://openalex.org/A5054557953 https://openalex.org/A5068588707 
+#&gt;                                0                                2                                0 
+#&gt; https://openalex.org/A5008858786 https://openalex.org/A5069636960 https://openalex.org/A5066180740 
+#&gt;                                0                                1                                0 
+#&gt; https://openalex.org/A5094354264 https://openalex.org/A5093339339 https://openalex.org/A5023979520 
+#&gt;                                0                                2                                0 
+#&gt; https://openalex.org/A5009683458 https://openalex.org/A5027839165 https://openalex.org/A5072177695 
+#&gt;                                0                                0                                4 
+#&gt; https://openalex.org/A5087731727 https://openalex.org/A5093234318 https://openalex.org/A5002117058 
+#&gt;                                4                                1                                2 
+#&gt; https://openalex.org/A5002400940 https://openalex.org/A5032861550 https://openalex.org/A5012711147 
+#&gt;                                0                                0                                0 
+#&gt; https://openalex.org/A5002931512 https://openalex.org/A5049078170 https://openalex.org/A5003168251 
+#&gt;                                0                                0                                0 
+#&gt; https://openalex.org/A5090100669 https://openalex.org/A5039152196 https://openalex.org/A5027800349 
+#&gt;                                1                                0                                0 
+#&gt; https://openalex.org/A5066542953 https://openalex.org/A5013043102 https://openalex.org/A5016505779 
+#&gt;                                2                                1                                0 
+#&gt; https://openalex.org/A5032988766 https://openalex.org/A5012806378 https://openalex.org/A5006555859 
+#&gt;                                2                                3                                1 
+#&gt; https://openalex.org/A5059113934 https://openalex.org/A5030606755 https://openalex.org/A5029073868 
+#&gt;                                3                                2                                0 
+#&gt; https://openalex.org/A5015717800 https://openalex.org/A5069836300 https://openalex.org/A5024053147 
+#&gt;                                0                                0                                6 
+#&gt; https://openalex.org/A5047911137 https://openalex.org/A5017637321 https://openalex.org/A5068000059 
+#&gt;                                0                                0                                1 
+#&gt; https://openalex.org/A5013258554 https://openalex.org/A5010364555 https://openalex.org/A5083920028 
+#&gt;                                0                                0                                0 
+#&gt; https://openalex.org/A5021060071 https://openalex.org/A5044669679 
+#&gt;                                0                                0</code></pre>
+<pre class="r test"><code># hist(table(degree(g)), xlab=&#39;indegree&#39;, main= &#39;Histogram of indegree&#39;)</code></pre>
+<pre class="r test"><code>colnames(df_ru_ego)</code></pre>
+<pre class="test2"><code>#&gt;  [1] &quot;Naam&quot;                 &quot;Universiteit.22&quot;      &quot;Email-adres.22&quot;       &quot;Functie.22&quot;          
+#&gt;  [5] &quot;Google Scholar id.22&quot; &quot;discipline.22&quot;        &quot;Specialisatie.22&quot;     &quot;year.22&quot;             
+#&gt;  [9] &quot;Universiteit1.22&quot;     &quot;Universiteit2.22&quot;     &quot;Universiteit.24&quot;      &quot;Email-adres.24&quot;      
+#&gt; [13] &quot;Functie.24&quot;           &quot;Google Scholar id.24&quot; &quot;discipline.24&quot;        &quot;Specialisatie.24&quot;    
+#&gt; [17] &quot;year.24&quot;              &quot;Universiteit1.24&quot;     &quot;Universiteit2.24&quot;     &quot;no_oa_id&quot;            
+#&gt; [21] &quot;au_id&quot;</code></pre>
+<pre class="r test"><code>head(df_ru_ego)</code></pre>
+<pre class="test2"><code>#&gt; # A tibble: 6 × 21
+#&gt;   Naam              Universiteit.22 `Email-adres.22` Functie.22 `Google Scholar id.22` discipline.22
+#&gt;   &lt;chr&gt;             &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;                  &lt;chr&gt;        
+#&gt; 1 Ana Macanovic     UU              a.macanovic@uu.… PhD Stude… s5D67kwAAAAJ           sociology    
+#&gt; 2 Ronald Batenburg  RU              ronald.batenbur… Hoogleraar UK7nVSEAAAAJ           sociology    
+#&gt; 3 Katia Begall      RU              katia.begall@ru… Universit… e7zfTqMAAAAJ           sociology    
+#&gt; 4 Hidde Bekhuis     RU              hidde.bekhuis@r… Associate… Q4saWX8AAAAJ           sociology    
+#&gt; 5 Lonneke van den … RU              lonneke.vandenb… Postdoc    vzBNQ1kAAAAJ           sociology    
+#&gt; 6 Lieselotte Blomm… RU              lieselotte.blom… Universit… RG54uasAAAAJ           sociology    
+#&gt; # ℹ 15 more variables: Specialisatie.22 &lt;chr&gt;, year.22 &lt;dbl&gt;, Universiteit1.22 &lt;chr&gt;,
+#&gt; #   Universiteit2.22 &lt;chr&gt;, Universiteit.24 &lt;chr&gt;, `Email-adres.24` &lt;chr&gt;, Functie.24 &lt;chr&gt;,
+#&gt; #   `Google Scholar id.24` &lt;chr&gt;, discipline.24 &lt;chr&gt;, Specialisatie.24 &lt;chr&gt;, year.24 &lt;dbl&gt;,
+#&gt; #   Universiteit1.24 &lt;chr&gt;, Universiteit2.24 &lt;chr&gt;, no_oa_id &lt;dbl&gt;, au_id &lt;chr&gt;</code></pre>
+<pre class="r test"><code>library(igraph)
+
+# --- 1. Layout &amp; netwerk ---
+set.seed(123)
+layout_fr &lt;- igraph::layout_with_fr(test_ru_w2)
+
+# --- 2. Geef elke scholar een eenvoudig nummer als label ---
+V(test_ru_w2)$label &lt;- 1:vcount(test_ru_w2)
+
+# --- 3. Bereken graad per scholar ---
+degree_df &lt;- data.frame(
+  scholar_number = V(test_ru_w2)$label,
+  degree = igraph::degree(test_ru_w2)
+)
+
+# Sorteer van hoogste naar laagste graad
+degree_df &lt;- degree_df[order(-degree_df$degree), ]
+print(degree_df)</code></pre>
+<pre class="test2"><code>#&gt;                                  scholar_number degree
+#&gt; https://openalex.org/A5035350135             15     15
+#&gt; https://openalex.org/A5035502020             19     15
+#&gt; https://openalex.org/A5003892082             46     15
+#&gt; https://openalex.org/A5027461314             18     14
+#&gt; https://openalex.org/A5007673492              8      9
+#&gt; https://openalex.org/A5018242597              6      8
+#&gt; https://openalex.org/A5087380803             20      8
+#&gt; https://openalex.org/A5048988743             17      7
+#&gt; https://openalex.org/A5060015711             22      7
+#&gt; https://openalex.org/A5031128137             55      7
+#&gt; https://openalex.org/A5066699568             21      6
+#&gt; https://openalex.org/A5024053147             93      6
+#&gt; https://openalex.org/A5016107698              9      5
+#&gt; https://openalex.org/A5062608377             10      5
+#&gt; https://openalex.org/A5079372810             16      4
+#&gt; https://openalex.org/A5001803910             28      4
+#&gt; https://openalex.org/A5055096981             35      4
+#&gt; https://openalex.org/A5020765315             37      4
+#&gt; https://openalex.org/A5045572082             44      4
+#&gt; https://openalex.org/A5072177695             69      4
+#&gt; https://openalex.org/A5087731727             70      4
+#&gt; https://openalex.org/A5030977100              7      3
+#&gt; https://openalex.org/A5023494442             12      3
+#&gt; https://openalex.org/A5046746723             13      3
+#&gt; https://openalex.org/A5017017044             23      3
+#&gt; https://openalex.org/A5031002485             36      3
+#&gt; https://openalex.org/A5065130106             38      3
+#&gt; https://openalex.org/A5080235042             39      3
+#&gt; https://openalex.org/A5085493990             45      3
+#&gt; https://openalex.org/A5012806378             86      3
+#&gt; https://openalex.org/A5059113934             88      3
+#&gt; https://openalex.org/A5014129369              2      2
+#&gt; https://openalex.org/A5002388922             11      2
+#&gt; https://openalex.org/A5050987926             24      2
+#&gt; https://openalex.org/A5009655338             26      2
+#&gt; https://openalex.org/A5026217132             27      2
+#&gt; https://openalex.org/A5030092568             29      2
+#&gt; https://openalex.org/A5031371982             31      2
+#&gt; https://openalex.org/A5023362052             32      2
+#&gt; https://openalex.org/A5071959536             33      2
+#&gt; https://openalex.org/A5063338887             43      2
+#&gt; https://openalex.org/A5040189434             48      2
+#&gt; https://openalex.org/A5054557953             59      2
+#&gt; https://openalex.org/A5093339339             65      2
+#&gt; https://openalex.org/A5002117058             72      2
+#&gt; https://openalex.org/A5066542953             82      2
+#&gt; https://openalex.org/A5032988766             85      2
+#&gt; https://openalex.org/A5030606755             89      2
+#&gt; https://openalex.org/A5023395007              3      1
+#&gt; https://openalex.org/A5068642001              4      1
+#&gt; https://openalex.org/A5074062335              5      1
+#&gt; https://openalex.org/A5050683616             30      1
+#&gt; https://openalex.org/A5038009917             40      1
+#&gt; https://openalex.org/A5047687982             41      1
+#&gt; https://openalex.org/A5057934803             42      1
+#&gt; https://openalex.org/A5005730087             49      1
+#&gt; https://openalex.org/A5040048804             51      1
+#&gt; https://openalex.org/A5071355463             53      1
+#&gt; https://openalex.org/A5040273574             54      1
+#&gt; https://openalex.org/A5069636960             62      1
+#&gt; https://openalex.org/A5093234318             71      1
+#&gt; https://openalex.org/A5090100669             79      1
+#&gt; https://openalex.org/A5013043102             83      1
+#&gt; https://openalex.org/A5006555859             87      1
+#&gt; https://openalex.org/A5068000059             96      1
+#&gt; https://openalex.org/A5011326378              1      0
+#&gt; https://openalex.org/A5017382943             14      0
+#&gt; https://openalex.org/A5019030264             25      0
+#&gt; https://openalex.org/A5093927073             34      0
+#&gt; https://openalex.org/A5059896113             47      0
+#&gt; https://openalex.org/A5030570203             50      0
+#&gt; https://openalex.org/A5093934510             52      0
+#&gt; https://openalex.org/A5029519225             56      0
+#&gt; https://openalex.org/A5071625615             57      0
+#&gt; https://openalex.org/A5002941700             58      0
+#&gt; https://openalex.org/A5068588707             60      0
+#&gt; https://openalex.org/A5008858786             61      0
+#&gt; https://openalex.org/A5066180740             63      0
+#&gt; https://openalex.org/A5094354264             64      0
+#&gt; https://openalex.org/A5023979520             66      0
+#&gt; https://openalex.org/A5009683458             67      0
+#&gt; https://openalex.org/A5027839165             68      0
+#&gt; https://openalex.org/A5002400940             73      0
+#&gt; https://openalex.org/A5032861550             74      0
+#&gt; https://openalex.org/A5012711147             75      0
+#&gt; https://openalex.org/A5002931512             76      0
+#&gt; https://openalex.org/A5049078170             77      0
+#&gt; https://openalex.org/A5003168251             78      0
+#&gt; https://openalex.org/A5039152196             80      0
+#&gt; https://openalex.org/A5027800349             81      0
+#&gt; https://openalex.org/A5016505779             84      0
+#&gt; https://openalex.org/A5029073868             90      0
+#&gt; https://openalex.org/A5015717800             91      0
+#&gt; https://openalex.org/A5069836300             92      0
+#&gt; https://openalex.org/A5047911137             94      0
+#&gt; https://openalex.org/A5017637321             95      0
+#&gt; https://openalex.org/A5013258554             97      0
+#&gt; https://openalex.org/A5010364555             98      0
+#&gt; https://openalex.org/A5083920028             99      0
+#&gt; https://openalex.org/A5021060071            100      0
+#&gt; https://openalex.org/A5044669679            101      0</code></pre>
+<pre class="r test"><code># --- 4. Plot netwerk ---
+plot(
+  test_ru_w2,
+  layout = layout_fr,
+  vertex.size = 6,
+  vertex.color = ifelse(df_ru_ego$discipline.24 == &quot;sociology&quot;, &quot;red&quot;, &quot;blue&quot;),
+  vertex.label = V(test_ru_w2)$label,
+  vertex.label.cex = 0.7,
+  edge.width = 0.3,
+  main = &quot;RU Co-authorship Network (2019–2023)&quot;
+)</code></pre>
+<p><img src="lab5.2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r test"><code># 1. Zet labels op simpele nummers (als nog niet gedaan)
+V(test_ru_w2)$label &lt;- 1:vcount(test_ru_w2)
+
+# 2. Bereken de graad
+degree_df &lt;- data.frame(
+  scholar_number = V(test_ru_w2)$label,
+  degree = igraph::degree(test_ru_w2)
+)
+
+# 3. Bekijk resultaat
+degree_df &lt;- degree_df[order(-degree_df$degree), ]
+print(degree_df)</code></pre>
+<pre class="test2"><code>#&gt;                                  scholar_number degree
+#&gt; https://openalex.org/A5035350135             15     15
+#&gt; https://openalex.org/A5035502020             19     15
+#&gt; https://openalex.org/A5003892082             46     15
+#&gt; https://openalex.org/A5027461314             18     14
+#&gt; https://openalex.org/A5007673492              8      9
+#&gt; https://openalex.org/A5018242597              6      8
+#&gt; https://openalex.org/A5087380803             20      8
+#&gt; https://openalex.org/A5048988743             17      7
+#&gt; https://openalex.org/A5060015711             22      7
+#&gt; https://openalex.org/A5031128137             55      7
+#&gt; https://openalex.org/A5066699568             21      6
+#&gt; https://openalex.org/A5024053147             93      6
+#&gt; https://openalex.org/A5016107698              9      5
+#&gt; https://openalex.org/A5062608377             10      5
+#&gt; https://openalex.org/A5079372810             16      4
+#&gt; https://openalex.org/A5001803910             28      4
+#&gt; https://openalex.org/A5055096981             35      4
+#&gt; https://openalex.org/A5020765315             37      4
+#&gt; https://openalex.org/A5045572082             44      4
+#&gt; https://openalex.org/A5072177695             69      4
+#&gt; https://openalex.org/A5087731727             70      4
+#&gt; https://openalex.org/A5030977100              7      3
+#&gt; https://openalex.org/A5023494442             12      3
+#&gt; https://openalex.org/A5046746723             13      3
+#&gt; https://openalex.org/A5017017044             23      3
+#&gt; https://openalex.org/A5031002485             36      3
+#&gt; https://openalex.org/A5065130106             38      3
+#&gt; https://openalex.org/A5080235042             39      3
+#&gt; https://openalex.org/A5085493990             45      3
+#&gt; https://openalex.org/A5012806378             86      3
+#&gt; https://openalex.org/A5059113934             88      3
+#&gt; https://openalex.org/A5014129369              2      2
+#&gt; https://openalex.org/A5002388922             11      2
+#&gt; https://openalex.org/A5050987926             24      2
+#&gt; https://openalex.org/A5009655338             26      2
+#&gt; https://openalex.org/A5026217132             27      2
+#&gt; https://openalex.org/A5030092568             29      2
+#&gt; https://openalex.org/A5031371982             31      2
+#&gt; https://openalex.org/A5023362052             32      2
+#&gt; https://openalex.org/A5071959536             33      2
+#&gt; https://openalex.org/A5063338887             43      2
+#&gt; https://openalex.org/A5040189434             48      2
+#&gt; https://openalex.org/A5054557953             59      2
+#&gt; https://openalex.org/A5093339339             65      2
+#&gt; https://openalex.org/A5002117058             72      2
+#&gt; https://openalex.org/A5066542953             82      2
+#&gt; https://openalex.org/A5032988766             85      2
+#&gt; https://openalex.org/A5030606755             89      2
+#&gt; https://openalex.org/A5023395007              3      1
+#&gt; https://openalex.org/A5068642001              4      1
+#&gt; https://openalex.org/A5074062335              5      1
+#&gt; https://openalex.org/A5050683616             30      1
+#&gt; https://openalex.org/A5038009917             40      1
+#&gt; https://openalex.org/A5047687982             41      1
+#&gt; https://openalex.org/A5057934803             42      1
+#&gt; https://openalex.org/A5005730087             49      1
+#&gt; https://openalex.org/A5040048804             51      1
+#&gt; https://openalex.org/A5071355463             53      1
+#&gt; https://openalex.org/A5040273574             54      1
+#&gt; https://openalex.org/A5069636960             62      1
+#&gt; https://openalex.org/A5093234318             71      1
+#&gt; https://openalex.org/A5090100669             79      1
+#&gt; https://openalex.org/A5013043102             83      1
+#&gt; https://openalex.org/A5006555859             87      1
+#&gt; https://openalex.org/A5068000059             96      1
+#&gt; https://openalex.org/A5011326378              1      0
+#&gt; https://openalex.org/A5017382943             14      0
+#&gt; https://openalex.org/A5019030264             25      0
+#&gt; https://openalex.org/A5093927073             34      0
+#&gt; https://openalex.org/A5059896113             47      0
+#&gt; https://openalex.org/A5030570203             50      0
+#&gt; https://openalex.org/A5093934510             52      0
+#&gt; https://openalex.org/A5029519225             56      0
+#&gt; https://openalex.org/A5071625615             57      0
+#&gt; https://openalex.org/A5002941700             58      0
+#&gt; https://openalex.org/A5068588707             60      0
+#&gt; https://openalex.org/A5008858786             61      0
+#&gt; https://openalex.org/A5066180740             63      0
+#&gt; https://openalex.org/A5094354264             64      0
+#&gt; https://openalex.org/A5023979520             66      0
+#&gt; https://openalex.org/A5009683458             67      0
+#&gt; https://openalex.org/A5027839165             68      0
+#&gt; https://openalex.org/A5002400940             73      0
+#&gt; https://openalex.org/A5032861550             74      0
+#&gt; https://openalex.org/A5012711147             75      0
+#&gt; https://openalex.org/A5002931512             76      0
+#&gt; https://openalex.org/A5049078170             77      0
+#&gt; https://openalex.org/A5003168251             78      0
+#&gt; https://openalex.org/A5039152196             80      0
+#&gt; https://openalex.org/A5027800349             81      0
+#&gt; https://openalex.org/A5016505779             84      0
+#&gt; https://openalex.org/A5029073868             90      0
+#&gt; https://openalex.org/A5015717800             91      0
+#&gt; https://openalex.org/A5069836300             92      0
+#&gt; https://openalex.org/A5047911137             94      0
+#&gt; https://openalex.org/A5017637321             95      0
+#&gt; https://openalex.org/A5013258554             97      0
+#&gt; https://openalex.org/A5010364555             98      0
+#&gt; https://openalex.org/A5083920028             99      0
+#&gt; https://openalex.org/A5021060071            100      0
+#&gt; https://openalex.org/A5044669679            101      0</code></pre>
+<pre class="r test"><code># 1. Geef nodes eenvoudige nummers als label
+V(test_ru_w2)$label &lt;- 1:vcount(test_ru_w2)
+
+# 2. Bereken lokale clustering
+clustering_local &lt;- igraph::transitivity(
+  test_ru_w2,
+  type = &quot;localundirected&quot;,
+  isolates = &quot;zero&quot;
+)
+
+# 3. Stop in een overzichtelijke dataframe
+clustering_df &lt;- data.frame(
+  scholar_number = V(test_ru_w2)$label,
+  clustering = clustering_local
+)
+
+# Bekijk eerste 10 waarden
+head(clustering_df, 101)</code></pre>
+<pre class="test2"><code>#&gt;                                  scholar_number clustering
+#&gt; https://openalex.org/A5011326378              1  0.0000000
+#&gt; https://openalex.org/A5014129369              2  0.0000000
+#&gt; https://openalex.org/A5023395007              3  0.0000000
+#&gt; https://openalex.org/A5068642001              4  0.0000000
+#&gt; https://openalex.org/A5074062335              5  0.0000000
+#&gt; https://openalex.org/A5018242597              6  0.4642857
+#&gt; https://openalex.org/A5030977100              7  0.6666667
+#&gt; https://openalex.org/A5007673492              8  0.2500000
+#&gt; https://openalex.org/A5016107698              9  0.7000000
+#&gt; https://openalex.org/A5062608377             10  0.7000000
+#&gt; https://openalex.org/A5002388922             11  1.0000000
+#&gt; https://openalex.org/A5023494442             12  1.0000000
+#&gt; https://openalex.org/A5046746723             13  1.0000000
+#&gt; https://openalex.org/A5017382943             14  0.0000000
+#&gt; https://openalex.org/A5035350135             15  0.1428571
+#&gt; https://openalex.org/A5079372810             16  0.5000000
+#&gt; https://openalex.org/A5048988743             17  0.4761905
+#&gt; https://openalex.org/A5027461314             18  0.2637363
+#&gt; https://openalex.org/A5035502020             19  0.1904762
+#&gt; https://openalex.org/A5087380803             20  0.2500000
+#&gt; https://openalex.org/A5066699568             21  0.2666667
+#&gt; https://openalex.org/A5060015711             22  0.3809524
+#&gt; https://openalex.org/A5017017044             23  0.3333333
+#&gt; https://openalex.org/A5050987926             24  1.0000000
+#&gt; https://openalex.org/A5019030264             25  0.0000000
+#&gt; https://openalex.org/A5009655338             26  1.0000000
+#&gt; https://openalex.org/A5026217132             27  1.0000000
+#&gt; https://openalex.org/A5001803910             28  0.6666667
+#&gt; https://openalex.org/A5030092568             29  1.0000000
+#&gt; https://openalex.org/A5050683616             30  0.0000000
+#&gt; https://openalex.org/A5031371982             31  1.0000000
+#&gt; https://openalex.org/A5023362052             32  1.0000000
+#&gt; https://openalex.org/A5071959536             33  1.0000000
+#&gt; https://openalex.org/A5093927073             34  0.0000000
+#&gt; https://openalex.org/A5055096981             35  1.0000000
+#&gt; https://openalex.org/A5031002485             36  0.3333333
+#&gt; https://openalex.org/A5020765315             37  0.8333333
+#&gt; https://openalex.org/A5065130106             38  1.0000000
+#&gt; https://openalex.org/A5080235042             39  1.0000000
+#&gt; https://openalex.org/A5038009917             40  0.0000000
+#&gt; https://openalex.org/A5047687982             41  0.0000000
+#&gt; https://openalex.org/A5057934803             42  0.0000000
+#&gt; https://openalex.org/A5063338887             43  1.0000000
+#&gt; https://openalex.org/A5045572082             44  0.5000000
+#&gt; https://openalex.org/A5085493990             45  1.0000000
+#&gt; https://openalex.org/A5003892082             46  0.2285714
+#&gt; https://openalex.org/A5059896113             47  0.0000000
+#&gt; https://openalex.org/A5040189434             48  1.0000000
+#&gt; https://openalex.org/A5005730087             49  0.0000000
+#&gt; https://openalex.org/A5030570203             50  0.0000000
+#&gt; https://openalex.org/A5040048804             51  0.0000000
+#&gt; https://openalex.org/A5093934510             52  0.0000000
+#&gt; https://openalex.org/A5071355463             53  0.0000000
+#&gt; https://openalex.org/A5040273574             54  0.0000000
+#&gt; https://openalex.org/A5031128137             55  0.2380952
+#&gt; https://openalex.org/A5029519225             56  0.0000000
+#&gt; https://openalex.org/A5071625615             57  0.0000000
+#&gt; https://openalex.org/A5002941700             58  0.0000000
+#&gt; https://openalex.org/A5054557953             59  1.0000000
+#&gt; https://openalex.org/A5068588707             60  0.0000000
+#&gt; https://openalex.org/A5008858786             61  0.0000000
+#&gt; https://openalex.org/A5069636960             62  0.0000000
+#&gt; https://openalex.org/A5066180740             63  0.0000000
+#&gt; https://openalex.org/A5094354264             64  0.0000000
+#&gt; https://openalex.org/A5093339339             65  1.0000000
+#&gt; https://openalex.org/A5023979520             66  0.0000000
+#&gt; https://openalex.org/A5009683458             67  0.0000000
+#&gt; https://openalex.org/A5027839165             68  0.0000000
+#&gt; https://openalex.org/A5072177695             69  0.3333333
+#&gt; https://openalex.org/A5087731727             70  0.3333333
+#&gt; https://openalex.org/A5093234318             71  0.0000000
+#&gt; https://openalex.org/A5002117058             72  1.0000000
+#&gt; https://openalex.org/A5002400940             73  0.0000000
+#&gt; https://openalex.org/A5032861550             74  0.0000000
+#&gt; https://openalex.org/A5012711147             75  0.0000000
+#&gt; https://openalex.org/A5002931512             76  0.0000000
+#&gt; https://openalex.org/A5049078170             77  0.0000000
+#&gt; https://openalex.org/A5003168251             78  0.0000000
+#&gt; https://openalex.org/A5090100669             79  0.0000000
+#&gt; https://openalex.org/A5039152196             80  0.0000000
+#&gt; https://openalex.org/A5027800349             81  0.0000000
+#&gt; https://openalex.org/A5066542953             82  1.0000000
+#&gt; https://openalex.org/A5013043102             83  0.0000000
+#&gt; https://openalex.org/A5016505779             84  0.0000000
+#&gt; https://openalex.org/A5032988766             85  1.0000000
+#&gt; https://openalex.org/A5012806378             86  0.3333333
+#&gt; https://openalex.org/A5006555859             87  0.0000000
+#&gt; https://openalex.org/A5059113934             88  0.6666667
+#&gt; https://openalex.org/A5030606755             89  0.0000000
+#&gt; https://openalex.org/A5029073868             90  0.0000000
+#&gt; https://openalex.org/A5015717800             91  0.0000000
+#&gt; https://openalex.org/A5069836300             92  0.0000000
+#&gt; https://openalex.org/A5024053147             93  0.2666667
+#&gt; https://openalex.org/A5047911137             94  0.0000000
+#&gt; https://openalex.org/A5017637321             95  0.0000000
+#&gt; https://openalex.org/A5068000059             96  0.0000000
+#&gt; https://openalex.org/A5013258554             97  0.0000000
+#&gt; https://openalex.org/A5010364555             98  0.0000000
+#&gt; https://openalex.org/A5083920028             99  0.0000000
+#&gt; https://openalex.org/A5021060071            100  0.0000000
+#&gt; https://openalex.org/A5044669679            101  0.0000000</code></pre>
+<pre class="r test"><code>clustering_global &lt;- igraph::transitivity(
+  test_ru_w2,
+  type = &quot;global&quot;
+)
+print(clustering_global)</code></pre>
+<pre class="test2"><code>#&gt; [1] 0.3128571</code></pre>
+<pre class="r test"><code># Bereken betweenness voor elke node
+betweenness_values &lt;- igraph::betweenness(
+  test_ru_w2,
+  directed = FALSE
+)
+
+# Stop in een overzichtelijke dataframe met simpele scholar nummers
+betweenness_df &lt;- data.frame(
+  scholar_number = 1:vcount(test_ru_w2),
+  betweenness = betweenness_values
+)
+
+# Sorteer van hoog naar laag
+betweenness_df &lt;- betweenness_df[order(-betweenness_df$betweenness), ]
+print(betweenness_df)</code></pre>
+<pre class="test2"><code>#&gt;                                  scholar_number betweenness
+#&gt; https://openalex.org/A5035350135             15 335.1720418
+#&gt; https://openalex.org/A5035502020             19 333.2152958
+#&gt; https://openalex.org/A5003892082             46 314.1728355
+#&gt; https://openalex.org/A5024053147             93 171.1588745
+#&gt; https://openalex.org/A5007673492              8 155.9334055
+#&gt; https://openalex.org/A5031128137             55 152.1098485
+#&gt; https://openalex.org/A5027461314             18 137.2099206
+#&gt; https://openalex.org/A5087380803             20 120.4314214
+#&gt; https://openalex.org/A5066699568             21  97.5333333
+#&gt; https://openalex.org/A5072177695             69  51.8234848
+#&gt; https://openalex.org/A5018242597              6  50.5626984
+#&gt; https://openalex.org/A5060015711             22  49.0918470
+#&gt; https://openalex.org/A5017017044             23  47.0000000
+#&gt; https://openalex.org/A5031002485             36  36.5778139
+#&gt; https://openalex.org/A5048988743             17  25.5666667
+#&gt; https://openalex.org/A5001803910             28  16.1194805
+#&gt; https://openalex.org/A5079372810             16  15.5599206
+#&gt; https://openalex.org/A5062608377             10  14.5333333
+#&gt; https://openalex.org/A5020765315             37  11.9785714
+#&gt; https://openalex.org/A5016107698              9   7.8047619
+#&gt; https://openalex.org/A5087731727             70   5.0000000
+#&gt; https://openalex.org/A5012806378             86   4.0000000
+#&gt; https://openalex.org/A5045572082             44   1.5000000
+#&gt; https://openalex.org/A5014129369              2   1.0000000
+#&gt; https://openalex.org/A5059113934             88   1.0000000
+#&gt; https://openalex.org/A5030606755             89   1.0000000
+#&gt; https://openalex.org/A5030977100              7   0.9444444
+#&gt; https://openalex.org/A5011326378              1   0.0000000
+#&gt; https://openalex.org/A5023395007              3   0.0000000
+#&gt; https://openalex.org/A5068642001              4   0.0000000
+#&gt; https://openalex.org/A5074062335              5   0.0000000
+#&gt; https://openalex.org/A5002388922             11   0.0000000
+#&gt; https://openalex.org/A5023494442             12   0.0000000
+#&gt; https://openalex.org/A5046746723             13   0.0000000
+#&gt; https://openalex.org/A5017382943             14   0.0000000
+#&gt; https://openalex.org/A5050987926             24   0.0000000
+#&gt; https://openalex.org/A5019030264             25   0.0000000
+#&gt; https://openalex.org/A5009655338             26   0.0000000
+#&gt; https://openalex.org/A5026217132             27   0.0000000
+#&gt; https://openalex.org/A5030092568             29   0.0000000
+#&gt; https://openalex.org/A5050683616             30   0.0000000
+#&gt; https://openalex.org/A5031371982             31   0.0000000
+#&gt; https://openalex.org/A5023362052             32   0.0000000
+#&gt; https://openalex.org/A5071959536             33   0.0000000
+#&gt; https://openalex.org/A5093927073             34   0.0000000
+#&gt; https://openalex.org/A5055096981             35   0.0000000
+#&gt; https://openalex.org/A5065130106             38   0.0000000
+#&gt; https://openalex.org/A5080235042             39   0.0000000
+#&gt; https://openalex.org/A5038009917             40   0.0000000
+#&gt; https://openalex.org/A5047687982             41   0.0000000
+#&gt; https://openalex.org/A5057934803             42   0.0000000
+#&gt; https://openalex.org/A5063338887             43   0.0000000
+#&gt; https://openalex.org/A5085493990             45   0.0000000
+#&gt; https://openalex.org/A5059896113             47   0.0000000
+#&gt; https://openalex.org/A5040189434             48   0.0000000
+#&gt; https://openalex.org/A5005730087             49   0.0000000
+#&gt; https://openalex.org/A5030570203             50   0.0000000
+#&gt; https://openalex.org/A5040048804             51   0.0000000
+#&gt; https://openalex.org/A5093934510             52   0.0000000
+#&gt; https://openalex.org/A5071355463             53   0.0000000
+#&gt; https://openalex.org/A5040273574             54   0.0000000
+#&gt; https://openalex.org/A5029519225             56   0.0000000
+#&gt; https://openalex.org/A5071625615             57   0.0000000
+#&gt; https://openalex.org/A5002941700             58   0.0000000
+#&gt; https://openalex.org/A5054557953             59   0.0000000
+#&gt; https://openalex.org/A5068588707             60   0.0000000
+#&gt; https://openalex.org/A5008858786             61   0.0000000
+#&gt; https://openalex.org/A5069636960             62   0.0000000
+#&gt; https://openalex.org/A5066180740             63   0.0000000
+#&gt; https://openalex.org/A5094354264             64   0.0000000
+#&gt; https://openalex.org/A5093339339             65   0.0000000
+#&gt; https://openalex.org/A5023979520             66   0.0000000
+#&gt; https://openalex.org/A5009683458             67   0.0000000
+#&gt; https://openalex.org/A5027839165             68   0.0000000
+#&gt; https://openalex.org/A5093234318             71   0.0000000
+#&gt; https://openalex.org/A5002117058             72   0.0000000
+#&gt; https://openalex.org/A5002400940             73   0.0000000
+#&gt; https://openalex.org/A5032861550             74   0.0000000
+#&gt; https://openalex.org/A5012711147             75   0.0000000
+#&gt; https://openalex.org/A5002931512             76   0.0000000
+#&gt; https://openalex.org/A5049078170             77   0.0000000
+#&gt; https://openalex.org/A5003168251             78   0.0000000
+#&gt; https://openalex.org/A5090100669             79   0.0000000
+#&gt; https://openalex.org/A5039152196             80   0.0000000
+#&gt; https://openalex.org/A5027800349             81   0.0000000
+#&gt; https://openalex.org/A5066542953             82   0.0000000
+#&gt; https://openalex.org/A5013043102             83   0.0000000
+#&gt; https://openalex.org/A5016505779             84   0.0000000
+#&gt; https://openalex.org/A5032988766             85   0.0000000
+#&gt; https://openalex.org/A5006555859             87   0.0000000
+#&gt; https://openalex.org/A5029073868             90   0.0000000
+#&gt; https://openalex.org/A5015717800             91   0.0000000
+#&gt; https://openalex.org/A5069836300             92   0.0000000
+#&gt; https://openalex.org/A5047911137             94   0.0000000
+#&gt; https://openalex.org/A5017637321             95   0.0000000
+#&gt; https://openalex.org/A5068000059             96   0.0000000
+#&gt; https://openalex.org/A5013258554             97   0.0000000
+#&gt; https://openalex.org/A5010364555             98   0.0000000
+#&gt; https://openalex.org/A5083920028             99   0.0000000
+#&gt; https://openalex.org/A5021060071            100   0.0000000
+#&gt; https://openalex.org/A5044669679            101   0.0000000</code></pre>
+<pre class="r test"><code>igraph::dyad_census(test_ru_w2)</code></pre>
+<pre class="test2"><code>#&gt; $mut
+#&gt; [1] 118
+#&gt; 
+#&gt; $asym
+#&gt; [1] 0
+#&gt; 
+#&gt; $null
+#&gt; [1] 4932</code></pre>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogImxhYjUuMiINCm91dHB1dDogaHRtbF9kb2N1bWVudA0KZGF0ZTogIjIwMjUtMTAtMjciDQotLS0NCg0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGV2YWwgPSBGQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiNrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrcmVkJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgDQoNCjxicj4NCg0KYGBge3J9DQpybShsaXN0ID0gbHMoKSkNCg0KDQpmcGFja2FnZS5jaGVjayA8LSBmdW5jdGlvbihwYWNrYWdlcykgew0KICAgIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgICAgICBpZiAoIXJlcXVpcmUoeCwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKSkgew0KICAgICAgICAgICAgaW5zdGFsbC5wYWNrYWdlcyh4LCBkZXBlbmRlbmNpZXMgPSBUUlVFKQ0KICAgICAgICAgICAgbGlicmFyeSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpDQogICAgICAgIH0NCiAgICB9KQ0KfQ0KDQpmc2F2ZSA8LSBmdW5jdGlvbih4LCBmaWxlID0gTlVMTCwgbG9jYXRpb24gPSAiLi9kYXRhL3Byb2Nlc3NlZC8iKSB7DQogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhL3Byb2Nlc3NlZCIpLCBkaXIuY3JlYXRlKCJkYXRhL3Byb2Nlc3NlZCIpLCBGQUxTRSkNCiAgICBpZiAoaXMubnVsbChmaWxlKSkNCiAgICAgICAgZmlsZSA9IGRlcGFyc2Uoc3Vic3RpdHV0ZSh4KSkNCiAgICBkYXRlbmFtZSA8LSBzdWJzdHIoZ3N1YigiWzotXSIsICIiLCBTeXMudGltZSgpKSwgMSwgOCkNCiAgICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGZpbGUsICJfIiwgZGF0ZW5hbWUsICIucmRhIiwgc2VwID0gIiIpDQogICAgc2F2ZSh4LCBmaWxlID0gdG90YWxuYW1lKSAgI25lZWQgdG8gZml4IGlmIGZpbGUgaXMgcmVsb2FkZWQgYXMgaW5wdXQgbmFtZSwgbm90IGFzIHguIA0KfQ0KDQpmbG9hZCA8LSBmdW5jdGlvbihmaWxlbmFtZSkgew0KICAgIGxvYWQoZmlsZW5hbWUpDQogICAgZ2V0KGxzKClbbHMoKSAhPSAiZmlsZW5hbWUiXSkNCn0NCg0KZnNob3dkZiA8LSBmdW5jdGlvbih4LCAuLi4pIHsNCiAgICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pICU+JQ0KICAgICAgICBrYWJsZUV4dHJhOjprYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIpKSAlPiUNCiAgICAgICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KcGFja2FnZXMgPC0gYygidGlkeXZlcnNlIiwgInNjaG9sYXIiLCAib3BlbmFsZXhSIiwgInJ2ZXN0IiwgImpzb25saXRlIikNCmZwYWNrYWdlLmNoZWNrKHBhY2thZ2VzKQ0KDQpsaWJyYXJ5KGlncmFwaCkNCg0KYGBgDQoNCmBgYHtyfQ0Kc2Nob2xhcnMgPC0gZmxvYWQoIkM6L1VzZXJzL2hhbm5lL0Rvd25sb2Fkcy9zY2hvbGFyc18yMDI0MDkyNC5yZGEiKQ0KYGBgDQoNCmBgYHtyfQ0KZmNvbG5ldCA8LSBmdW5jdGlvbihkYXRhID0gc2Nob2xhcnMsIHVuaXZlcnNpdHkgPSAiUlUiLCBkaXNjaXBsaW5lID0gInNvY2lvbG9neSIsIHdhdmVzID0gbGlzdChjKDIwMTUsDQogICAgMjAxOCksIGMoMjAxOSwgMjAyMykpLCB0eXBlID0gYygiZmlyc3QiKSkgew0KDQogICAgIyBzdGVwIDENCiAgICBkZW1vZ3JhcGhpY3MgPC0gZG8uY2FsbChyYmluZC5kYXRhLmZyYW1lLCBkYXRhJGRlbW9ncmFwaGljcykNCiAgICBkZW1vZ3JhcGhpY3MgPC0gZGVtb2dyYXBoaWNzICU+JQ0KICAgICAgICBtdXRhdGUoVW5pdmVyc2l0ZWl0MS4yMiA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0MS4yMiwgaXMubmEoVW5pdmVyc2l0ZWl0MS4yMiksICIiKSwgVW5pdmVyc2l0ZWl0Mi4yMiA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0Mi4yMiwNCiAgICAgICAgICAgIGlzLm5hKFVuaXZlcnNpdGVpdDIuMjIpLCAiIiksIFVuaXZlcnNpdGVpdDEuMjQgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDEuMjQsIGlzLm5hKFVuaXZlcnNpdGVpdDEuMjQpLA0KICAgICAgICAgICAgIiIpLCBVbml2ZXJzaXRlaXQyLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQyLjI0KSwgIiIpLCBkaXNjaXBsaW5lLjIyID0gcmVwbGFjZShkaXNjaXBsaW5lLjIyLA0KICAgICAgICAgICAgaXMubmEoZGlzY2lwbGluZS4yMiksICIiKSwgZGlzY2lwbGluZS4yNCA9IHJlcGxhY2UoZGlzY2lwbGluZS4yNCwgaXMubmEoZGlzY2lwbGluZS4yNCksICIiKSkNCg0KICAgIHNhbXBsZSA8LSB3aGljaCgoZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDEuMjIgJWluJSB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDIuMjIgJWluJQ0KICAgICAgICB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDEuMjQgJWluJSB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDIuMjQgJWluJQ0KICAgICAgICB1bml2ZXJzaXR5KSAmIChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yMiAlaW4lIGRpc2NpcGxpbmUgfCBkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNCAlaW4lIGRpc2NpcGxpbmUpKQ0KDQogICAgZGVtb2dyYXBoaWNzX3NvYyA8LSBkZW1vZ3JhcGhpY3Nbc2FtcGxlLCBdDQogICAgc2Nob2xhcnNfc2VsIDwtIGxhcHBseShzY2hvbGFycywgIlsiLCBzYW1wbGUpDQoNCiAgICAjIHN0ZXAgMg0KICAgIGlkcyA8LSBkZW1vZ3JhcGhpY3Nfc29jJGF1X2lkDQogICAgbndhdmVzIDwtIGxlbmd0aCh3YXZlcykNCiAgICBuZXRzIDwtIGFycmF5KDAsIGRpbSA9IGMobndhdmVzLCBsZW5ndGgoaWRzKSwgbGVuZ3RoKGlkcykpLCBkaW1uYW1lcyA9IGxpc3Qod2F2ZSA9IDE6bndhdmVzLCBpZHMsDQogICAgICAgIGlkcykpDQogICAgZGltbmFtZXMobmV0cykNCg0KICAgICMgc3RlcCAzDQogICAgZGZfd29ya3MgPC0gdGliYmxlKHdvcmtzX2lkID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywgZnVuY3Rpb24obCkgbCRpZCkpLCB3b3Jrc19hdXRob3IgPSB1bmxpc3QobGFwcGx5KHNjaG9sYXJzX3NlbCR3b3JrLA0KICAgICAgICBmdW5jdGlvbihsKSBsJGF1dGhvciksIHJlY3Vyc2l2ZSA9IEZBTFNFKSwgd29ya3NfeWVhciA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkcHVibGljYXRpb25feWVhciksDQogICAgICAgIHJlY3Vyc2l2ZSA9IEZBTFNFKSkNCg0KICAgIGRmX3dvcmtzIDwtIGRmX3dvcmtzWyFkdXBsaWNhdGVkKGRmX3dvcmtzKSwgXQ0KDQogICAgIyBzdGVwIDQNCiAgICBpZiAodHlwZSA9PSAiZmlyc3QiKSB7DQogICAgICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICAgICAgICAgICAgXQ0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICAgICAgICAgIGVnbyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWzFdDQogICAgICAgICAgICAgICAgYWx0ZXJzIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWRbLTFdDQogICAgICAgICAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ28pID4gMCAmIHN1bShpZHMgJWluJSBhbHRlcnMpID4gMCkgew0KICAgICAgICAgICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ28pLCB3aGljaChpZHMgJWluJSBhbHRlcnMpXSA8LSAxDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfQ0KDQogICAgaWYgKHR5cGUgPT0gImxhc3QiKSB7DQogICAgICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICAgICAgICAgICAgXQ0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICAgICAgICAgIGVnbyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbMV0NCiAgICAgICAgICAgICAgICBhbHRlcnMgPC0gcmV2KGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWQpWy0xXQ0KICAgICAgICAgICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvKSA+IDAgJiBzdW0oaWRzICVpbiUgYWx0ZXJzKSA+IDApIHsNCiAgICAgICAgICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQ0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIH0NCiAgICAgICAgfQ0KICAgIH0NCg0KICAgIGlmICh0eXBlID09ICJhbGwiKSB7DQogICAgICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICAgICAgICAgICAgXQ0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICAgICAgICAgIGVnb3MgPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZA0KICAgICAgICAgICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvcykgPiAwKSB7DQogICAgICAgICAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnb3MpLCB3aGljaChpZHMgJWluJSBlZ29zKV0gPC0gMQ0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIH0NCiAgICAgICAgfQ0KICAgIH0NCiAgICBvdXRwdXQgPC0gbGlzdCgpDQogICAgb3V0cHV0JGRhdGEgPC0gc2Nob2xhcnNfc2VsDQogICAgb3V0cHV0JG5ldHMgPC0gbmV0cw0KICAgIHJldHVybihvdXRwdXQpDQp9DQpgYGANCg0KYGBge3J9DQojc2F2ZSB0aGUgb3V0cHV0IG9mIHlvdXIgZnVuY3Rpb24NCnRlc3QgPC0gZmNvbG5ldChkYXRhID0gc2Nob2xhcnMsIA0KICAgICAgICAgICAgICAgIHVuaXZlcnNpdHkgPSAiUlUiLCANCiAgICAgICAgICAgICAgICBkaXNjaXBsaW5lID0gInNvY2lvbG9neSIsIA0KICAgICAgICAgICAgICAgIHdhdmVzID0gbGlzdChjKDIwMTUsIDIwMTgpLCBjKDIwMTksIDIwMjMpKSwgDQogICAgICAgICAgICAgICAgdHlwZSA9IGMoImZpcnN0IikpDQoNCg0KDQoNCnRlc3RfdzEgPC0gaWdyYXBoOjpncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoDQogIHRlc3QkbmV0c1sxLCxdLCAjZm9yIHRoaXMgZXhhbXBsZSBJIHRha2UgdGhlIGZpcnN0IHdhdmUgb2YgZGF0YS4gKHRodXMgSSBzZWxlY3QgdGhlIGFycmF5IG9mIG5ldHdvcmtzIGFuZCB0YWtlIHRoZSBmaXJzdCBtYXRyaXgpDQogIG1vZGUgPSBjKCJkaXJlY3RlZCIpLA0KICB3ZWlnaHRlZCA9IE5VTEwsDQogIGRpYWcgPSBGQUxTRSwNCiAgYWRkLmNvbG5hbWVzID0gTlVMTCwNCiAgYWRkLnJvd25hbWVzID0gTlVMTA0KKQ0KDQpwbG90KHRlc3RfdzEsDQogIHZlcnRleC5sYWJlbCA9IE5BLA0KICBlZGdlLndpZHRoID0gMC4yLA0KICBlZGdlLmFycm93LnNpemUgPTAuMikNCg0KYGBgDQoNCg0KYGBge3J9DQp0ZXN0MiA8LSBmY29sbmV0KA0KICBkYXRhID0gc2Nob2xhcnMsDQogIHVuaXZlcnNpdHkgPSBjKCJSVSIsIlV2VCIsIlVVIiwiUlVHIiwiVlUiKSwgICAjIG9yICJhbGwiIHlvdSB3YW50DQogIGRpc2NpcGxpbmUgPSBjKCJzb2Npb2xvZ3kiLCAicG9saXRpY2FsIHNjaWVuY2UiKSwNCiAgd2F2ZXMgPSBsaXN0KGMoMjAxNSwyMDE4KSwgYygyMDE5LDIwMjMpKSwgICAgIyB0aW1lIHBlcmlvZHMNCiAgdHlwZSA9ICJhbGwiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBmaXJzdCAvIGxhc3QgLyBhbGwgYXV0aG9yc2hpcA0KKQ0KDQp0ZXN0Ml93MSA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgNCiAgdGVzdDIkbmV0c1sxLCAsIF0sICAgIyBmaXJzdCB3YXZlIG1hdHJpeA0KICBtb2RlID0gInVuZGlyZWN0ZWQiLCAjICJhbGwiIOKGkiB1c3VhbGx5IHVuZGlyZWN0ZWQgdGllcw0KICBkaWFnID0gRkFMU0UNCikNCg0KcGxvdCgNCiAgdGVzdDJfdzEsDQogIHZlcnRleC5sYWJlbCA9IE5BLA0KICBlZGdlLndpZHRoID0gMC4yLA0KICBlZGdlLmFycm93LnNpemUgPSAwLjINCikNCg0KYGBgDQoNCg0KDQpgYGB7cn0NCnRlc3QgPC0gZmNvbG5ldChkYXRhID0gc2Nob2xhcnMsIA0KICAgICAgICAgICAgICAgIHVuaXZlcnNpdHkgPSBjKCJSVSIsICJVdlQiKSwgDQogICAgICAgICAgICAgICAgZGlzY2lwbGluZSA9IGMoInNvY2lvbG9neSIsICJwb2xpdGljYWwgc2NpZW5jZSIpLCANCiAgICAgICAgICAgICAgICB3YXZlcyA9IGxpc3QoYygyMDE1LCAyMDE4KSwgYygyMDE5LCAyMDIzKSksIA0KICAgICAgICAgICAgICAgIHR5cGUgPSBjKCJhbGwiKSkNCg0KdGVzdF93MiA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgNCiAgdGVzdCRuZXRzWzIsLF0sICNub3csIEkgdGFrZSB0aGUgc2Vjb25kIHdhdmUNCiAgbW9kZSA9IGMoImRpcmVjdGVkIiksDQogIHdlaWdodGVkID0gTlVMTCwNCiAgZGlhZyA9IEZBTFNFLA0KICBhZGQuY29sbmFtZXMgPSBOVUxMDQopDQoNCiNMZXQgdXMgZmluZCBlZ28gY2hhcmFjdGVyaXN0aWNzLiANCiNmaXJzdCBmaXNoIG91dCB0aGUgZGF0YQ0KZGYgPC0gdGVzdCRkYXRhDQoNCiNzYW1lIGNvbXBsaWNhdGVkIHN0cnVjdHVyZSBhcyAnc2Nob2xhcnMnIHRodXMgZmlyc3QgbWFrZSBhIGRhdGFmcmFtZSBmcm9tIHRoZSBsaXN0IGluIHdoaWNoIGFsbCBpbmZvIHdhcyBzYXZlZC4gDQpkZl9lZ28gPC0gZG8uY2FsbChyYmluZC5kYXRhLmZyYW1lLCBkZiRkZW1vZ3JhcGhpY3MpDQoNCiNETyBOT1QgTUVTUyBVUCBUSEUgT1JERVIhIFRIVVMgSUYgWU9VIEpPSU4gVEhJUyBEQVRBIFdJVEggWU9VUiBPV04gREFUQSBDSEVDSyBUSEFUIE9SREVSIFJFTUFJTkVEIFRIRSBTQU1FISEgDQoNCnBsb3QodGVzdF93MiwNCiAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGRmX2VnbyRkaXNjaXBsaW5lLjI0ID09ICJzb2Npb2xvZ3kiLCAicmVkIiwgImJsdWUiKSwgI25vdywgSSBjYW4gdXNlIGFjdG9yIGF0dHJpYnV0ZXMgZm9yIHBsb3R0aW5nLiANCiAgdmVydGV4LmxhYmVsID0gTkEsDQogIGVkZ2Uud2lkdGggPSAwLjUsDQogIGVkZ2UuYXJyb3cuc2l6ZSA9MC41KQ0KYGBgDQoNCmBgYHtyfQ0KIyBVc2Ugc2Vjb25kLXdhdmUgdW5pdmVyc2l0eSBjb2x1bW4gZm9yIGNvbG9yaW5nDQoNCnRlc3QzIDwtIGZjb2xuZXQoDQogIGRhdGEgPSBzY2hvbGFycywgDQogIHVuaXZlcnNpdHkgPSBjKCJSVSIpLCANCiAgZGlzY2lwbGluZSA9IGMoInNvY2lvbG9neSIsICJwb2xpdGljYWwgc2NpZW5jZSIpLCANCiAgd2F2ZXMgPSBsaXN0KGMoMjAxNSwgMjAxOCksIGMoMjAxOSwgMjAyMykpLCANCiAgdHlwZSA9ICJhbGwiDQopDQoNCnRlc3QzX3cyIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICB0ZXN0MyRuZXRzWzIsLF0sICAjIDwtLSB1c2UgdGVzdDMsIG5vdCB0ZXN0DQogIG1vZGUgPSAiZGlyZWN0ZWQiLA0KICBkaWFnID0gRkFMU0UNCikNCg0KZGYzIDwtIHRlc3QzJGRhdGENCmRmM19lZ28gPC0gZG8uY2FsbChyYmluZC5kYXRhLmZyYW1lLCBkZjMkZGVtb2dyYXBoaWNzKQ0KDQojIFVzZSBhIG5pY2VyIGxheW91dCAoRnJ1Y2h0ZXJtYW4tUmVpbmdvbGQpDQpsYXlvdXRfZnIgPC0gbGF5b3V0X3dpdGhfZnIodGVzdDNfdzIpDQoNCnBsb3QoDQogIHRlc3QzX3cyLA0KICBsYXlvdXQgPSBsYXlvdXRfZnIsDQogIHZlcnRleC5jb2xvciA9IGlmZWxzZShkZjNfZWdvJGRpc2NpcGxpbmUuMjQgPT0gInNvY2lvbG9neSIsICJyZWQiLCAiYmx1ZSIpLA0KICB2ZXJ0ZXguc2l6ZSA9IDYsICAgICAgICMgc21hbGxlciBub2Rlcw0KICB2ZXJ0ZXgubGFiZWwgPSBOQSwgICAgICMgaGlkZSBsYWJlbHMNCiAgZWRnZS53aWR0aCA9IDAuMywgICAgICAjIHRoaW5uZXIgZWRnZXMNCiAgZWRnZS5hcnJvdy5zaXplID0gMC4yICAjIHNtYWxsZXIgYXJyb3dzDQopDQoNCg0KYGBgDQoNCmBgYHtyfQ0KIyBNYWFrIGhldCBuZXR3ZXJrIChhbGwtdG8tYWxsLCBhbGxlZW4gUlUpDQp0ZXN0X3J1IDwtIGZjb2xuZXQoDQogIGRhdGEgPSBzY2hvbGFycywNCiAgdW5pdmVyc2l0eSA9IGMoIlJVIiksICAgICAgICMgYWxsZWVuIFJhZGJvdWQgVW5pdmVyc2l0eQ0KICBkaXNjaXBsaW5lID0gYygic29jaW9sb2d5IiwgInBvbGl0aWNhbCBzY2llbmNlIiksDQogIHdhdmVzID0gbGlzdChjKDIwMTUsMjAxOCksIGMoMjAxOSwyMDIzKSksDQogIHR5cGUgPSAiYWxsIg0KKQ0KDQojIFBhayBidi4gZGUgMmUgd2F2ZSAoMjAxOeKAkzIwMjMpDQp0ZXN0X3J1X3cyIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICB0ZXN0X3J1JG5ldHNbMiwsXSwNCiAgbW9kZSA9ICJ1bmRpcmVjdGVkIiwNCiAgZGlhZyA9IEZBTFNFDQopDQoNCiMgRWdvLWRhdGENCmRmX3J1IDwtIHRlc3RfcnUkZGF0YQ0KZGZfcnVfZWdvIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGZfcnUkZGVtb2dyYXBoaWNzKQ0KDQojIExheW91dCAmIHBsb3QNCnNldC5zZWVkKDEyMykgICAjIHZvb3IgaGVyaGFhbGJhYXJoZWlkDQpsYXlvdXRfZnIgPC0gaWdyYXBoOjpsYXlvdXRfd2l0aF9mcih0ZXN0X3J1X3cyKQ0KDQpwbG90KA0KICB0ZXN0X3J1X3cyLA0KICBsYXlvdXQgPSBsYXlvdXRfZnIsDQogIHZlcnRleC5zaXplID0gNiwNCiAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGRmX3J1X2VnbyRkaXNjaXBsaW5lLjI0ID09ICJzb2Npb2xvZ3kiLCAicmVkIiwgImJsdWUiKSwNCiAgdmVydGV4LmxhYmVsID0gTkEsDQogIGVkZ2Uud2lkdGggPSAwLjMsDQogIG1haW4gPSAiUlUgQ28tYXV0aG9yc2hpcCBOZXR3b3JrICgyMDE54oCTMjAyMykiDQopDQoNCg0KYGBgDQoNCmBgYHtyfQ0KIyBNYWFrIGhldCBuZXR3ZXJrIChhbGwtdG8tYWxsLCBhbGxlZW4gUlUpDQp0ZXN0X3J1IDwtIGZjb2xuZXQoDQogIGRhdGEgPSBzY2hvbGFycywNCiAgdW5pdmVyc2l0eSA9IGMoIlJVIiksICAgICAgICMgYWxsZWVuIFJhZGJvdWQgVW5pdmVyc2l0eQ0KICBkaXNjaXBsaW5lID0gYygic29jaW9sb2d5IiwgInBvbGl0aWNhbCBzY2llbmNlIiksDQogIHdhdmVzID0gbGlzdChjKDIwMTUsMjAxOCksIGMoMjAxOSwyMDIzKSksDQogIHR5cGUgPSAiYWxsIg0KKQ0KDQojIFBhayBidi4gZGUgMmUgd2F2ZSAoMjAxOeKAkzIwMjMpDQp0ZXN0X3J1X3cxIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICB0ZXN0X3J1JG5ldHNbMSwsXSwNCiAgbW9kZSA9ICJ1bmRpcmVjdGVkIiwNCiAgZGlhZyA9IEZBTFNFDQopDQoNCiMgRWdvLWRhdGENCmRmX3J1IDwtIHRlc3RfcnUkZGF0YQ0KZGZfcnVfZWdvIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGZfcnUkZGVtb2dyYXBoaWNzKQ0KDQojIExheW91dCAmIHBsb3QNCnNldC5zZWVkKDEyMykgICAjIHZvb3IgaGVyaGFhbGJhYXJoZWlkDQpsYXlvdXRfZnIgPC0gaWdyYXBoOjpsYXlvdXRfd2l0aF9mcih0ZXN0X3J1X3cyKQ0KDQpwbG90KA0KICB0ZXN0X3J1X3cxLA0KICBsYXlvdXQgPSBsYXlvdXRfZnIsDQogIHZlcnRleC5zaXplID0gNiwNCiAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGRmX3J1X2VnbyRkaXNjaXBsaW5lLjI0ID09ICJzb2Npb2xvZ3kiLCAicmVkIiwgImJsdWUiKSwNCiAgdmVydGV4LmxhYmVsID0gTkEsDQogIGVkZ2Uud2lkdGggPSAwLjMsDQogIG1haW4gPSAiUlUgQ28tYXV0aG9yc2hpcCBOZXR3b3JrICgyMDE14oCTMjAxOCkiDQopDQoNCmBgYA0KDQpgYGB7cn0NCiMgTWFhayBuZXR3ZXJrZW4gKGFsbGVlbiBSVSwgc29jaW9sb2dpZSArIHBvbGl0aWNvbG9naWUpDQp0ZXN0X3J1IDwtIGZjb2xuZXQoDQogIGRhdGEgPSBzY2hvbGFycywNCiAgdW5pdmVyc2l0eSA9IGMoIlJVIiksDQogIGRpc2NpcGxpbmUgPSBjKCJzb2Npb2xvZ3kiLCAicG9saXRpY2FsIHNjaWVuY2UiKSwNCiAgd2F2ZXMgPSBsaXN0KGMoMjAxNSwyMDE4KSwgYygyMDE5LDIwMjMpKSwNCiAgdHlwZSA9ICJhbGwiDQopDQoNCiMgSGFhbCBiZWlkZSB3YXZlcyBlcnVpdA0KdGVzdF9ydV93MSA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgNCiAgdGVzdF9ydSRuZXRzWzEsLF0sDQogIG1vZGUgPSAidW5kaXJlY3RlZCIsDQogIGRpYWcgPSBGQUxTRQ0KKQ0KDQp0ZXN0X3J1X3cyIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICB0ZXN0X3J1JG5ldHNbMiwsXSwNCiAgbW9kZSA9ICJ1bmRpcmVjdGVkIiwNCiAgZGlhZyA9IEZBTFNFDQopDQoNCiMgRWdvLWRhdGENCmRmX3J1IDwtIHRlc3RfcnUkZGF0YQ0KZGZfcnVfZWdvIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGZfcnUkZGVtb2dyYXBoaWNzKQ0KDQojIFplbGZkZSBsYXlvdXQgdm9vciBiZWlkZSBuZXR3ZXJrZW4NCnNldC5zZWVkKDEyMykNCmxheW91dF9mciA8LSBpZ3JhcGg6OmxheW91dF93aXRoX2ZyKHRlc3RfcnVfdzEpDQoNCiMgWmV0IDIgcGxvdHMgbmFhc3QgZWxrYWFyDQpwYXIobWZyb3cgPSBjKDEsMiksIG1hciA9IGMoMSwxLDMsMSkpICANCg0KcGxvdCgNCiAgdGVzdF9ydV93MSwNCiAgbGF5b3V0ID0gbGF5b3V0X2ZyLA0KICB2ZXJ0ZXguc2l6ZSA9IDYsDQogIHZlcnRleC5jb2xvciA9IGlmZWxzZShkZl9ydV9lZ28kZGlzY2lwbGluZS4yNCA9PSAic29jaW9sb2d5IiwgInJlZCIsICJibHVlIiksDQogIHZlcnRleC5sYWJlbCA9IE5BLA0KICBlZGdlLndpZHRoID0gMC4zLA0KICBtYWluID0gIldhdmUgMTogMjAxNeKAkzIwMTgiDQopDQoNCnBsb3QoDQogIHRlc3RfcnVfdzIsDQogIGxheW91dCA9IGxheW91dF9mciwNCiAgdmVydGV4LnNpemUgPSA2LA0KICB2ZXJ0ZXguY29sb3IgPSBpZmVsc2UoZGZfcnVfZWdvJGRpc2NpcGxpbmUuMjQgPT0gInNvY2lvbG9neSIsICJyZWQiLCAiYmx1ZSIpLA0KICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgZWRnZS53aWR0aCA9IDAuMywNCiAgbWFpbiA9ICJXYXZlIDI6IDIwMTnigJMyMDIzIg0KKQ0KDQojIFZvZWcgbGVnZW5kYSB0b2UgKGFwYXJ0ZSBzdGFwISkNCnBhcihtZnJvdyA9IGMoMSwxKSkgIA0KcGxvdC5uZXcoKQ0KbGVnZW5kKA0KICAiY2VudGVyIiwNCiAgbGVnZW5kID0gYygiU29jaW9sb2d5IiwgIlBvbGl0aWNhbCBTY2llbmNlIiksDQogIGNvbCA9IGMoInJlZCIsICJibHVlIiksDQogIHBjaCA9IDE5LA0KICBwdC5jZXggPSAxLjUsDQogIGJ0eSA9ICJuIiwNCiAgdGl0bGUgPSAiRGlzY2lwbGluZSINCikNCg0KYGBgDQoNCmBgYHtyfQ0KIyBzb21lIGRlc2NyaXB0aXZlcyBmcm9tIHRoZSBzZWNvbmQgd2F2ZQ0KIyBudW1iZXIgb2Ygbm9kZXMNCnZjb3VudCh0ZXN0X3J1X3cyKQ0KIyBudW1iZXIgb2YgZWRnZXMNCmVjb3VudCh0ZXN0X3J1X3cyKQ0KYGBgDQoNCmBgYHtyfQ0KaWdyYXBoOjpkZWdyZWUodGVzdF9ydV93MikNCiMgaGlzdCh0YWJsZShkZWdyZWUoZykpLCB4bGFiPSdpbmRlZ3JlZScsIG1haW49ICdIaXN0b2dyYW0gb2YgaW5kZWdyZWUnKQ0KYGBgDQoNCmBgYHtyfQ0KY29sbmFtZXMoZGZfcnVfZWdvKQ0KaGVhZChkZl9ydV9lZ28pDQoNCg0KYGBgDQoNCmBgYHtyfQ0KbGlicmFyeShpZ3JhcGgpDQoNCiMgLS0tIDEuIExheW91dCAmIG5ldHdlcmsgLS0tDQpzZXQuc2VlZCgxMjMpDQpsYXlvdXRfZnIgPC0gaWdyYXBoOjpsYXlvdXRfd2l0aF9mcih0ZXN0X3J1X3cyKQ0KDQojIC0tLSAyLiBHZWVmIGVsa2Ugc2Nob2xhciBlZW4gZWVudm91ZGlnIG51bW1lciBhbHMgbGFiZWwgLS0tDQpWKHRlc3RfcnVfdzIpJGxhYmVsIDwtIDE6dmNvdW50KHRlc3RfcnVfdzIpDQoNCiMgLS0tIDMuIEJlcmVrZW4gZ3JhYWQgcGVyIHNjaG9sYXIgLS0tDQpkZWdyZWVfZGYgPC0gZGF0YS5mcmFtZSgNCiAgc2Nob2xhcl9udW1iZXIgPSBWKHRlc3RfcnVfdzIpJGxhYmVsLA0KICBkZWdyZWUgPSBpZ3JhcGg6OmRlZ3JlZSh0ZXN0X3J1X3cyKQ0KKQ0KDQojIFNvcnRlZXIgdmFuIGhvb2dzdGUgbmFhciBsYWFnc3RlIGdyYWFkDQpkZWdyZWVfZGYgPC0gZGVncmVlX2RmW29yZGVyKC1kZWdyZWVfZGYkZGVncmVlKSwgXQ0KcHJpbnQoZGVncmVlX2RmKQ0KDQojIC0tLSA0LiBQbG90IG5ldHdlcmsgLS0tDQpwbG90KA0KICB0ZXN0X3J1X3cyLA0KICBsYXlvdXQgPSBsYXlvdXRfZnIsDQogIHZlcnRleC5zaXplID0gNiwNCiAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGRmX3J1X2VnbyRkaXNjaXBsaW5lLjI0ID09ICJzb2Npb2xvZ3kiLCAicmVkIiwgImJsdWUiKSwNCiAgdmVydGV4LmxhYmVsID0gVih0ZXN0X3J1X3cyKSRsYWJlbCwNCiAgdmVydGV4LmxhYmVsLmNleCA9IDAuNywNCiAgZWRnZS53aWR0aCA9IDAuMywNCiAgbWFpbiA9ICJSVSBDby1hdXRob3JzaGlwIE5ldHdvcmsgKDIwMTnigJMyMDIzKSINCikNCg0KDQpgYGANCg0KYGBge3J9DQojIDEuIFpldCBsYWJlbHMgb3Agc2ltcGVsZSBudW1tZXJzIChhbHMgbm9nIG5pZXQgZ2VkYWFuKQ0KVih0ZXN0X3J1X3cyKSRsYWJlbCA8LSAxOnZjb3VudCh0ZXN0X3J1X3cyKQ0KDQojIDIuIEJlcmVrZW4gZGUgZ3JhYWQNCmRlZ3JlZV9kZiA8LSBkYXRhLmZyYW1lKA0KICBzY2hvbGFyX251bWJlciA9IFYodGVzdF9ydV93MikkbGFiZWwsDQogIGRlZ3JlZSA9IGlncmFwaDo6ZGVncmVlKHRlc3RfcnVfdzIpDQopDQoNCiMgMy4gQmVraWprIHJlc3VsdGFhdA0KZGVncmVlX2RmIDwtIGRlZ3JlZV9kZltvcmRlcigtZGVncmVlX2RmJGRlZ3JlZSksIF0NCnByaW50KGRlZ3JlZV9kZikNCg0KDQpgYGANCg0KDQpgYGB7cn0NCiMgMS4gR2VlZiBub2RlcyBlZW52b3VkaWdlIG51bW1lcnMgYWxzIGxhYmVsDQpWKHRlc3RfcnVfdzIpJGxhYmVsIDwtIDE6dmNvdW50KHRlc3RfcnVfdzIpDQoNCiMgMi4gQmVyZWtlbiBsb2thbGUgY2x1c3RlcmluZw0KY2x1c3RlcmluZ19sb2NhbCA8LSBpZ3JhcGg6OnRyYW5zaXRpdml0eSgNCiAgdGVzdF9ydV93MiwNCiAgdHlwZSA9ICJsb2NhbHVuZGlyZWN0ZWQiLA0KICBpc29sYXRlcyA9ICJ6ZXJvIg0KKQ0KDQojIDMuIFN0b3AgaW4gZWVuIG92ZXJ6aWNodGVsaWprZSBkYXRhZnJhbWUNCmNsdXN0ZXJpbmdfZGYgPC0gZGF0YS5mcmFtZSgNCiAgc2Nob2xhcl9udW1iZXIgPSBWKHRlc3RfcnVfdzIpJGxhYmVsLA0KICBjbHVzdGVyaW5nID0gY2x1c3RlcmluZ19sb2NhbA0KKQ0KDQojIEJla2lqayBlZXJzdGUgMTAgd2FhcmRlbg0KaGVhZChjbHVzdGVyaW5nX2RmLCAxMDEpDQoNCg0KYGBgDQoNCmBgYHtyfQ0KY2x1c3RlcmluZ19nbG9iYWwgPC0gaWdyYXBoOjp0cmFuc2l0aXZpdHkoDQogIHRlc3RfcnVfdzIsDQogIHR5cGUgPSAiZ2xvYmFsIg0KKQ0KcHJpbnQoY2x1c3RlcmluZ19nbG9iYWwpDQoNCmBgYA0KDQoNCmBgYHtyfQ0KIyBCZXJla2VuIGJldHdlZW5uZXNzIHZvb3IgZWxrZSBub2RlDQpiZXR3ZWVubmVzc192YWx1ZXMgPC0gaWdyYXBoOjpiZXR3ZWVubmVzcygNCiAgdGVzdF9ydV93MiwNCiAgZGlyZWN0ZWQgPSBGQUxTRQ0KKQ0KDQojIFN0b3AgaW4gZWVuIG92ZXJ6aWNodGVsaWprZSBkYXRhZnJhbWUgbWV0IHNpbXBlbGUgc2Nob2xhciBudW1tZXJzDQpiZXR3ZWVubmVzc19kZiA8LSBkYXRhLmZyYW1lKA0KICBzY2hvbGFyX251bWJlciA9IDE6dmNvdW50KHRlc3RfcnVfdzIpLA0KICBiZXR3ZWVubmVzcyA9IGJldHdlZW5uZXNzX3ZhbHVlcw0KKQ0KDQojIFNvcnRlZXIgdmFuIGhvb2cgbmFhciBsYWFnDQpiZXR3ZWVubmVzc19kZiA8LSBiZXR3ZWVubmVzc19kZltvcmRlcigtYmV0d2Vlbm5lc3NfZGYkYmV0d2Vlbm5lc3MpLCBdDQpwcmludChiZXR3ZWVubmVzc19kZikNCg0KYGBgDQoNCmBgYHtyfQ0KaWdyYXBoOjpkeWFkX2NlbnN1cyh0ZXN0X3J1X3cyKQ0KDQoNCmBgYA0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("lab5.2.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

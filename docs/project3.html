@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2025-10-27" />
+
+<title>Introduction</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="lab2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="lab3.html">Week 3</a>
+    </li>
+    <li>
+      <a href="lab4.html">Week 4</a>
+    </li>
+    <li>
+      <a href="lab5.2.html">Week 5</a>
+    </li>
+    <li>
+      <a href="lab6.html">Week 6</a>
+    </li>
+    <li>
+      <a href="Lab7.html">Week 7</a>
+    </li>
+    <li>
+      <a href="lab7.2.html">Week 7.2</a>
+    </li>
+    <li>
+      <a href="Lab8.html">Week 8</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final paper
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project3.html">Introduction</a>
+    </li>
+    <li>
+      <a href="project4.html">Theory and hypothesis </a>
+    </li>
+    <li>
+      <a href="project2.html">Methods and analytical strategy</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/HanneWolthuis/HWolthuis-labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Introduction</h1>
+<h4 class="date">2025-10-27</h4>
+
+</div>
+
+
+<p>Last compiled on oktober, 2025</p>
+<p><br></p>
+<p>#Introduction <span
+style="color: orange;"><strong>Introduction?</strong></span></p>
+<p>Scientific research increasingly relies on collaboration between
+scholars across disciplinary boundaries. Interdisciplinary research is
+widely recognized as essential for addressing complex societal
+challenges, as it allows for the integration of diverse perspectives,
+theories, and methodologies (Spence et al., 2024., Haines et al., 2011).
+At the same time, the formation of collaborative ties is not random.
+Working interdisciplinary is complex and considerate amount of time is
+needed to understand multiple approaches and develop skills (Spence et
+al., 2024). At the same time homophily also has a strong influence on
+collaboration formation. Homophily entails that individuals have an
+inherent tendency to bond with others who exhibit similar attributes, in
+this case similarity in methods, theories and skills (Santos et al.,
+2024). Despite the growing policy and scientific emphasis on
+interdisciplinarity, we still know relatively little about the specific
+mechanisms that shape how interdisciplinary collaborations emerge over
+time. While many studies examine interdisciplinarity through
+bibliometric indicators (e.g., co-citation or topical diversity), fewer
+focus on the dynamic social networks through which collaboration
+actually occurs (Zheng, Qian, 2023). Understanding these processes
+requires not only describing how collaborations are structured but also
+identifying which actor-level and network-level mechanisms explain their
+evolution. Therefore the main research question of this project is:
+Which structural and content-based mechanisms explain the formation of
+scientific collaboration ties over time, and what role does
+interdisciplinarity play in this process? In this project in order to
+better understand collaboration and interdisciplinary collaboration
+within social sciences I will adopt a social network analysis
+perspective. Social Network Analysis (SNA) is particularly relevant for
+studying interdisciplinary collaborations because it explicitly accounts
+for the relational context in which researchers operate. Rather than
+treating collaborations as independent events or focusing solely on
+individual attributes, SNA views researchers as embedded in dynamic
+networks of relationships, where ties reflect knowledge exchange, trust,
+and resource flows. This perspective allows us to investigate both the
+formation mechanisms of collaboration networks, such as homophily,
+complementary expertise, and bridging across disciplines, and their
+consequences for individual researchers and the broader scientific
+community. By applying SNA, this project can move beyond static
+bibliometric measures to capture the evolving structure of
+interdisciplinary collaboration networks and identify which actor-level
+and network-level processes drive their development over time (Tolsma
+&amp; Hofstra, 2022) This study aims to contribute to the literature on
+scientific collaboration and interdisciplinarity by addressing both
+descriptive and explanatory research questions.</p>
+<p><strong>RQ1:</strong> To what extent does scientific collaboration
+occur within and across disciplinary boundaries homophily?
+<strong>RQ2:</strong> Has interdisciplinary collaboration increased over
+time? <strong>RQ3:</strong> To what extent does the interdisciplinarity
+of individual researchers increase the likelihood of forming new
+collaboration ties? <strong>RQ4:</strong> What is the role of clustering
+in the evolution of collaboration networks? <strong>RQ5:</strong> What
+is the role of centrality in the formation of new collaboration
+ties?</p>
+<div id="references" class="section level2" number="1">
+<h2><span class="header-section-number">1</span> References</h2>
+<p>Haines, V. A., Godley, J., &amp; Hawe, P. (2011). Understanding
+interdisciplinary collaborations as social networks. <em>American
+Journal of Community Psychology, 47</em>(1–2), 1–11.</p>
+<p>Santos, J. M., Horta, H., &amp; Feng, S. (2024). Homophily and its
+effects on collaborations and repeated collaborations: a study across
+scientific fields. <em>Scientometrics, 129</em>(3), 1801–1823. <a
+href="https://doi.org/10.1007/s11192-024-04950-3"
+class="uri">https://doi.org/10.1007/s11192-024-04950-3</a></p>
+<p>Spence, N., Markauskaite, L., &amp; McEwen, C. (2024). Why and how
+academics become interdisciplinary researchers early in their careers.
+<em>Higher Education Research &amp; Development</em>, 1–16.</p>
+<p>Tolsma, J., &amp; Hofstra, B. (2022). <em>Social network analysis for
+social scientists.</em> Retrieved from <a
+href="https://jtolsma.nl/SNASS/"
+class="uri">https://jtolsma.nl/SNASS/</a></p>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiINCm91dHB1dDogaHRtbF9kb2N1bWVudA0KZGF0ZTogIjIwMjUtMTAtMjciDQotLS0NCg0KYGBge3IsIGdsb2JhbHNldHRpbmdzLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdoaWRlJ30NCmxpYnJhcnkoa25pdHIpDQoNCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj0xMDApLHRpZHk9VFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UsY29tbWVudCA9ICIjPiIsIGNhY2hlPVRSVUUsIGNsYXNzLnNvdXJjZT1jKCJ0ZXN0IiksIGNsYXNzLm91dHB1dD1jKCJ0ZXN0MiIpKQ0Kb3B0aW9ucyh3aWR0aCA9IDEwMCkNCnJnbDo6c2V0dXBLbml0cigpDQoNCg0KDQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpgYGANCg0KYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBldmFsID0gRkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQoja2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya3JlZCcpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCg0KI0ludHJvZHVjdGlvbg0KYHIgY29sb3JpemUoIioqSW50cm9kdWN0aW9uPyoqIiwgIm9yYW5nZSIpYA0KDQpTY2llbnRpZmljIHJlc2VhcmNoIGluY3JlYXNpbmdseSByZWxpZXMgb24gY29sbGFib3JhdGlvbiBiZXR3ZWVuIHNjaG9sYXJzIGFjcm9zcyBkaXNjaXBsaW5hcnkgYm91bmRhcmllcy4gSW50ZXJkaXNjaXBsaW5hcnkgcmVzZWFyY2ggaXMgd2lkZWx5IHJlY29nbml6ZWQgYXMgZXNzZW50aWFsIGZvciBhZGRyZXNzaW5nIGNvbXBsZXggc29jaWV0YWwgY2hhbGxlbmdlcywgYXMgaXQgYWxsb3dzIGZvciB0aGUgaW50ZWdyYXRpb24gb2YgZGl2ZXJzZSBwZXJzcGVjdGl2ZXMsIHRoZW9yaWVzLCBhbmQgbWV0aG9kb2xvZ2llcyAoU3BlbmNlIGV0IGFsLiwgMjAyNC4sIEhhaW5lcyBldCBhbC4sIDIwMTEpLiBBdCB0aGUgc2FtZSB0aW1lLCB0aGUgZm9ybWF0aW9uIG9mIGNvbGxhYm9yYXRpdmUgdGllcyBpcyBub3QgcmFuZG9tLiBXb3JraW5nIGludGVyZGlzY2lwbGluYXJ5IGlzIGNvbXBsZXggYW5kIGNvbnNpZGVyYXRlIGFtb3VudCBvZiB0aW1lIGlzIG5lZWRlZCB0byB1bmRlcnN0YW5kIG11bHRpcGxlIGFwcHJvYWNoZXMgYW5kIGRldmVsb3Agc2tpbGxzIChTcGVuY2UgZXQgYWwuLCAyMDI0KS4gQXQgdGhlIHNhbWUgdGltZSBob21vcGhpbHkgYWxzbyBoYXMgYSBzdHJvbmcgaW5mbHVlbmNlIG9uIGNvbGxhYm9yYXRpb24gZm9ybWF0aW9uLiBIb21vcGhpbHkgZW50YWlscyB0aGF0IGluZGl2aWR1YWxzIGhhdmUgYW4gaW5oZXJlbnQgdGVuZGVuY3kgdG8gYm9uZCB3aXRoIG90aGVycyB3aG8gZXhoaWJpdCBzaW1pbGFyIGF0dHJpYnV0ZXMsIGluIHRoaXMgY2FzZSBzaW1pbGFyaXR5IGluIG1ldGhvZHMsIHRoZW9yaWVzIGFuZCBza2lsbHMgKFNhbnRvcyBldCBhbC4sIDIwMjQpLiANCkRlc3BpdGUgdGhlIGdyb3dpbmcgcG9saWN5IGFuZCBzY2llbnRpZmljIGVtcGhhc2lzIG9uIGludGVyZGlzY2lwbGluYXJpdHksIHdlIHN0aWxsIGtub3cgcmVsYXRpdmVseSBsaXR0bGUgYWJvdXQgdGhlIHNwZWNpZmljIG1lY2hhbmlzbXMgdGhhdCBzaGFwZSBob3cgaW50ZXJkaXNjaXBsaW5hcnkgY29sbGFib3JhdGlvbnMgZW1lcmdlIG92ZXIgdGltZS4gV2hpbGUgbWFueSBzdHVkaWVzIGV4YW1pbmUgaW50ZXJkaXNjaXBsaW5hcml0eSB0aHJvdWdoIGJpYmxpb21ldHJpYyBpbmRpY2F0b3JzIChlLmcuLCBjby1jaXRhdGlvbiBvciB0b3BpY2FsIGRpdmVyc2l0eSksIGZld2VyIGZvY3VzIG9uIHRoZSBkeW5hbWljIHNvY2lhbCBuZXR3b3JrcyB0aHJvdWdoIHdoaWNoIGNvbGxhYm9yYXRpb24gYWN0dWFsbHkgb2NjdXJzIChaaGVuZywgUWlhbiwgMjAyMykuIFVuZGVyc3RhbmRpbmcgdGhlc2UgcHJvY2Vzc2VzIHJlcXVpcmVzIG5vdCBvbmx5IGRlc2NyaWJpbmcgaG93IGNvbGxhYm9yYXRpb25zIGFyZSBzdHJ1Y3R1cmVkIGJ1dCBhbHNvIGlkZW50aWZ5aW5nIHdoaWNoIGFjdG9yLWxldmVsIGFuZCBuZXR3b3JrLWxldmVsIG1lY2hhbmlzbXMgZXhwbGFpbiB0aGVpciBldm9sdXRpb24uIFRoZXJlZm9yZSB0aGUgbWFpbiByZXNlYXJjaCBxdWVzdGlvbiBvZiB0aGlzIHByb2plY3QgaXM6IFdoaWNoIHN0cnVjdHVyYWwgYW5kIGNvbnRlbnQtYmFzZWQgbWVjaGFuaXNtcyBleHBsYWluIHRoZSBmb3JtYXRpb24gb2Ygc2NpZW50aWZpYyBjb2xsYWJvcmF0aW9uIHRpZXMgb3ZlciB0aW1lLCBhbmQgd2hhdCByb2xlIGRvZXMgaW50ZXJkaXNjaXBsaW5hcml0eSBwbGF5IGluIHRoaXMgcHJvY2Vzcz8NCkluIHRoaXMgcHJvamVjdCBpbiBvcmRlciB0byBiZXR0ZXIgdW5kZXJzdGFuZCBjb2xsYWJvcmF0aW9uIGFuZCBpbnRlcmRpc2NpcGxpbmFyeSBjb2xsYWJvcmF0aW9uIHdpdGhpbiBzb2NpYWwgc2NpZW5jZXMgSSB3aWxsIGFkb3B0IGEgc29jaWFsIG5ldHdvcmsgYW5hbHlzaXMgcGVyc3BlY3RpdmUuIFNvY2lhbCBOZXR3b3JrIEFuYWx5c2lzIChTTkEpIGlzIHBhcnRpY3VsYXJseSByZWxldmFudCBmb3Igc3R1ZHlpbmcgaW50ZXJkaXNjaXBsaW5hcnkgY29sbGFib3JhdGlvbnMgYmVjYXVzZSBpdCBleHBsaWNpdGx5IGFjY291bnRzIGZvciB0aGUgcmVsYXRpb25hbCBjb250ZXh0IGluIHdoaWNoIHJlc2VhcmNoZXJzIG9wZXJhdGUuIFJhdGhlciB0aGFuIHRyZWF0aW5nIGNvbGxhYm9yYXRpb25zIGFzIGluZGVwZW5kZW50IGV2ZW50cyBvciBmb2N1c2luZyBzb2xlbHkgb24gaW5kaXZpZHVhbCBhdHRyaWJ1dGVzLCBTTkEgdmlld3MgcmVzZWFyY2hlcnMgYXMgZW1iZWRkZWQgaW4gZHluYW1pYyBuZXR3b3JrcyBvZiByZWxhdGlvbnNoaXBzLCB3aGVyZSB0aWVzIHJlZmxlY3Qga25vd2xlZGdlIGV4Y2hhbmdlLCB0cnVzdCwgYW5kIHJlc291cmNlIGZsb3dzLiBUaGlzIHBlcnNwZWN0aXZlIGFsbG93cyB1cyB0byBpbnZlc3RpZ2F0ZSBib3RoIHRoZSBmb3JtYXRpb24gbWVjaGFuaXNtcyBvZiBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzLCBzdWNoIGFzIGhvbW9waGlseSwgY29tcGxlbWVudGFyeSBleHBlcnRpc2UsIGFuZCBicmlkZ2luZyBhY3Jvc3MgZGlzY2lwbGluZXMsIGFuZCB0aGVpciBjb25zZXF1ZW5jZXMgZm9yIGluZGl2aWR1YWwgcmVzZWFyY2hlcnMgYW5kIHRoZSBicm9hZGVyIHNjaWVudGlmaWMgY29tbXVuaXR5LiBCeSBhcHBseWluZyBTTkEsIHRoaXMgcHJvamVjdCBjYW4gbW92ZSBiZXlvbmQgc3RhdGljIGJpYmxpb21ldHJpYyBtZWFzdXJlcyB0byBjYXB0dXJlIHRoZSBldm9sdmluZyBzdHJ1Y3R1cmUgb2YgaW50ZXJkaXNjaXBsaW5hcnkgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBhbmQgaWRlbnRpZnkgd2hpY2ggYWN0b3ItbGV2ZWwgYW5kIG5ldHdvcmstbGV2ZWwgcHJvY2Vzc2VzIGRyaXZlIHRoZWlyIGRldmVsb3BtZW50IG92ZXIgdGltZSAoVG9sc21hICYgSG9mc3RyYSwgMjAyMikNClRoaXMgc3R1ZHkgYWltcyB0byBjb250cmlidXRlIHRvIHRoZSBsaXRlcmF0dXJlIG9uIHNjaWVudGlmaWMgY29sbGFib3JhdGlvbiBhbmQgaW50ZXJkaXNjaXBsaW5hcml0eSBieSBhZGRyZXNzaW5nIGJvdGggZGVzY3JpcHRpdmUgYW5kIGV4cGxhbmF0b3J5IHJlc2VhcmNoIHF1ZXN0aW9ucy4NCg0KKipSUTE6KiogVG8gd2hhdCBleHRlbnQgZG9lcyBzY2llbnRpZmljIGNvbGxhYm9yYXRpb24gb2NjdXIgd2l0aGluIGFuZCBhY3Jvc3MgZGlzY2lwbGluYXJ5IGJvdW5kYXJpZXMgaG9tb3BoaWx5Pw0KKipSUTI6KiogSGFzIGludGVyZGlzY2lwbGluYXJ5IGNvbGxhYm9yYXRpb24gaW5jcmVhc2VkIG92ZXIgdGltZT8NCioqUlEzOioqIFRvIHdoYXQgZXh0ZW50IGRvZXMgdGhlIGludGVyZGlzY2lwbGluYXJpdHkgb2YgaW5kaXZpZHVhbCByZXNlYXJjaGVycyBpbmNyZWFzZSB0aGUgbGlrZWxpaG9vZCBvZiBmb3JtaW5nIG5ldyBjb2xsYWJvcmF0aW9uIHRpZXM/DQoqKlJRNDoqKiBXaGF0IGlzIHRoZSByb2xlIG9mIGNsdXN0ZXJpbmcgaW4gdGhlIGV2b2x1dGlvbiBvZiBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzPw0KKipSUTU6KiogV2hhdCBpcyB0aGUgcm9sZSBvZiBjZW50cmFsaXR5IGluIHRoZSBmb3JtYXRpb24gb2YgbmV3IGNvbGxhYm9yYXRpb24gdGllcz8NCg0KDQoNCiMjIFJlZmVyZW5jZXMNCg0KSGFpbmVzLCBWLiBBLiwgR29kbGV5LCBKLiwgJiBIYXdlLCBQLiAoMjAxMSkuIFVuZGVyc3RhbmRpbmcgaW50ZXJkaXNjaXBsaW5hcnkgY29sbGFib3JhdGlvbnMgYXMgc29jaWFsIG5ldHdvcmtzLiAqQW1lcmljYW4gSm91cm5hbCBvZiBDb21tdW5pdHkgUHN5Y2hvbG9neSwgNDcqKDHigJMyKSwgMeKAkzExLiAgDQoNClNhbnRvcywgSi4gTS4sIEhvcnRhLCBILiwgJiBGZW5nLCBTLiAoMjAyNCkuIEhvbW9waGlseSBhbmQgaXRzIGVmZmVjdHMgb24gY29sbGFib3JhdGlvbnMgYW5kIHJlcGVhdGVkIGNvbGxhYm9yYXRpb25zOiBhIHN0dWR5IGFjcm9zcyBzY2llbnRpZmljIGZpZWxkcy4gKlNjaWVudG9tZXRyaWNzLCAxMjkqKDMpLCAxODAx4oCTMTgyMy4gaHR0cHM6Ly9kb2kub3JnLzEwLjEwMDcvczExMTkyLTAyNC0wNDk1MC0zICANCg0KU3BlbmNlLCBOLiwgTWFya2F1c2thaXRlLCBMLiwgJiBNY0V3ZW4sIEMuICgyMDI0KS4gV2h5IGFuZCBob3cgYWNhZGVtaWNzIGJlY29tZSBpbnRlcmRpc2NpcGxpbmFyeSByZXNlYXJjaGVycyBlYXJseSBpbiB0aGVpciBjYXJlZXJzLiAqSGlnaGVyIEVkdWNhdGlvbiBSZXNlYXJjaCAmIERldmVsb3BtZW50KiwgMeKAkzE2LiAgDQoNClRvbHNtYSwgSi4sICYgSG9mc3RyYSwgQi4gKDIwMjIpLiAqU29jaWFsIG5ldHdvcmsgYW5hbHlzaXMgZm9yIHNvY2lhbCBzY2llbnRpc3RzLiogUmV0cmlldmVkIGZyb20gaHR0cHM6Ly9qdG9sc21hLm5sL1NOQVNTLw0KDQo=</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("project3.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

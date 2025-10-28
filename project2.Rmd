@@ -1,0 +1,323 @@
+---
+title: "Final project Methods"
+#bibliography: references.bib
+author: "Hanne Wolthuis"
+---
+
+
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+  
+----
+
+# Methods and analytical strategy
+`r colorize("**Methods and analytical strategy.**", "orange")` 
+
+
+For this project the analytical strategy will consist out of 3 step. In the first step I will provide some descriptive statistics of the complete sample. In the second step some descriptive statics of the network will be presented together with multiple different visualizations of the different waves. These descriptives together with the visualizations will be used to capture some of the macro-level changes in the network and to answer hypothesis 1 and 2. Third, the longitudinal network analysis will be conducted using RSiena, a package designed for Stochastic Actor-Oriented Models (SAOMs). This approach assumes that networks evolve as a result of actors’ individual decisions and preferences, influenced by both structural and attribute-based factors. RSiena enables the modeling of micro-level behavioral changes that collectively shape the macro-level structure of the network over time. Through its estimation framework, the method distinguishes between selection processes, where network ties themselves are the dependent variable, and influence processes, where the outcome concerns changes in actor attributes. This makes RSiena particularly suited for examining how collaboration patterns among scholars emerge and transform across time.
+Descriptive statistics 
+
+# Descriptives
+
+blablabla
+
+# Data preparation
+
+preparing data
+
+
+## Functions and loading data
+```{r}
+rm(list = ls())
+```
+
+```{r}
+fpackage.check = function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave = function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename = substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname = paste(location, datename, file, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload = function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf = function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) |>
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) |>
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+```
+
+
+## Define Network Data Helper Function
+```{r}
+
+
+fcolnet = function(data = scholars, university = c("RU", "VU","UU", "UvT", "RUG", "EUR", "UvA"), discipline = "Sociologie", waves = list(c(2015,
+    2018), c(2019, 2023), c(2024, 2025)), type = c("first")) {
+
+    university = paste0('(', paste0(university, collapse='|' ), ')')
+    discipline = paste0('(', paste0(discipline, collapse='|' ), ')')
+
+    # step 1
+    demographics = data$demographics
+    sample = which(
+        (str_detect(demographics$universiteit.22, university)
+            | str_detect(demographics$universiteit.24, university)
+            | str_detect(demographics$universiteit.25, university)
+        ) & (
+            str_detect(demographics$discipline.22, discipline)
+            | str_detect(demographics$discipline.24, discipline)
+            | str_detect(demographics$discipline.25, discipline)
+        ) |> replace_na(FALSE))
+
+    demographics_soc = demographics[sample, ] |> drop_na(id)
+
+    # step 2
+    ids = demographics_soc$id |> unique()
+
+
+    scholars_sel = list() 
+    for (id_ in ids){
+        scholars_sel[[id_]] = bind_rows(scholars$works) |>
+            filter(author_id == id_)
+    }
+    scholars_sel = bind_rows(scholars$works) 
+    
+
+    nwaves = length(waves)
+    nets = array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works = tibble(
+            works_id = scholars_sel$id, 
+            works_author = scholars_sel$authorships, 
+            works_year = scholars_sel$publication_year
+        )
+
+
+    df_works = df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == "first") {
+        for (j in 1:length(waves)) {
+            df_works_w = df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego = df_works_w$works_author[i][[1]]$id[1]
+                alters = df_works_w$works_author[i][[1]]$id[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] = 1
+                }
+            }
+        }
+    }
+
+    if (type == "last") {
+        for (j in 1:length(waves)) {
+            df_works_w = df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego = rev(df_works_w$works_author[i][[1]]$id[1])
+                alters = rev(df_works_w$works_author[i][[1]]$id[-1])
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] = 1
+                }
+            }
+        }
+    }
+    if (type == "all") {
+        for (j in 1:length(waves)) {
+            df_works_w = df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos = df_works_w$works_author[i][[1]]$id
+                if (sum(ids %in% egos) > 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] = 1
+                }
+            }
+            diag(nets[j,,]) = 0
+        }
+    }
+
+    output = list()
+    output$data = demographics_soc
+    output$nets = nets
+    return(output)
+}
+```
+
+```{r}
+packages = c(
+    "RSiena", "tidyverse",
+    'dplyr', 'stringr' # these packages were added to make the code run
+)
+
+library(igraph)
+library(dplyr)
+
+fpackage.check(packages)
+scholars = fload("C:/Users/hanne/Downloads/20251017scholars.Rda")
+```
+```{r}
+# Build the network
+test <- fcolnet(data = scholars, 
+                university = c("RU", 'UvA'), 
+                discipline = c("Sociologie", "Politicologie"), 
+                waves = list(c(2015, 2018), c(2019, 2023), c(2024, 2025)),
+                type = c("all"))
+
+# First wave
+test_w1 <- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,],
+  mode = "undirected",
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+# Second wave
+test_w2 <- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,],
+  mode = "undirected",
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+# thrird wave
+test_w3 <- igraph::graph_from_adjacency_matrix(
+  test$nets[3,,],
+  mode = "undirected",
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+```
+
+## Descriptives 
+## Table of edges and ties for all waves
+
+```{r}
+
+# Suppose you have a list of graphs for each wave
+graphs <- list(test_w1, test_w2, test_w3)
+
+# Create a data frame with nodes and edges for each wave
+network_nodes_edges <- data.frame(
+  wave = seq_along(graphs),
+  nodes = sapply(graphs, vcount),  # count vertices
+  edges = sapply(graphs, ecount)   # count edges
+)
+
+# View the table
+print(network_nodes_edges)
+
+
+```
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+# List of graphs (waves)
+graphs <- list(test_w1, test_w2, test_w3)
+
+# Function to compute triad census for a graph
+triad_summary <- function(g) {
+  triads <- triad_census(g)  # returns 16 triad counts
+  data.frame(
+    wave = NA,
+    T003 = triads[1],
+    T012 = triads[2],
+    T102 = triads[3],
+    T021D = triads[4],
+    T021U = triads[5],
+    T021C = triads[6],
+    T111D = triads[7],
+    T111U = triads[8],
+    T030T = triads[9],
+    T030C = triads[10],
+    T201 = triads[11],
+    T120D = triads[12],
+    T120U = triads[13],
+    T120C = triads[14],
+    T210 = triads[15],
+    T300 = triads[16]
+  )
+}
+
+# Apply to all waves
+triad_census_table <- bind_rows(lapply(seq_along(graphs), function(i) {
+  df <- triad_summary(graphs[[i]])
+  df$wave <- i
+  df
+}))
+
+# Reorder columns for readability
+triad_census_table <- triad_census_table %>% select(wave, everything())
+
+# Show the table
+print(triad_census_table)
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

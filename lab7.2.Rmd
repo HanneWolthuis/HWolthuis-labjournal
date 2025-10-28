@@ -1,0 +1,310 @@
+---
+title: "lab7.2"
+output: html_document
+date: "2025-10-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# setput
+```{r}
+rm(list = ls())
+
+
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, file, "_", datename, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+packages <- c("tidyverse", "scholar", "openalexR", "rvest", "jsonlite")
+fpackage.check(packages)
+
+library(igraph)
+library(RSiena)
+```
+
+```{r}
+scholars <- fload("C:/Users/hanne/Downloads/scholars_20240924.rda")
+```
+
+```{r}
+fcolnet2 <- function(data = scholars,
+                     university = c("RU", "VU","UU", "UvT", "RUG", "EUR", "UvA", "LEI", "TUE"),
+                     discipline = c("sociology", "political science"),
+                     waves = list(c(2015, 2018), c(2019, 2023)),
+                     type = "first") {
+
+  # step 1
+  demographics <- do.call(rbind.data.frame, data$demographics)
+  demographics <- demographics %>%
+    mutate(
+      Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""),
+      Universiteit2.22 = replace(Universiteit2.22, is.na(Universiteit2.22), ""),
+      Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24), ""),
+      Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""),
+      discipline.22 = replace(discipline.22, is.na(discipline.22), ""),
+      discipline.24 = replace(discipline.24, is.na(discipline.24), "")
+    )
+
+  sample <- which(
+    (demographics$Universiteit1.22 %in% university |
+       demographics$Universiteit2.22 %in% university |
+       demographics$Universiteit1.24 %in% university |
+       demographics$Universiteit2.24 %in% university) &
+      (demographics$discipline.22 %in% discipline |
+         demographics$discipline.24 %in% discipline)
+  )
+
+  demographics_soc <- demographics[sample, ]
+  scholars_sel <- lapply(scholars, "[", sample)
+
+  # step 2
+  ids <- demographics_soc$au_id
+  nwaves <- length(waves)
+  nets <- array(0, dim = c(nwaves, length(ids), length(ids)),
+                dimnames = list(wave = 1:nwaves, ids, ids))
+  dimnames(nets)
+
+  # step 3
+  df_works <- tibble(
+    works_id = unlist(lapply(scholars_sel$work, function(l) l$id)),
+    works_author = unlist(lapply(scholars_sel$work, function(l) l$author), recursive = FALSE),
+    works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year), recursive = FALSE)
+  )
+
+  df_works <- df_works[!duplicated(df_works), ]
+
+  # step 4
+  if (type == "first") {
+    for (j in 1:nwaves) {
+      df_works_w <- df_works[df_works$works_year >= waves[[j]][1] &
+                               df_works$works_year <= waves[[j]][2], ]
+      for (i in 1:nrow(df_works_w)) {
+        ego <- df_works_w$works_author[i][[1]]$au_id[1]
+        alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+        if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+          nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+        }
+      }
+    }
+  }
+
+  if (type == "last") {
+    for (j in 1:nwaves) {
+      df_works_w <- df_works[df_works$works_year >= waves[[j]][1] &
+                               df_works$works_year <= waves[[j]][2], ]
+      for (i in 1:nrow(df_works_w)) {
+        ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+        alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+        if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+          nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+        }
+      }
+    }
+  }
+
+  if (type == "all") {
+    for (j in 1:nwaves) {
+      df_works_w <- df_works[df_works$works_year >= waves[[j]][1] &
+                               df_works$works_year <= waves[[j]][2], ]
+      for (i in 1:nrow(df_works_w)) {
+        egos <- df_works_w$works_author[i][[1]]$au_id
+        if (sum(ids %in% egos) > 0) {
+          nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+        }
+      }
+    }
+  }
+
+  # output
+  output <- list()
+  output$data <- scholars_sel
+  output$nets <- nets
+  output$demographics <- demographics_soc
+  return(output)
+}
+
+```
+
+## setup RSiena
+```{r}
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, datename, file, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+colorize <- function(x, color) {
+    sprintf("<span style='color: %s;'>%s</span>", color, x)
+}
+```
+
+```{r}
+packages = c("RSiena", "devtools", "igraph")
+fpackage.check(packages)
+
+packages = c("RsienaTwoStep")
+fpackage.check(packages)
+```
+```{r}
+# Run your function
+test <- fcolnet2(
+  data = scholars,
+  university = c("RU", "UvA"),
+  discipline = c("sociology", "political science"),
+  waves = list(c(2015, 2018), c(2019, 2023)),
+  type = "all"
+)
+```
+
+```{r}
+# Make it an array
+
+nets_correct <- aperm(test$nets, c(2, 3, 1))
+
+dim(nets_correct)
+
+net_siena <- sienaDependent(nets_correct)
+```
+
+
+```{r}
+# --- 1. Take the network array from your function ---
+nets_correct <- aperm(test$nets, c(2, 3, 1))  # [actors x actors x waves]
+
+# --- 2. Select the first wave as your base for the covariate ---
+wave1 <- nets_correct[,,1]
+
+# --- 3. Symmetrize to make it undirected and weighted ---
+# This will sum the ties in both directions, so if i→j and j→i exist, weight = 2
+wave1_weighted <- wave1 + t(wave1)
+
+# --- 4. Get the numeric department vector ---
+demographics_soc <- test$demographics
+dept_num <- as.numeric(as.factor(demographics_soc$discipline.22))
+
+# --- 5. Matrix indicating cross-department differences ---
+diff_dept_matrix <- outer(dept_num, dept_num, FUN = function(i, j) i != j)
+
+# --- 6. Weighted sum of cross-department ties ---
+cross_weighted <- rowSums(wave1_weighted * diff_dept_matrix, na.rm = TRUE)
+
+# --- 7. Total weighted degree (total tie strength per ego) ---
+total_weighted <- rowSums(wave1_weighted, na.rm = TRUE)
+
+# --- 8. Proportion of weighted cross-department collaboration ---
+cross_prop_weighted <- ifelse(total_weighted > 0, cross_weighted / total_weighted, 0)
+
+# --- 9. Create covariate object for RSiena ---
+interdisc_weighted_cov <- coCovar(cross_prop_weighted)
+
+```
+
+
+```{r}
+# Department (node attribute)
+dept_num <- as.numeric(as.factor(demographics_soc$discipline.24))
+dept_cov <- coCovar(dept_num)
+
+table(as.numeric(cross_prop_weighted))
+
+# Interdisciplinarity (derived actor characteristic)
+interdisc_weighted_cov <- coCovar(cross_prop_weighted)
+
+# Add both to RSiena
+mydata <- sienaDataCreate(net_siena, dept_cov, interdisc_weighted_cov)
+
+```
+
+```{r}
+myeff <- getEffects(mydata)
+myeff <- includeEffects(myeff, density) 
+myeff <- includeEffects(myeff, simX, interaction1 = "dept_cov") 
+myeff <- includeEffects(myeff, altX, interaction1="interdisc_weighted_cov")
+myeff <- includeEffects(myeff, altX, interaction1 = "dept_cov")
+ 
+```
+```{r}
+myAlgorithm <- sienaAlgorithmCreate()
+
+
+ansM1 <- siena07(myAlgorithm, data = mydata, effects = myeff, returnDeps = TRUE)
+ansM1
+```
+
+```{r}
+
+```
+
+```{r}
+myeff <- getEffects(mydata)
+myeff <- includeEffects(myeff, density) 
+#myeff <- includeEffects(myeff, simX, interaction1 = "dept_cov") 
+myeff <- includeEffects(myeff, altX, interaction1 = "dept_cov")
+myeff <- includeEffects(myeff, egoX, interaction1 = "dept_cov")
+
+myAlgorithm2 <- sienaAlgorithmCreate()
+
+
+ansM2 <- siena07(myAlgorithm2, data = mydata, effects = myeff, returnDeps = FALSE)
+ansM2
+```
+
+
+```{r}
+print01Report(mydata)
+```
+
+
+

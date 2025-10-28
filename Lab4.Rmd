@@ -1,0 +1,494 @@
+---
+title: "Journal week 3"
+output: html_document
+date: "2025-09-26"
+---
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(igraph)
+g <- make_graph("Zachary")
+plot(g)
+```
+```{r}
+gmat <- as_adjacency_matrix(g, type = "both", sparse = FALSE)
+gmat
+```
+```{r}
+# number of nodes
+vcount(g)
+# number of edges
+ecount(g)
+
+```
+```{r}
+# changing V
+V(g)$size = betweenness(g, normalized = T, directed = FALSE) * 60 + 10  #after some trial and error
+plot(g, mode = "undirected")
+```
+```{r}
+set.seed(2345)
+l <- layout_with_mds(g)  #https://igraph.org/r/doc/layout_with_mds.html
+plot(g, layout = l)
+```
+
+
+```{r}
+l  #let us take a look at the coordinates
+l[1, 1] <- 4
+l[34, 1] <- -3.5
+plot(g, layout = l)
+```
+
+```{r}
+rm(list = ls())
+```
+
+```{R} 
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, file, "_", datename, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+```
+
+```{r}
+packages <- c("tidyverse", "scholar", "openalexR", "rvest", "jsonlite")
+fpackage.check(packages)
+```
+```{r}
+library(readxl)
+
+df1 <- read_excel("./RAW data/20221219Scholarid_soc_pol.xlsx")
+df2 <- read_excel("./RAW data/20240419Scholarid_soc_pol.xlsx")
+
+
+```
+
+```{r}
+df22_soc <- readxl::read_xlsx("./RAW data/20221219Scholarid_soc_pol.xlsx", sheet = 1)
+df22_soc$discipline <- "sociology"
+df22_soc$Specialisatie <- NA
+df22_pol <- readxl::read_xlsx("./RAW data/20221219Scholarid_soc_pol.xlsx", sheet = 2)
+df22_pol$discipline <- "political science"
+df22 <- rbind(df22_soc, df22_pol)
+df22$year <- 22
+df24_soc <- readxl::read_xlsx("./RAW data/20240419Scholarid_soc_pol.xlsx", sheet = 1)
+df24_soc$discipline <- "sociology"
+df24_soc$Specialisatie <- NA
+df24_pol <- readxl::read_xlsx("./RAW data/20240419Scholarid_soc_pol.xlsx", sheet = 2)
+df24_pol$discipline <- "political science"
+df24 <- rbind(df24_soc, df24_pol)
+df24$year <- 24
+
+df22 <- df22 %>%
+    filter(!is.na(Naam)) %>%
+    mutate(Universiteit1 = sapply(str_split(Universiteit, "/"), "[", 1), Universiteit2 = sapply(str_split(Universiteit,
+        "/"), "[", 2))
+# remove duplicates
+df24 <- df24 %>%
+    filter(!is.na(Naam)) %>%
+    mutate(Universiteit1 = sapply(str_split(Universiteit, "/"), "[", 1), Universiteit2 = sapply(str_split(Universiteit,
+        "/"), "[", 2))
+
+df_scholars <- full_join(x = df22, y = df24, by = "Naam", suffix = c(".22", ".24"))
+# table(df_scholars$Universiteit.22[is.na(df_scholars$Universiteit.24)], useNA = 'always')
+# table(df_scholars$Universiteit.24[is.na(df_scholars$Universiteit.22)], useNA = 'always')
+
+# correct typos
+df_scholars$Universiteit2.22[df_scholars$Naam == "David van der Duin"] <- "UvA"
+
+df_scholars$Universiteit1.22[df_scholars$Naam == "Duygu Uysal Dincol"] <- "Koc University"
+
+df_scholars$Universiteit2.22[df_scholars$Naam == "Duygu Uysal Dincol"] <- "UvA"
+
+
+# correct the type
+df_scholars <- df_scholars %>%
+    mutate(across(c(Universiteit1.22, Universiteit2.22, Universiteit1.24, Universiteit2.24), ~case_when(.x ==
+        "Uvt" ~ "UvT", .x == "UU?" ~ "UU", .x == "Leiden uni" ~ "Leiden", .x == "UvA?" ~ "UvA", .x ==
+        "Uva" ~ "UvA", .x == "UU?" ~ "UU", .x == "Tilburg" ~ "UvT", is.na(.x) ~ "", .default = as.character(.x))))
+
+fshowdf(df_scholars)
+```
+
+```{r}
+instituties <- na.omit(unique(c(df_scholars$Universiteit1.22, df_scholars$Universiteit2.22, df_scholars$Universiteit1.24,
+    df_scholars$Universiteit2.24)))
+df_instituties <- data.frame(instituties)
+fshowdf(instituties)
+```
+```{r}
+# make yourself known to openAlex
+options(openalexR.mailto = "hanne.wolthuis@ru.nl")
+```
+
+```{r}
+oa_fetch(entity = "institutions", search = "Radboud")$id[1]
+```
+
+
+
+```{r}
+# I made a function so it is easier to use.
+f_inst <- function(x) {
+    # I am only interested in institution id and if I find multiple I only take the first one.
+    oa_fetch(entity = "institutions", search = x)$id[1]
+
+}
+
+df_instituties$inst.id[df_instituties$instituties == "UU" | df_instituties$instituties == "UU?"] <- f_inst("Utrecht University")
+df_instituties$inst.id[df_instituties$instituties == "Leiden" | df_instituties$instituties == "Leiden uni"] <- f_inst("Leiden University")
+df_instituties$inst.id[df_instituties$instituties == "RU"] <- f_inst("Radboud University Nijmegen")
+df_instituties$inst.id[df_instituties$instituties == "RUG"] <- f_inst("Rijksuniversiteit Groningen")
+df_instituties$inst.id[df_instituties$instituties == "UvA" | df_instituties$instituties == "Uva" | df_instituties$instituties ==
+    "UvA?"] <- f_inst("Universiteit van Amsterdam")
+df_instituties$inst.id[df_instituties$instituties == "Universita degli studi di Milano"] <- f_inst("University of Milan")
+df_instituties$inst.id[df_instituties$instituties == "VU"] <- f_inst("Vrije Universiteit Amsterdam")
+df_instituties$inst.id[df_instituties$instituties == "VU"] <- f_inst("Vrije Universiteit Amsterdam")
+df_instituties$inst.id[df_instituties$instituties == "EUR"] <- f_inst("Erasmus Universiteit Rotterdam")
+df_instituties$inst.id[df_instituties$instituties == "UvT" | df_instituties$instituties == "Uvt" | df_instituties$instituties ==
+    "Tilburg"] <- f_inst("Universiteit van Tilburg")
+df_instituties$inst.id[df_instituties$instituties == "TU Delft"] <- f_inst("Technische Universiteit Delft")
+df_instituties$inst.id[df_instituties$instituties == "TU Delft"] <- f_inst("Technische Universiteit Delft")
+df_instituties$inst.id[df_instituties$instituties == "WUR"] <- f_inst("Wageningen University & Research")
+df_instituties$inst.id[df_instituties$instituties == "Universiteit Gent"] <- f_inst("Universiteit Gent")
+df_instituties$inst.id[df_instituties$instituties == "Koc University"] <- f_inst("Koç Üniversitesi")
+df_instituties$inst.id[df_instituties$instituties == "Bocconi University"] <- f_inst("Bocconi University")
+df_instituties$inst.id[df_instituties$instituties == "Universiteit Stockholm"] <- f_inst("Stockholm University")
+df_instituties$inst.id[df_instituties$instituties == "University Linköping"] <- f_inst("Linköping University")
+
+```
+
+```{r}
+load("C:/Users/hanne/Downloads/scholars_20240924.rda")
+```
+
+```{r}
+scholars <- fload("C:/Users/hanne/Downloads/scholars_20240924.rda")
+```
+```{r}
+```
+
+
+```{r}
+# (sociology, RU)
+demographics <- do.call(rbind.data.frame, scholars$demographics)
+demographics <- demographics %>%
+    mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+        is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+        ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+        is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+
+sample <- which((demographics$Universiteit1.22 == "RU" | demographics$Universiteit2.22 == "RU" | demographics$Universiteit1.24 ==
+    "RU" | demographics$Universiteit2.24 == "RU") & (demographics$discipline.22 == "sociology" | demographics$discipline.24 ==
+    "sociology"))
+
+demographics_soc <- demographics[sample, ]
+scholars_sel <- lapply(scholars, "[", sample)
+```
+
+```{r}
+ids <- demographics_soc$au_id
+wave2 <- wave1 <- matrix(0, nrow = length(ids), ncol = length(ids), dimnames = list(ids, ids))
+```
+
+```{r}
+works <- scholars_sel$work
+
+works_id <- unlist(lapply(works, function(l) l$id))
+works_author <- unlist(lapply(works, function(l) l$author), recursive = FALSE)
+works_year <- unlist(lapply(works, function(l) l$publication_year), recursive = FALSE)
+
+df_works <- tibble(works_id, works_author, works_year)
+
+dups <- which(duplicated(works_id))
+# why are there some many papers of Batenburg duplicates
+
+df_works <- df_works[-dups, ]
+df_works_w2 <- df_works[df_works$works_year > 2019, ]
+```
+
+```{r}
+# first to others
+for (i in 1:nrow(df_works_w2)) {
+    ego <- df_works_w2$works_author[i][[1]]$au_id[1]
+    alters <- df_works_w2$works_author[i][[1]]$au_id[-1]
+
+    if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+        wave2[which(ids %in% ego), which(ids %in% alters)] <- 1
+    }
+}
+
+# last to others
+for (i in 1:nrow(df_works_w2)) {
+    ego <- rev(df_works_w2$works_author[i][[1]]$au_id)[1]
+    alters <- rev(df_works_w2$works_author[i][[1]]$au_id)[-1]
+
+    if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+        wave2[which(ids %in% ego), which(ids %in% alters)] <- 1
+    }
+}
+
+# undirected
+for (i in 1:nrow(df_works_w2)) {
+    egos <- df_works_w2$works_author[i][[1]]$au_id
+
+    if (sum(ids %in% egos) > 0) {
+        wave2[which(ids %in% egos), which(ids %in% egos)] <- 1
+    }
+}
+```
+
+```{r}
+fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
+    2018), c(2019, 2023)), type = c("first")) {
+
+    # step 1
+    demographics <- do.call(rbind.data.frame, data$demographics)
+    demographics <- demographics %>%
+        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+            is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+            ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+            is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+
+    sample <- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+        university) & (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+
+    demographics_soc <- demographics[sample, ]
+    scholars_sel <- lapply(scholars, "[", sample)
+
+    # step 2
+    ids <- demographics_soc$au_id
+    nwaves <- length(waves)
+    nets <- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works <- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+        recursive = FALSE))
+
+    df_works <- df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == "first") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- df_works_w$works_author[i][[1]]$au_id[1]
+                alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "last") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+                alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+                if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+                }
+            }
+        }
+    }
+
+    if (type == "all") {
+        for (j in 1:nwaves) {
+            df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos <- df_works_w$works_author[i][[1]]$au_id
+                if (sum(ids %in% egos) > 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+                }
+            }
+        }
+    }
+    output <- list()
+    output$data <- scholars_sel
+    output$nets <- nets
+    return(output)
+}
+```
+
+```{r}
+#save the output of your function
+test <- fcolnet(data = scholars, 
+                university = "RU", 
+                discipline = "sociology", 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c("first"))
+
+
+
+
+test_w1 <- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,], #for this example I take the first wave of data. (thus I select the array of networks and take the first matrix)
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL,
+  add.rownames = NULL
+)
+
+plot(test_w1,
+  vertex.label = NA,
+  edge.width = 0.2,
+  edge.arrow.size =0.2)
+```
+```{r}
+test <- fcolnet(data = scholars, 
+                university = c("RU", "UvT"), 
+                discipline = c("sociology", "political science"), 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c("all"))
+
+test_w2 <- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,], #now, I take the second wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#Let us find ego characteristics. 
+#first fish out the data
+df <- test$data
+
+#same complicated structure as 'scholars' thus first make a dataframe from the list in which all info was saved. 
+df_ego <- do.call(rbind.data.frame, df$demographics)
+
+#DO NOT MESS UP THE ORDER! THUS IF YOU JOIN THIS DATA WITH YOUR OWN DATA CHECK THAT ORDER REMAINED THE SAME!! 
+
+plot(test_w2,
+  vertex.color = ifelse(df_ego$discipline.24 == "sociology", "red", "blue"), #now, I can use actor attributes for plotting. 
+  vertex.label = NA,
+  edge.width = 0.5,
+  edge.arrow.size =0.5)
+```
+
+
+```{r}
+test <- fcolnet(data = scholars, 
+                university = c("RU", "UvT", "UU"), 
+                discipline = c("sociology"), 
+                waves = list(c(2015, 2018), c(2019, 2023)), 
+                type = c("all"))
+
+test_w2 <- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,], #now, I take the second wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#Let us find ego characteristics. 
+#first fish out the data
+df <- test$data
+
+#same complicated structure as 'scholars' thus first make a dataframe from the list in which all info was saved. 
+df_ego <- do.call(rbind.data.frame, df$demographics)
+
+#DO NOT MESS UP THE ORDER! THUS IF YOU JOIN THIS DATA WITH YOUR OWN DATA CHECK THAT ORDER REMAINED THE SAME!! 
+
+plot(test_w2,
+  vertex.color = ifelse(df_ego$Universiteit2.24 == "RU", "red",
+                   ifelse(df_ego$Universiteit2.24 == "UvT", "blue","green" )),
+  vertex.label = NA,
+  edge.width = 0.2,
+  edge.arrow.size = 0.2
+)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

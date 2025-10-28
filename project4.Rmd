@@ -1,0 +1,76 @@
+---
+title: "project4"
+output: html_document
+date: "2025-10-27"
+---
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+# `r colorize("**Theory and hypothesis**", "orange")`
+
+Before developing any theoretical framework or hypothesis, it is important to conceptualize what is meant by discipline and interdisciplinarity in this specific study. A discipline is often referred to as a specific branch of knowledge or learning, defined by its focus, boundaries, and recognized subject categories (Zheng et al., 2023). In science, subject categories are a commonly used form of academic discipline. Even though there is some critique on this with regard to the evolution of disciplines over the years, I will closely stick to this conceptualization. For this study, discipline will refer to distinct departments within social sciences, namely political science and sociology. Accordingly, interdisciplinary refers to the collaboration of two scholars of political sociology on a paper. 
+
+One of the most consistent findings in the study of social networks is the principle of homophily, the tendency for individuals to associate and bond with others who are similar to themselves (Santos et al., 2024; Zhang et al., 2017). In academic collaboration networks, similarity can occur along multiple dimensions — disciplinary background, institutional affiliation, geographic proximity, and epistemic approach. Disciplinary boundaries can reinforce these tendencies, as researchers often share similar methodological tools, theoretical language, and publication outlets within their field. These shared elements lower collaboration costs and increase the likelihood of repeated collaboration. Thus, disciplinary homophily is expected to be a strong predictor of tie formation in co-authorship networks.
+
+*Hypothesis 1: Scholars are more likely to collaborate with others from the same department (discipline) than with scholars from other departments (interdisciplinary collaboration).*
+
+The increasing complexity of societal challenges and scientific problems has led to growing attention to interdisciplinary collaboration in research (Spence et al., 2024; Haines et al., 2011). Interdisciplinary research integrates knowledge, methods, and perspectives from different disciplines to address complex questions that transcend traditional academic boundaries (Spence et al., 2024; Haines et al., 2011). These developments have not only influenced individual incentives to collaborate across disciplines but have also contributed to structural transformations in academic collaboration networks. Research has shown a general trend toward more interdisciplinary research over time, often visible in co-authorship patterns and citation structures (Zhang et al., 2017; Zheng et al., 2023).
+
+*Hypothesis 2: The proportion of interdisciplinary collaborations in the network has increased over time.*
+
+Interdisciplinarity, the extent to which a scholar collaborates across disciplinary boundaries, may itself influence future tie formation. Interdisciplinary researchers often act as bridges between otherwise disconnected communities, facilitating knowledge exchange and innovation (Zheng et al., 2023). This aligns with theories of brokerage and bridging social capital, which highlight the strategic advantages of connecting diverse groups (Burt, 2004).
+
+*Hypothesis 3: Scholars with higher levels of interdisciplinarity are more likely to form new collaborations over time than scholars with lower levels of interdisciplinarity.*
+
+In addition to individual characteristics, structural network dynamics influence how collaboration networks evolve. One key structural mechanism is transitivity, or clustering, which reflects the tendency for actors who share a common collaborator to form ties among themselves. Over time, scientific collaboration networks often become more clustered, with the emergence of densely connected groups (Khan & Lee, 2018; Zhang et al., 2017). This tendency is partly explained by preferential attachment, where actors who are already well connected are more likely to attract additional ties, resulting in the formation of cohesive subgroups or “hubs.”
+
+Interdisciplinary scholars, due to their brokerage position, may play a particularly important role in these clustering dynamics. By linking otherwise separated disciplinary communities, they may become focal points around which clusters form. This suggests not only that clustering will increase over time, but also that interdisciplinary actors will occupy structurally central positions within these clusters.
+
+*Hypothesis 4: Collaboration networks will display increasing levels of clustering over time, with clusters forming disproportionately around scholars with higher levels of interdisciplinarity.*
+
+Finally, network evolution is also shaped by preferential attachment. This is the tendency for scholars with many existing collaborations to attract even more collaborators (Khan & Lee, 2018; Capocci et al., 2006). Scholars in central positions are more visible, more active, and often more experienced, making them attractive as collaboration partners. This can reinforce existing hierarchical structures in the network.
+
+*Hypothesis 5: Scholars with higher centrality (degree activity and popularity) are more likely to form new collaborations over time.*
+
+---
+
+##  `r colorize("**References**", "orange")`
+
+Burt, R. S. (2004). Structural holes and good ideas. *American Journal of Sociology, 110*(2), 349–399. https://doi.org/10.1086/421787  
+
+Capocci, A., Servedio, V. D., Colaiori, F., Buriol, L. S., Donato, D., Leonardi, S., & Caldarelli, G. (2006). Preferential attachment in the growth of social networks: The internet encyclopedia Wikipedia. *Physical Review E—Statistical, Nonlinear, and Soft Matter Physics, 74*(3), 036116.  
+
+Haines, V. A., Godley, J., & Hawe, P. (2011). Understanding interdisciplinary collaborations as social networks. *American Journal of Community Psychology, 47*(1–2), 1–11.  
+
+Khan, J., & Lee, S. (2018). Online social networks (OSN) evolution model based on homophily and preferential attachment. *Symmetry, 10*(11), 654.  
+
+Santos, J. M., Horta, H., & Feng, S. (2024). Homophily and its effects on collaborations and repeated collaborations: a study across scientific fields. *Scientometrics, 129*(3), 1801–1823. https://doi.org/10.1007/s11192-024-04950-3  
+
+Spence, N., Markauskaite, L., & McEwen, C. (2024). Why and how academics become interdisciplinary researchers early in their careers. *Higher Education Research & Development*, 1–16.  
+
+Zhang, C., Bu, Y., Ding, Y., & Xu, J. (2017). Understanding scientific collaboration: Homophily, transitivity, and preferential attachment. *Journal of the Association for Information Science and Technology, 69*(1), 72–86. https://doi.org/10.1002/asi.23916  
+
+Zheng, J., Zhang, K., Han, B., & Hou, J. (2023). Research interdisciplinarity and citation impact: A network analysis of social networking sites research. *SAGE Open, 13*(3). https://doi.org/10.1177/21582440231193472
+
