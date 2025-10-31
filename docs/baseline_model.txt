@@ -1,0 +1,746 @@
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 17:04:44
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 530915.
+Effects object used: myeff 
+Model Type:
+ Pairwise mutual model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 17:06:35
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 196030.
+Effects object used: myeff 
+Model Type:
+ Pairwise mutual model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 2 parameters, 2 statistics
+
+The user asked for early end of phase 2.
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 1279 iterations.
+Parameter estimates based on 279 iterations,
+basic rate parameters as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.   25.0680   37.5268   0.6680 
+  2. 1695.4360 3307.0073   0.5127 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.668 .
+One or more of the t-statistics are rather large.
+Convergence of the algorithm is doubtful.
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 1279 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0.1  Rate parameter period 1     0.7908  (   0.1309)
+ 0.2  Rate parameter period 2     0.2941  (   0.0237)
+
+Other parameters:
+ 1. eval:  degree (density)                                       -3.4379  (   0.0491)
+ 2. eval:  degree act+pop                                          0.0680  (   0.0037)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.002      0.000
+    -0.758      0.000
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 4784.84 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 19:05:17
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 594391.
+Effects object used: myeff 
+Model Type:
+ Pairwise mutual model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+These were calculated from the data.
+
+ 2 parameters, 2 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 21:57:28
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 618511.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 21:58:23
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 927766.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 21:58:45
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 307669.
+Effects object used: myeff 
+Model Type:
+ Pairwise mutual model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 22:00:20
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 801573.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 22:03:59
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 876154.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 22:05:10
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 361355.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 22:05:38
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 446091.
+Effects object used: myeff 
+Model Type:
+ Initiative model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 1887 iterations.
+Parameter estimates based on 887 iterations,
+basic rate parameters as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.  -0.1700   37.9693  -0.0045 
+  2.   0.7710   54.5924   0.0141 
+  3.  17.6280 1656.2800   0.0106 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.0299 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 1887 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0.1  Rate parameter period 1    21.7896  (   6.0751)
+ 0.2  Rate parameter period 2     6.5309  (   0.5324)
+
+Other parameters:
+ 1. eval:  degree (density)                                       -2.3679  (   0.0361)
+ 2. eval:  transitive triads                                       0.7955  (   0.0490)
+ 3. eval:  degree act+pop                                          0.0304  (   0.0038)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.001      0.000      0.000
+     0.187      0.002      0.000
+    -0.813     -0.444      0.000
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 3897.62 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 29/10/2025 23:27:00
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 87597.
+Effects object used: myeff 
+Model Type:
+ Initiative model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 1801 iterations.
+Parameter estimates based on 801 iterations,
+basic rate parameters as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.   2.6800   38.3395   0.0699 
+  2.   6.0360   57.6158   0.1048 
+  3. 109.7280 1668.7806   0.0658 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.1382 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 1801 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0.1  Rate parameter period 1    21.3162  (   5.9827)
+ 0.2  Rate parameter period 2     6.5408  (   0.5143)
+
+Other parameters:
+ 1. eval:  degree (density)                                       -2.3631  (   0.0366)
+ 2. eval:  transitive triads                                       0.8019  (   0.0506)
+ 3. eval:  degree act+pop                                          0.0300  (   0.0039)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.001      0.000      0.000
+     0.234      0.003      0.000
+    -0.829     -0.472      0.000
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 1597.12 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 30/10/2025 21:32:53
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 786188.
+Effects object used: myeff 
+Model Type:
+ Initiative model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 1894 iterations.
+Parameter estimates based on 894 iterations,
+basic rate parameters as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.   3.2280   38.3344   0.0842 
+  2.   5.0000   57.1444   0.0875 
+  3. 110.5280 1673.5979   0.0660 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.1281 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 1894 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0.1  Rate parameter period 1    21.4385  (   5.8722)
+ 0.2  Rate parameter period 2     6.5056  (   0.5214)
+
+Other parameters:
+ 1. eval:  degree (density)                                       -2.3623  (   0.0377)
+ 2. eval:  transitive triads                                       0.7993  (   0.0511)
+ 3. eval:  degree act+pop                                          0.0300  (   0.0042)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.001      0.001      0.000
+     0.306      0.003      0.000
+    -0.854     -0.533      0.000
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 1409.34 seconds.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 31/10/2025 12:40:35
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 119215.
+Effects object used: myeff 
+Model Type:
+ Initiative model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 31/10/2025 12:42:59
+New results follow.
+-----------------------------------
+
+RSiena version 1.5.0 (06 jul 25)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 592529.
+Effects object used: myeff 
+Model Type:
+ Initiative model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distances for simulations are
+period   :   1   2
+distance :  754 684.
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0.1  Rate parameter                         3.1890
+  0.2  Rate parameter                         2.8930
+  1. eval:  degree (density)                               -1.6452
+  2. eval:  transitive triads                               0.0000
+  3. eval:  degree act+pop                                  0.0000
+
+
+Values of target statistics are
+  1. Number of edges                                                    646.0000
+  2. Number of transitive triads                                        259.0000
+  3. Sum of squared degrees                                            13916.0000
+These were calculated from the data.
+
+ 3 parameters, 3 statistics
+
+Total computation time 9.72 seconds.

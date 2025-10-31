@@ -30,6 +30,14 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 # `r colorize("**Theory and hypothesis**", "orange")`
 
+KS: departments in aliena 1 is misschien verwarrende term, ander woord weet ik ff niet.
+
+Laatste regel al. 1, political sociology moet zijn political science and sociology.
+
+In alinea 3 mis ik nog de expliciete link tussen advantagous position en het nieuwe ties aangaan. Misschien dat je kan putten uit twee keer zo veel researcher als het ware?
+
+Hypothese 4 is logischer denk ik als je hypo 5 preferential attachment al hebt uitgelegd maarmisschien veel gedoe om alles om te gooien. 
+
 Before developing any theoretical framework or hypothesis, it is important to conceptualize what is meant by discipline and interdisciplinarity in this specific study. A discipline is often referred to as a specific branch of knowledge or learning, defined by its focus, boundaries, and recognized subject categories (Zheng et al., 2023). In science, subject categories are a commonly used form of academic discipline. Even though there is some critique on this with regard to the evolution of disciplines over the years, I will closely stick to this conceptualization. For this study, discipline will refer to distinct departments within social sciences, namely political science and sociology. Accordingly, interdisciplinary refers to the collaboration of two scholars of political sociology on a paper. 
 
 One of the most consistent findings in the study of social networks is the principle of homophily, the tendency for individuals to associate and bond with others who are similar to themselves (Santos et al., 2024; Zhang et al., 2017). In academic collaboration networks, similarity can occur along multiple dimensions — disciplinary background, institutional affiliation, geographic proximity, and epistemic approach. Disciplinary boundaries can reinforce these tendencies, as researchers often share similar methodological tools, theoretical language, and publication outlets within their field. These shared elements lower collaboration costs and increase the likelihood of repeated collaboration. Thus, disciplinary homophily is expected to be a strong predictor of tie formation in co-authorship networks.

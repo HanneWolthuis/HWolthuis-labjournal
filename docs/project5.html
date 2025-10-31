@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Hanne Wolthuis" />
+
+
+<title>Final project Methods</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    My journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="lab2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="lab3.html">Week 3</a>
+    </li>
+    <li>
+      <a href="lab4.html">Week 4</a>
+    </li>
+    <li>
+      <a href="lab5.2.html">Week 5</a>
+    </li>
+    <li>
+      <a href="lab6.html">Week 6</a>
+    </li>
+    <li>
+      <a href="Lab7.html">Week 7</a>
+    </li>
+    <li>
+      <a href="lab7.2.html">Week 7.2</a>
+    </li>
+    <li>
+      <a href="Lab8.html">Week 8</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Final paper
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project3.html">Introduction</a>
+    </li>
+    <li>
+      <a href="project4.html">Theory and hypothesis </a>
+    </li>
+    <li>
+      <a href="project2.html">Methods and analytical strategy</a>
+    </li>
+    <li>
+      <a href="project5.html">Analysis and results </a>
+    </li>
+    <li>
+      <a href="project7.html">Conclusion </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/HanneWolthuis/HWolthuis-labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Final project Methods</h1>
+<h4 class="author">Hanne Wolthuis</h4>
+
+</div>
+
+
+<p>Last compiled on oktober, 2025</p>
+<p><br></p>
+<pre class="r test"><code>rm(list = ls())
+
+fpackage.check = function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave = function(x, file = NULL, location = &quot;./data/processed/&quot;) {
+    ifelse(!dir.exists(&quot;data&quot;), dir.create(&quot;data&quot;), FALSE)
+    ifelse(!dir.exists(&quot;data/processed&quot;), dir.create(&quot;data/processed&quot;), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename = substr(gsub(&quot;[:-]&quot;, &quot;&quot;, Sys.time()), 1, 8)
+    totalname = paste(location, datename, file, &quot;.rda&quot;, sep = &quot;&quot;)
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload = function(filename) {
+    load(filename)
+    get(ls()[ls() != &quot;filename&quot;])
+}
+
+fshowdf = function(x, ...) {
+    knitr::kable(x, digits = 2, &quot;html&quot;, ...) |&gt;
+        kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;)) |&gt;
+        kableExtra::scroll_box(width = &quot;100%&quot;, height = &quot;300px&quot;)
+}
+
+
+
+
+fcolnet = function(data = scholars, university = c(&quot;RU&quot;, &quot;VU&quot;,&quot;UU&quot;, &quot;UvT&quot;, &quot;RUG&quot;, &quot;EUR&quot;, &quot;UvA&quot;), discipline = &quot;Sociologie&quot;, waves = list(c(2015,
+    2018), c(2019, 2023), c(2024, 2025)), type = c(&quot;first&quot;)) {
+
+    university = paste0(&#39;(&#39;, paste0(university, collapse=&#39;|&#39; ), &#39;)&#39;)
+    discipline = paste0(&#39;(&#39;, paste0(discipline, collapse=&#39;|&#39; ), &#39;)&#39;)
+
+    # step 1
+    demographics = data$demographics
+    sample = which(
+        (str_detect(demographics$universiteit.22, university)
+            | str_detect(demographics$universiteit.24, university)
+            | str_detect(demographics$universiteit.25, university)
+        ) &amp; (
+            str_detect(demographics$discipline.22, discipline)
+            | str_detect(demographics$discipline.24, discipline)
+            | str_detect(demographics$discipline.25, discipline)
+        ) |&gt; replace_na(FALSE))
+
+    demographics_soc = demographics[sample, ] |&gt; drop_na(id)
+
+    # step 2
+    ids = demographics_soc$id |&gt; unique()
+
+    scholars_sel = list() 
+    for (id_ in ids){
+        scholars_sel[[id_]] = bind_rows(scholars$works) |&gt;
+            filter(author_id == id_)
+    }
+    scholars_sel = bind_rows(scholars$works) 
+    
+
+    nwaves = length(waves)
+    nets = array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+        ids))
+    dimnames(nets)
+
+    # step 3
+    df_works = tibble(
+            works_id = scholars_sel$id, 
+            works_author = scholars_sel$authorships, 
+            works_year = scholars_sel$publication_year
+        )
+
+    df_works = df_works[!duplicated(df_works), ]
+
+    # step 4
+    if (type == &quot;first&quot;) {
+        for (j in 1:length(waves)) {
+            df_works_w = df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego = df_works_w$works_author[i][[1]]$id[1]
+                alters = df_works_w$works_author[i][[1]]$id[-1]
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] = 1
+                }
+            }
+        }
+    }
+
+    if (type == &quot;last&quot;) {
+        for (j in 1:length(waves)) {
+            df_works_w = df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                ego = rev(df_works_w$works_author[i][[1]]$id[1])
+                alters = rev(df_works_w$works_author[i][[1]]$id[-1])
+                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
+                  nets[j, which(ids %in% ego), which(ids %in% alters)] = 1
+                }
+            }
+        }
+    }
+    if (type == &quot;all&quot;) {
+        for (j in 1:length(waves)) {
+            df_works_w = df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
+                ]
+            for (i in 1:nrow(df_works_w)) {
+                egos = df_works_w$works_author[i][[1]]$id
+                if (sum(ids %in% egos) &gt; 0) {
+                  nets[j, which(ids %in% egos), which(ids %in% egos)] = 1
+                }
+            }
+            diag(nets[j,,]) = 0
+        }
+    }
+
+    output = list()
+    output$data = demographics_soc
+    output$nets = nets
+    return(output)
+}
+
+packages = c(
+    &quot;RSiena&quot;, &quot;tidyverse&quot;,
+    &quot;dplyr&quot;, &quot;stringr&quot;, &quot;scholar&quot;, &quot;openalexR&quot;, &quot;rvest&quot;, &quot;jsonlite&quot; # these packages were added to make the code run
+)
+
+
+
+library(igraph)
+
+
+fpackage.check(packages)
+scholars = fload(&quot;C:/Users/hanne/Downloads/20251017scholars.Rda&quot;)</code></pre>
+<pre class="r test"><code># Build the network
+test &lt;- fcolnet(data = scholars, 
+                university = c(&quot;RU&quot;, &#39;UvA&#39;, &quot;RUG&quot;, &quot;UU&quot;), 
+                discipline = c(&quot;Sociologie&quot;, &quot;Politicologie&quot;), 
+                waves = list(c(2015, 2018), c(2019, 2023), c(2024, 2025)),
+                type = c(&quot;all&quot;))
+
+# --- Prepare ego-level data for later use ---
+df_ego &lt;- test$data
+
+# First wave
+test_w1 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[1,,],
+  mode = &quot;undirected&quot;,
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+# Second wave
+test_w2 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[2,,],
+  mode = &quot;undirected&quot;,
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+# thrird wave
+test_w3 &lt;- igraph::graph_from_adjacency_matrix(
+  test$nets[3,,],
+  mode = &quot;undirected&quot;,
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+# Make it an array
+
+nets_correct &lt;- aperm(test$nets, c(2, 3, 1))
+
+dim(nets_correct)
+
+net_siena &lt;- sienaDependent(nets_correct)</code></pre>
+<pre class="r test"><code># ---------- Bereken cross-department variabele voor alle waves ----------
+
+# Vereist: nets_correct (array van dim [actors x actors x waves])
+#           df_ego met kolom discipline.22
+
+# 1. Disciplinevector voorbereiden
+dept_num &lt;- as.numeric(as.factor(df_ego$discipline.22))
+dept_num[is.na(dept_num)] &lt;- 99  # vervang missende waarden door neutrale code
+
+# 2. Functie om cross-score per wave te berekenen
+get_cross_score &lt;- function(wave_matrix, dept_num) {
+  # Verschilmatrix: TRUE als alter andere discipline heeft
+  diff_dept_matrix &lt;- outer(dept_num, dept_num, FUN = function(i, j) i != j)
+  
+  # Aantal cross-department ties per ego
+  cross_out_counts &lt;- rowSums(wave_matrix * diff_dept_matrix, na.rm = TRUE)
+  
+  # Totale outdegree per ego
+  ego_outdeg &lt;- rowSums(wave_matrix, na.rm = TRUE)
+  
+  # Proportie cross-department relaties
+  cross_prop &lt;- ifelse(ego_outdeg &gt; 0, cross_out_counts / ego_outdeg, 0)
+  
+  # Indirecte blootstelling (alter heeft cross_prop &gt; 0)
+  indirect_flag &lt;- rep(0, length(cross_prop))
+  for (i in seq_along(cross_prop)) {
+    alters &lt;- which(wave_matrix[i, ] != 0)
+    if (length(alters) &gt; 0) {
+      if (cross_prop[i] == 0 &amp;&amp; any(cross_prop[alters] &gt; 0)) {
+        indirect_flag[i] &lt;- 1
+      }
+    }
+  }
+  
+  # Categoriseer score
+  cross_score &lt;- dplyr::case_when(
+    cross_prop == 0 &amp; indirect_flag == 0 ~ 0,
+    cross_prop == 0 &amp; indirect_flag == 1 ~ 1,
+    cross_prop &gt; 0 &amp; cross_prop &lt;= 0.25 ~ 2,
+    cross_prop &gt; 0.25 &amp; cross_prop &lt;= 0.5 ~ 3,
+    cross_prop &gt; 0.5 ~ 4
+  )
+  
+  return(cross_score)
+}
+
+# 3. Toepassen op alle waves
+nwaves &lt;- dim(nets_correct)[3]
+
+cross_scores &lt;- sapply(1:nwaves, function(w) {
+  get_cross_score(nets_correct[,,w], dept_num)
+})
+
+# 4. RSiena varCovar-object aanmaken
+cross_cov &lt;- varCovar(cross_scores)
+
+#Department covar
+demographics_soc &lt;- test$data
+
+# Replace empty / missing with NA
+demographics_soc$discipline.22[demographics_soc$discipline.22 == &quot;missing&quot;] &lt;- NA
+
+# Keep only the two real departments
+dept_factor &lt;- factor(demographics_soc$discipline.22,
+                      levels = c(&quot;Politicologie&quot;, &quot;Sociologie&quot;))
+
+# Convert to numeric for RSiena
+dept_num &lt;- as.numeric(dept_factor)
+
+# Create a covariate object (RSiena ignores NAs automatically)
+dept_cov &lt;- coCovar(dept_num)</code></pre>
+<div id="analysis-and-results" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> <span
+style="color: orange;"><strong>Analysis and Results</strong></span></h1>
+<div id="network-descriptives" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> <span
+style="color: orange;">Network descriptives</span></h2>
+<p>The collaboration networks analyzed in this study consist of 474
+scholars across three waves (2015–2018, 2019–2023, 2024–2025). The
+tables below present key network statistics, including the number of
+nodes, edges, dyads, triad census, transitivity, and the proportion of
+interdisciplinary ties. In wave 1, there were 474 nodes and 226 edges,
+indicating relatively sparse connectivity. The number of edges increased
+in wave 2 to 381, suggesting more active collaboration, before declining
+to 265 in wave 3. This decline is consistent with the shorter time
+period of wave 3, which likely limits the number of co-authored papers
+captured in the network. All dyads are either null (no tie) or mutual
+(tie present), reflecting the undirected nature of co-authorship
+networks where all ties are treated as reciprocal. Triad census measures
+reveal the prevalence of various three-node configurations. Most triads
+are disconnected (T003), reflecting network sparsity, while a small
+number of partially connected and fully connected triads appear across
+all waves (T102, T201, T300). The transitivity coefficient, which
+indicates the likelihood that two collaborators of a scholar are
+themselves connected, is moderate but stable over time. This suggests
+that while collaborations are not highly clustered, there is a modest
+tendency for local closure, consistent with triadic processes in
+academic networks. The proportion of interdisciplinary ties,
+collaborations between scholars from different departments, is
+relatively low but consistent across waves. In raw counts, wave 1 has 13
+interdisciplinary ties (6% of total edges), wave 2 has 18 ties (5%), and
+wave 3 has 10 ties (7%). These results show now clear support for the
+increase of interdisciplinary ties over time. Overall, these descriptive
+statistics provide a foundation for examining both actor-level
+mechanisms (disciplinary affiliation, interdisciplinarity) and
+structural mechanisms (triadic closure, transitivity) in the evolution
+of scholarly collaboration networks.</p>
+<div id="edges-and-ties-for-all-waves" class="section level3"
+number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Edges and ties for
+all waves</h3>
+<pre class="r test"><code># Suppose you have a list of graphs for each wave
+graphs &lt;- list(test_w1, test_w2, test_w3)
+
+# Create a data frame with nodes and edges for each wave
+network_nodes_edges &lt;- data.frame(
+  wave = seq_along(graphs),
+  nodes = sapply(graphs, vcount),  # count vertices
+  edges = sapply(graphs, ecount)   # count edges
+)
+
+# View the table
+fshowdf(network_nodes_edges)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+wave
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+nodes
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+edges
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+474
+</td>
+<td style="text-align:right;">
+226
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+474
+</td>
+<td style="text-align:right;">
+381
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+474
+</td>
+<td style="text-align:right;">
+265
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="dyad-census" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Dyad Census</h3>
+<pre class="r test"><code># List of graphs (waves)
+graphs &lt;- list(test_w1, test_w2, test_w3)
+
+# Function to compute dyad census for a graph
+dyad_summary &lt;- function(g) {
+  dyads &lt;- dyad_census(g)  # returns null, asymmetric, mutual
+  data.frame(
+    wave = NA,
+    null_dyads = dyads$null,
+    asymmetric_dyads = dyads$asym,
+    mutual_dyads = dyads$mut
+  )
+}
+
+# Apply to all waves
+dyad_census_table &lt;- bind_rows(lapply(seq_along(graphs), function(i) {
+  df &lt;- dyad_summary(graphs[[i]])
+  df$wave &lt;- i
+  df
+}))
+
+# Reorder columns for readability
+dyad_census_table &lt;- dyad_census_table %&gt;% select(wave, everything())
+
+# Show the table
+fshowdf(dyad_census_table)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+wave
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+null_dyads
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+asymmetric_dyads
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mutual_dyads
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+111875
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+226
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+111720
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+381
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+111836
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+265
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="tryad-census" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Tryad Census</h3>
+<pre class="r test"><code># List of graphs (waves)
+graphs &lt;- list(test_w1, test_w2, test_w3)
+
+# Function to compute triad census for a graph
+triad_summary &lt;- function(g) {
+  triads &lt;- triad_census(g)  # returns 16 triad counts
+  data.frame(
+    wave = NA,
+    T003 = triads[1],
+    T012 = triads[2],
+    T102 = triads[3],
+    T021D = triads[4],
+    T021U = triads[5],
+    T021C = triads[6],
+    T111D = triads[7],
+    T111U = triads[8],
+    T030T = triads[9],
+    T030C = triads[10],
+    T201 = triads[11],
+    T120D = triads[12],
+    T120U = triads[13],
+    T120C = triads[14],
+    T210 = triads[15],
+    T300 = triads[16]
+  )
+}
+
+# Apply to all waves
+triad_census_table &lt;- bind_rows(lapply(seq_along(graphs), function(i) {
+  df &lt;- triad_summary(graphs[[i]])
+  df$wave &lt;- i
+  df
+}))
+
+# Reorder columns for readability
+triad_census_table &lt;- triad_census_table %&gt;% select(wave, everything())
+
+# Show the table
+show(triad_census_table)</code></pre>
+<pre class="test2"><code>#&gt;   wave     T003 T012   T102 T021D T021U T021C T111D T111U T030T T030C T201 T120D T120U T120C T210
+#&gt; 1    1 17531449    0 104964     0     0     0     0     0     0     0  725     0     0     0    0
+#&gt; 2    2 17459133    0 176515     0     0     0     0     0     0     0 1411     0     0     0    0
+#&gt; 3    3 17512977    0 123508     0     0     0     0     0     0     0  645     0     0     0    0
+#&gt;   T300
+#&gt; 1   86
+#&gt; 2  165
+#&gt; 3   94</code></pre>
+</div>
+<div id="transitivity" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Transitivity</h3>
+<pre class="r test"><code>network_trans &lt;- data.frame(
+  trans_w1 = transitivity(test_w1),
+  trans_w2 = transitivity(test_w2),
+  trans_w3 = transitivity(test_w3)
+)
+
+fshowdf(network_trans)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+trans_w1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+trans_w2
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+trans_w3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="proportion-interdisciplinary-ties" class="section level3"
+number="1.1.5">
+<h3><span class="header-section-number">1.1.5</span> proportion
+interdisciplinary ties</h3>
+<pre class="r test"><code># --- Function to count interdisciplinary ties for undirected networks ---
+count_interdiscip &lt;- function(adj_matrix, discipline_vec) {
+  # Only consider upper triangle to avoid double counting
+  edges &lt;- which(upper.tri(adj_matrix) &amp; adj_matrix != 0, arr.ind = TRUE)
+  
+  # Count interdisciplinary ties
+  interdiscip_count &lt;- sum(
+    (discipline_vec[edges[,1]] == &quot;Sociologie&quot; &amp; discipline_vec[edges[,2]] == &quot;Politicologie&quot;) |
+    (discipline_vec[edges[,1]] == &quot;Politicologie&quot; &amp; discipline_vec[edges[,2]] == &quot;Sociologie&quot;)
+  )
+  
+  # Total number of edges in upper triangle
+  total_edges &lt;- nrow(edges)
+  
+  # Proportion of interdisciplinary ties
+  proportion &lt;- ifelse(total_edges &gt; 0, interdiscip_count / total_edges, NA)
+  
+  return(c(interdiscip_count = interdiscip_count, proportion = proportion))
+}
+
+# --- Wave 1 ---
+valid_nodes_w1 &lt;- which(!is.na(df_ego$discipline.22))
+adj_w1_clean &lt;- test$nets[1, valid_nodes_w1, valid_nodes_w1]
+discipline_w1_clean &lt;- df_ego$discipline.22[valid_nodes_w1]
+interdiscip_w1 &lt;- count_interdiscip(adj_w1_clean, discipline_w1_clean)
+
+# --- Wave 2 ---
+valid_nodes_w2 &lt;- which(!is.na(df_ego$discipline.24))
+adj_w2_clean &lt;- test$nets[2, valid_nodes_w2, valid_nodes_w2]
+discipline_w2_clean &lt;- df_ego$discipline.24[valid_nodes_w2]
+interdiscip_w2 &lt;- count_interdiscip(adj_w2_clean, discipline_w2_clean)
+
+# --- Wave 3 ---
+valid_nodes_w3 &lt;- which(!is.na(df_ego$discipline.25))
+adj_w3_clean &lt;- test$nets[3, valid_nodes_w3, valid_nodes_w3]
+discipline_w3_clean &lt;- df_ego$discipline.25[valid_nodes_w3]
+interdiscip_w3 &lt;- count_interdiscip(adj_w3_clean, discipline_w3_clean)
+
+# --- Create summary table ---
+interdiscip_table &lt;- data.frame(
+  wave = c(1, 2, 3),
+  interdisciplinary_ties = c(interdiscip_w1[&quot;interdiscip_count&quot;], interdiscip_w2[&quot;interdiscip_count&quot;], interdiscip_w3[&quot;interdiscip_count&quot;]),
+  proportion = c(interdiscip_w1[&quot;proportion&quot;], interdiscip_w2[&quot;proportion&quot;], interdiscip_w3[&quot;proportion&quot;])
+)
+
+# --- Show results ---
+fshowdf(interdiscip_table)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+wave
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+interdisciplinary_ties
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+proportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="model-visualisations" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> <span
+style="color: orange;">Model visualisations</span></h2>
+<p>Figures 1–3 display the co-authorship networks across three periods
+(2015–2019, 2019–2023, and 2024–2025). Isolates—authors without any
+collaborations in the respective period—were removed, which makes the
+networks appear visually denser than they are in reality. Still, some
+clear trends emerge. Collaboration remains strongly discipline-bound:
+sociologists (circles) and political scientists (squares) mostly cluster
+within their own disciplinary groups, with only limited
+cross-disciplinary connections. There is little visual indication of a
+sustained increase in interdisciplinary collaboration over time, the
+disciplinary clusters remain largely distinct, with only a few bridging
+ties appearing and disappearing across waves.</p>
+<p>However, the networks do show structural evolution. From Wave 1 to
+Wave 2, the visualizations reveal denser local groupings and more
+tightly connected subnetworks, suggesting higher clustering and
+transitivity. By Wave 3, the network expands but remains organized
+around similar clustered cores, implying that existing collaborative
+structures persist rather than diversify. The visualization algorithm
+somewhat “suppresses” the real magnitude of these differences because
+isolates are excluded—meaning that in the full networks, the contrast
+between waves would likely be even stronger.</p>
+<p>Figure 4 visualizes the same collaboration networks colored by
+interdisciplinarity scores (0–4), allowing for a more direct assessment
+of the relationship between interdisciplinarity and collaboration
+activity. Interestingly, the most interdisciplinary scholars (scores
+3–4, in darker orange and red) are not necessarily those with the
+largest number of connections or the most central positions in the
+network. Instead, researchers with moderate interdisciplinarity (scores
+1–2) appear more frequently at the core of collaborative clusters,
+suggesting that these scholars are more active or popular as
+collaborators.</p>
+<pre class="r test"><code>library(igraph)  # igraph functions will override
+
+
+# --- Wave 1 ---
+isolates_w1 &lt;- which(igraph::degree(test_w1) == 0)
+no_isolatesw1 &lt;- igraph::delete_vertices(test_w1, isolates_w1)
+
+
+# Vertex shapes
+vertex_shapes1 &lt;- ifelse(df_ego$discipline.22 == &quot;Sociologie&quot;, &quot;circle&quot;, &quot;square&quot;)
+vertex_shapes1[is.na(vertex_shapes1)] &lt;- &quot;rectangle&quot;
+vertex_shapes1 &lt;- vertex_shapes1[-isolates_w1]
+
+# Vertex colors
+vertex_color1 &lt;- ifelse(df_ego$universiteit.22 == &quot;RU&quot;, &quot;brown3&quot;,
+                  ifelse(df_ego$universiteit.22 == &quot;UU&quot;, &quot;gold&quot;,
+                  ifelse(df_ego$universiteit.22 == &quot;RUG&quot;, &quot;orange&quot;,
+                  ifelse(df_ego$universiteit.22 == &quot;UvA&quot;, &quot;darkcyan&quot;, &quot;grey&quot;))))
+
+vertex_color1 &lt;- vertex_color1[-isolates_w1]
+
+# --- Wave 2 ---
+isolates_w2 &lt;- which(igraph::degree(test_w2) == 0)
+no_isolatesw2 &lt;- igraph::delete_vertices(test_w2, isolates_w2)
+
+
+# Vertex shapes
+vertex_shapes2 &lt;- ifelse(df_ego$discipline.24 == &quot;Sociologie&quot;, &quot;circle&quot;, &quot;square&quot;)
+vertex_shapes2[is.na(vertex_shapes2)] &lt;- &quot;rectangle&quot;
+vertex_shapes2 &lt;- vertex_shapes2[-isolates_w2]
+
+# Vertex colors
+vertex_color2 &lt;- ifelse(df_ego$universiteit.24 == &quot;RU&quot;, &quot;brown3&quot;,
+                  ifelse(df_ego$universiteit.24 == &quot;UU&quot;, &quot;gold&quot;,
+                  ifelse(df_ego$universiteit.24 == &quot;RUG&quot;, &quot;orange&quot;,
+                  ifelse(df_ego$universiteit.24 == &quot;UvA&quot;, &quot;darkcyan&quot;, &quot;grey&quot;))))
+vertex_color2 &lt;- vertex_color2[-isolates_w2]
+
+# --- Wave 3 ---
+isolates_w3 &lt;- which(igraph::degree(test_w3) == 0)
+no_isolatesw3 &lt;- igraph::delete_vertices(test_w3, isolates_w3)
+
+
+# Vertex shapes
+vertex_shapes3 &lt;- ifelse(df_ego$discipline.25 == &quot;Sociologie&quot;, &quot;circle&quot;, &quot;square&quot;)
+vertex_shapes3[is.na(vertex_shapes3)] &lt;- &quot;rectangle&quot;
+vertex_shapes3 &lt;- vertex_shapes3[-isolates_w3]
+
+# Vertex colors
+vertex_color3 &lt;- ifelse(df_ego$universiteit.25 == &quot;RU&quot;, &quot;brown3&quot;,
+                  ifelse(df_ego$universiteit.25 == &quot;UU&quot;, &quot;gold&quot;,
+                  ifelse(df_ego$universiteit.25 == &quot;RUG&quot;, &quot;orange&quot;,
+                  ifelse(df_ego$universiteit.25 == &quot;UvA&quot;, &quot;darkcyan&quot;, &quot;grey&quot;))))
+
+vertex_color3 &lt;- vertex_color3[-isolates_w3]
+
+# Zelfde layout voor beide netwerken
+set.seed(123)
+layout_fr &lt;- igraph::layout_with_fr(test_w1)</code></pre>
+<pre class="r test"><code># -----------------------------
+# 1. Nieuwe lege plotruimte
+# -----------------------------
+plot.new()
+
+# -----------------------------
+# 2. Legenda universiteit (kleuren)
+# -----------------------------
+legend(&quot;top&quot;,
+       legend = c(&quot;RU&quot;, &quot;UU&quot;, &quot;RUG&quot;, &quot;UvA&quot;, &quot;Other&quot;),
+       col = c(&quot;brown3&quot;, &quot;gold&quot;, &quot;orange&quot;, &quot;darkcyan&quot;, &quot;grey&quot;),
+       pch = 19,
+       pt.cex = 2,
+       horiz = TRUE,
+       bty = &quot;n&quot;,
+       title = &quot;University&quot;,
+       inset = c(0, 0.2)
+)
+
+# -----------------------------
+# 3. Legenda discipline (vormen)
+# -----------------------------
+legend(&quot;bottom&quot;,
+       legend = c(&quot;Sociology&quot;, &quot;Political science&quot;),
+       pch = c(19, 15),    # 19 = circle, 15 = square
+       col = &quot;black&quot;,
+       pt.cex = 2,
+       horiz = TRUE,
+       bty = &quot;n&quot;,
+       title = &quot;Discipline&quot;,
+       inset = c(0, 0.1)
+)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r test"><code># Plot Wave 1
+set.seed(123)  # for reproducible layout
+layout1 &lt;- layout_with_fr(no_isolatesw1)  # Fruchterman-Reingold layout
+plot(no_isolatesw1,
+     layout = layout1,
+     vertex.color = vertex_color1,
+     vertex.shape = vertex_shapes1,
+     vertex.size = 6,
+     vertex.frame.color = &quot;gray&quot;,
+     vertex.label = NA,
+     edge.curved = 0.2,
+     edge.arrow.size = 0.1,
+     main = &quot;Wave 1: 2015–2019&quot;
+)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r test"><code># Plot Wave 2
+set.seed(123)
+layout2 &lt;- layout_with_fr(no_isolatesw2)
+plot(no_isolatesw2,
+     layout = layout2,
+     vertex.color = vertex_color2,
+     vertex.shape = vertex_shapes2,
+     vertex.size = 6,
+     vertex.frame.color = &quot;gray&quot;,
+     vertex.label = NA,
+     edge.curved = 0.2,
+     edge.arrow.size = 0.1,
+     main = &quot;Wave 2: 2019–2023&quot;
+)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r test"><code># Plot Wave 3
+set.seed(123)
+layout3 &lt;- layout_with_fr(no_isolatesw3)
+plot(no_isolatesw3,
+     layout = layout3,
+     vertex.color = vertex_color3,
+     vertex.shape = vertex_shapes3,
+     vertex.size = 6,
+     vertex.frame.color = &quot;gray&quot;,
+     vertex.label = NA,
+     edge.curved = 0.2,
+     edge.arrow.size = 0.1,
+     main = &quot;Wave 3: 2024–2025&quot;
+)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r test"><code># ============================================================
+# 1. Load packages
+# ============================================================
+library(igraph)
+library(scales)
+library(gridExtra)
+library(grid)
+
+# ============================================================
+# 2. Color and size settings
+# ============================================================
+set.seed(123)
+color_palette &lt;- colorRampPalette(c(&quot;lightblue&quot;, &quot;orange&quot;, &quot;red&quot;))(5)
+
+# Vertex size function (based on degree)
+get_vertex_size &lt;- function(g) {
+  scales::rescale(igraph::degree(g, mode = &quot;all&quot;), to = c(5, 20))
+}
+
+# ============================================================
+# 3. Plot function for a single wave
+# ============================================================
+plot_wave &lt;- function(graph_obj, wave_idx, cross_scores, wave_label) {
+  # Remove isolates
+  no_iso &lt;- igraph::delete.vertices(graph_obj, which(igraph::degree(graph_obj) == 0))
+  
+  # Generate layout
+  layout_use &lt;- igraph::layout_with_fr(no_iso)
+  
+  # Map interdisciplinarity (cross_scores) to color
+  vertex_colors &lt;- color_palette[cross_scores[, wave_idx] + 1]
+  
+  # Compute vertex sizes based on degree
+  vertex_sizes &lt;- get_vertex_size(no_iso)
+  
+  # Plot the network
+  plot(no_iso,
+       layout = layout_use,
+       vertex.color = vertex_colors[igraph::V(no_iso)],
+       vertex.size = vertex_sizes[igraph::V(no_iso)],
+       vertex.shape = &quot;circle&quot;,
+       vertex.frame.color = &quot;gray70&quot;,
+       vertex.label = NA,
+       edge.curved = 0.2,
+       edge.width = 0.5,
+       main = wave_label
+  )
+}
+
+
+
+# ============================================================
+# 5. Add combined legends (interdisciplinarity + degree)
+# ============================================================
+# New plot space for legend
+plot.new()
+
+# (a) Legend: interdisciplinarity
+legend(&quot;bottom&quot;,
+       legend = paste(&quot;Score&quot;, 0:4),
+       col = color_palette,
+       pch = 19,
+       pt.cex = 2,
+       horiz = TRUE,
+       bty = &quot;n&quot;,
+       title = &quot;Interdisciplinarity&quot;,
+       inset = c(0, 0.35)
+)
+
+# (b) Legend: degree
+legend_sizes &lt;- c(5, 10, 20)
+legend_labels &lt;- c(&quot;Low degree&quot;, &quot;Medium&quot;, &quot;High&quot;)
+legend(&quot;bottom&quot;,
+       legend = legend_labels,
+       pt.cex = legend_sizes / 6,
+       pch = 21,
+       col = &quot;gray30&quot;,
+       pt.bg = &quot;white&quot;,
+       horiz = TRUE,
+       bty = &quot;n&quot;,
+       title = &quot;Collaborations&quot;,
+       inset = c(0, 0)
+)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r test"><code>plot_wave(test_w1, 1, cross_scores, &quot;Wave 1: 2015–2018&quot;)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r test"><code>plot_wave(test_w2, 2, cross_scores, &quot;Wave 2: 2019–2023&quot;)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r test"><code>plot_wave(test_w3, 3, cross_scores, &quot;Wave 3: 2024–2025&quot;)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="rsiena-models" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> <span
+style="color: orange;">RSiena Models</span></h2>
+<p>The baseline structural model (Model 1) was estimated using RSiena
+with an undirected network specification. All models assume unilateral
+initiative with reciprocal confirmation: one actor proposes a new tie or
+dissolves an existing one, and a new tie is only created if the partner
+confirms (Ripley &amp; Preciado, 2011). The confirmation process is
+controlled by a fixed offset, which adjusts for the difference between
+binary and multinomial choice probabilities.</p>
+<div id="model-1" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Model 1</h3>
+<p>The model includes three structural effects: overall network density,
+transitive triads, and a combined degree-related activity and popularity
+term (degPlus). The density effect ( –2.37, SE = 0.04 ) was strongly
+negative, suggesting that scholars generally evaluate tie formation as
+undesirable in the absence of specific incentives. In other words,
+researchers do not collaborate randomly but rather selectively, they
+‘dislike’ initiating new collaborations unless other factors, such as
+existing connections or disciplinary similarity, make such ties more
+attractive.. The transitive triads effect ( 0.80, SE = 0.05 ) was
+positive and significant, consistent with increasing closure: scholars
+are more likely to collaborate with colleagues of their collaborators.
+The degree activity + popularity effect ( 0.03, SE = 0.004 ) was also
+positive, implying a mild tendency for already well-connected scholars
+to attract additional ties. Overall, the baseline model indicates a
+highly clustered and preferentially attached network structure.</p>
+<pre class="test2"><code>#&gt;   effectNumber effectName       shortName include fix   test  initialValue parm
+#&gt; 1 6            degree (density) density   TRUE    FALSE FALSE   -1.64519   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName        shortName   include fix   test  initialValue parm
+#&gt; 1 9            transitive triads transTriads TRUE    FALSE FALSE          0   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName     shortName include fix   test  initialValue parm
+#&gt; 1 42           degree act+pop degPlus   TRUE    FALSE FALSE          0   1</code></pre>
+<pre class="test2"><code>#&gt; If you use this algorithm object, siena07 will create/use an output file baseline_model.txt .</code></pre>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                    Estimate   Standard   Convergence 
+#&gt;                                                 Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0.1      Rate parameter period 1 21.4385  ( 5.8722   )             
+#&gt;   0.2      Rate parameter period 2  6.5056  ( 0.5214   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1.  eval degree (density)        -2.3623  ( 0.0377   )   0.0842    
+#&gt;   2.  eval transitive triads        0.7993  ( 0.0511   )   0.0875    
+#&gt;   3.  eval degree act+pop           0.0300  ( 0.0042   )   0.0660    
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.1281 
+#&gt; 
+#&gt; 
+#&gt;  Model Type:
+#&gt; net_siena : Initiative model 
+#&gt; 
+#&gt; 
+#&gt; Total of 1894 iteration steps.
+#&gt; 
+#&gt; Covariance matrix of estimates (correlations below diagonal)
+#&gt; 
+#&gt;        0.001        0.001        0.000
+#&gt;        0.306        0.003        0.000
+#&gt;       -0.854       -0.533        0.000
+#&gt; 
+#&gt; Derivative matrix of expected statistics X by parameters:
+#&gt; 
+#&gt;     1752.950      325.405    43587.631
+#&gt;      740.246     1362.671    38572.754
+#&gt;    18998.259    10521.363   707528.494
+#&gt; 
+#&gt; Covariance matrix of X (correlations below diagonal):
+#&gt; 
+#&gt;     1469.530     1338.402    55521.681
+#&gt;        0.611     3265.477    81159.636
+#&gt;        0.865        0.849  2800929.963</code></pre>
+</div>
+<div id="model-2" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Model 2</h3>
+<p>Model 2 extends the baseline structural model by including a
+covariate capturing departmental similarity, allowing for the
+examination of disciplinary homophily while retaining the core
+structural mechanisms identified in Model 1. The model again converged
+well (overall maximum convergence ratio = 0.0288), and all estimated
+effects were statistically significant and in the expected
+directions.</p>
+<p>The results show the departmental similarity effect (β = 1.32, SE =
+0.11), which is positive and significant. This finding provides strong
+evidence of disciplinary homophily, scholars are substantially more
+likely to collaborate with colleagues from their own department (e.g.,
+sociology with sociology, political science with political science) than
+to engage in interdisciplinary collaborations.</p>
+<p>Model 2 demonstrates that the network’s structure remains shaped by
+clustering and centralization, while disciplinary affiliation continues
+to exert a strong organizing force on collaboration patterns. Together,
+these results suggest that even within an evolving academic environment,
+disciplinary boundaries persist as a key determinant of collaborative
+behavior.</p>
+<pre class="test2"><code>#&gt;   effectNumber effectName       shortName include fix   test  initialValue parm
+#&gt; 1 7            degree (density) density   TRUE    FALSE FALSE   -1.64519   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName        shortName   include fix   test  initialValue parm
+#&gt; 1 10           transitive triads transTriads TRUE    FALSE FALSE          0   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName     shortName include fix   test  initialValue parm
+#&gt; 1 43           degree act+pop degPlus   TRUE    FALSE FALSE          0   1</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName          shortName include fix   test  initialValue parm
+#&gt; 1 154          dept_cov similarity simX      TRUE    FALSE FALSE          0   0</code></pre>
+<pre class="test2"><code>#&gt; If you use this algorithm object, siena07 will create/use an output file model2_dept_homophily.txt .</code></pre>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                    Estimate   Standard   Convergence 
+#&gt;                                                 Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0.1      Rate parameter period 1 18.8009  ( 4.2423   )             
+#&gt;   0.2      Rate parameter period 2  6.3736  ( 0.5119   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1.  eval degree (density)        -2.6813  ( 0.0544   )   -0.0705   
+#&gt;   2.  eval transitive triads        0.7135  ( 0.0478   )   -0.0101   
+#&gt;   3.  eval degree act+pop           0.0264  ( 0.0044   )   -0.0756   
+#&gt;   4.  eval dept_cov similarity      1.3399  ( 0.1156   )    0.0161   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2857 
+#&gt; 
+#&gt; 
+#&gt;  Model Type:
+#&gt; net_siena : Initiative model 
+#&gt; 
+#&gt; 
+#&gt; Total of 1877 iteration steps.
+#&gt; 
+#&gt; Covariance matrix of estimates (correlations below diagonal)
+#&gt; 
+#&gt;        0.003        0.000        0.000       -0.004
+#&gt;        0.133        0.002        0.000        0.000
+#&gt;       -0.422       -0.518        0.000        0.000
+#&gt;       -0.712        0.070       -0.201        0.013
+#&gt; 
+#&gt; Derivative matrix of expected statistics X by parameters:
+#&gt; 
+#&gt;     1497.254      445.188    37501.717     1203.977
+#&gt;      678.940     1370.437    36277.519      614.626
+#&gt;    15535.573    10752.413   601408.824    12980.112
+#&gt;      604.708      195.969    16233.579      575.778
+#&gt; 
+#&gt; Covariance matrix of X (correlations below diagonal):
+#&gt; 
+#&gt;     1236.494     1166.480    46030.851     1046.511
+#&gt;        0.619     2870.180    70402.300     1089.988
+#&gt;        0.853        0.857  2353076.062    40737.176
+#&gt;        0.944        0.645        0.842      994.412</code></pre>
+</div>
+<div id="model-3" class="section level3" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Model 3</h3>
+<p>Model 3 represents the full specification, integrating both the
+structural network effect, the substantive covariate of departmental
+similarity and the time-varying covariate interdisciplinarity. This
+model allows for a more comprehensive understanding of how both
+disciplinary boundaries and cross-disciplinary engagement shape
+collaboration patterns over time. The model converged well (overall
+maximum convergence ratio = 0.11) after 1,370 iterations.</p>
+<p>Importantly, interdisciplinarity was modelled as a time-varying
+covariate, allowing the analysis to account for changes in scholars’
+cross-departmental collaborations between waves. This dynamic
+specification means that the positive effect of interdisciplinarity (β =
+0.07, SE = 0.013) reflects not just static differences between more and
+less interdisciplinary scholars, but rather that becoming more
+interdisciplinary over time increases the likelihood of forming new
+collaborations. In other words, scholars who expand their disciplinary
+range appear to gain new opportunities for collaboration, suggesting
+that interdisciplinary engagement is both a product and a driver of
+network evolution.</p>
+<pre class="test2"><code>#&gt;   effectNumber effectName       shortName include fix   test  initialValue parm
+#&gt; 1 8            degree (density) density   TRUE    FALSE FALSE   -1.64519   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName        shortName   include fix   test  initialValue parm
+#&gt; 1 11           transitive triads transTriads TRUE    FALSE FALSE          0   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName     shortName include fix   test  initialValue parm
+#&gt; 1 44           degree act+pop degPlus   TRUE    FALSE FALSE          0   1</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName          shortName include fix   test  initialValue parm
+#&gt; 1 155          dept_cov similarity simX      TRUE    FALSE FALSE          0   0</code></pre>
+<pre class="test2"><code>#&gt;   effectNumber effectName            shortName   include fix   test  initialValue parm
+#&gt; 1 270          cross_cov ego and alt egoPlusAltX TRUE    FALSE FALSE          0   0</code></pre>
+<pre class="test2"><code>#&gt; If you use this algorithm object, siena07 will create/use an output file modelfull.txt .</code></pre>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                    Estimate   Standard   Convergence 
+#&gt;                                                 Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0.1      Rate parameter period 1 20.0894  ( 4.5366   )             
+#&gt;   0.2      Rate parameter period 2  6.5653  ( 0.5441   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1.  eval degree (density)        -2.7337  ( 0.0796   )   -0.0248   
+#&gt;   2.  eval transitive triads        0.6948  ( 0.0537   )    0.0388   
+#&gt;   3.  eval degree act+pop           0.0214  ( 0.0043   )    0.0122   
+#&gt;   4.  eval dept_cov similarity      1.4945  ( 0.1645   )    0.0526   
+#&gt;   5.  eval cross_cov ego and alt    0.0736  ( 0.0167   )    0.1152   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.3340 
+#&gt; 
+#&gt; 
+#&gt;  Model Type:
+#&gt; net_siena : Initiative model 
+#&gt; 
+#&gt; 
+#&gt; Total of 1996 iteration steps.
+#&gt; 
+#&gt; Covariance matrix of estimates (correlations below diagonal)
+#&gt; 
+#&gt;        0.006        0.002        0.000       -0.012       -0.001
+#&gt;        0.452        0.003        0.000       -0.004        0.000
+#&gt;       -0.350       -0.407        0.000        0.000        0.000
+#&gt;       -0.881       -0.408       -0.031        0.027        0.001
+#&gt;       -0.416       -0.234       -0.284        0.516        0.000
+#&gt; 
+#&gt; Derivative matrix of expected statistics X by parameters:
+#&gt; 
+#&gt;     1396.539      236.062    32512.313     1101.278     3187.636
+#&gt;      724.196     1403.638    37436.417      654.279     2354.858
+#&gt;    15639.354     9897.221   598642.187    12954.476    46394.122
+#&gt;      636.307      241.032    16570.978      582.392     1247.178
+#&gt;     1332.679     1077.042    54266.078      901.903     9802.831
+#&gt; 
+#&gt; Covariance matrix of X (correlations below diagonal):
+#&gt; 
+#&gt;     1232.048     1284.676    47779.675     1041.451     3670.268
+#&gt;        0.630     3376.381    80260.523     1218.695     4717.504
+#&gt;        0.855        0.867  2535768.854    42768.771   166524.367
+#&gt;        0.938        0.663        0.849     1000.199     2999.702
+#&gt;        0.766        0.595        0.766        0.695    18648.833</code></pre>
+</div>
+</div>
+<div id="goodness-of-fit" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> <span
+style="color: orange;">Goodness of Fit</span></h2>
+<p>The goodness-of-fit (GOF) tests based on the geodesic distance
+distribution were used to assess how well each model reproduced the
+empirical network structure. In the case of undirected networks, the
+traditional out- or indegree distributions are less meaningful (because
+sending vs. receiving ties are not distinguished). Instead, the geodesic
+distance distribution (i.e., distribution of shortest path lengths
+between node pairs) become especially relevant. The geodesic
+distribution assesses whether the model accurately captures how
+“connected” the network is (Lospinoso &amp; Snijders, 2019).</p>
+<p>For the baseline structural model (Model 1), the GOF has a p-value
+&gt; 0.05, indicating that the simulated geodesic distance distribution
+differs only marginally from the observed one. In other words, the
+baseline model provides an acceptable fit to the overall connectivity
+and distance structure of the collaboration network.</p>
+<p>For the extended models (Models 2 and 3), the GOF tests show p-values
+below 0.001, suggesting that these models deviate significantly from the
+observed distribution. However, visual inspection of the GOF plots
+provides a more nuanced picture, in all models, the red line
+(representing the observed values) lies within the gray bands of
+simulated distributions, indicating that the simulations broadly capture
+the network’s structure.</p>
+<div id="gof-model-1" class="section level4" number="1.4.0.1">
+<h4><span class="header-section-number">1.4.0.1</span> GOF Model 1</h4>
+<pre class="r test"><code>GeodesicDistribution &lt;- function(i, data, sims, period, groupName, varName,
+                                 levls = c(1:5, Inf), cumulative = TRUE, ...) {
+  x &lt;- networkExtraction(i, data, sims, period, groupName, varName)
+  require(sna)
+  a &lt;- sna::geodist(symmetrize(x))$gdist
+  if (cumulative) {
+    gdi &lt;- sapply(levls, function(i) sum(a &lt;= i))
+  } else {
+    gdi &lt;- sapply(levls, function(i) sum(a == i))
+  }
+  names(gdi) &lt;- as.character(levls)
+  gdi
+}
+
+
+gof_gd1 &lt;- sienaGOF(ansM1, GeodesicDistribution,
+                   varName = &quot;net_siena&quot;,
+                   levls = c(1:5, Inf),
+                   cumulative = FALSE,
+                   verbose = FALSE)
+plot(gof_gd1)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="gof-model-2" class="section level3" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> GOF Model 2</h3>
+<pre class="r test"><code>gof_gd2 &lt;- sienaGOF(ansM2, GeodesicDistribution,
+                   varName = &quot;net_siena&quot;,
+                   levls = c(1:5, Inf),
+                   cumulative = FALSE,
+                   verbose = FALSE)
+plot(gof_gd2)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="gof-model-3" class="section level3" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> GOF Model 3</h3>
+<pre class="r test"><code>gof_gd3 &lt;- sienaGOF(ansM3, GeodesicDistribution,
+                   varName = &quot;net_siena&quot;,
+                   levls = c(1:5, Inf),
+                   cumulative = FALSE,
+                   verbose = FALSE)
+plot(gof_gd3)</code></pre>
+<p><img src="project5_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="r-colorizereferences-orange" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> `r
+colorize(“<strong>References</strong>”, “orange”)</h1>
+<p>Lospinoso, J., &amp; Snijders, T. A. (2019). <em>Goodness of fit for
+stochastic actor-oriented models. Methodological Innovations,
+12(3)</em>. <a href="https://doi.org/10.1177/2059799119884282"
+class="uri">https://doi.org/10.1177/2059799119884282</a></p>
+<p>Ripley, R. M., Snijders, T. A., Boda, Z., Vörös, A., &amp; Preciado,
+P. (2011). <em>Manual for RSIENA</em>. University of Oxford, Department
+of Statistics, Nuffield College, 1, 2011.</p>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkZpbmFsIHByb2plY3QgTWV0aG9kcyINCiNiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQphdXRob3I6ICJIYW5uZSBXb2x0aHVpcyINCmNvZGVfZm9sZGluZzogaGlkZQ0KLS0tDQoNCg0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGV2YWwgPSBGQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiNrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrcmVkJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgDQoNCjxicj4NCg0KYGBge3IsIHJlc3VsdHM9J2hpZGUnfQ0Kcm0obGlzdCA9IGxzKCkpDQoNCmZwYWNrYWdlLmNoZWNrID0gZnVuY3Rpb24ocGFja2FnZXMpIHsNCiAgICBsYXBwbHkocGFja2FnZXMsIEZVTiA9IGZ1bmN0aW9uKHgpIHsNCiAgICAgICAgaWYgKCFyZXF1aXJlKHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHsNCiAgICAgICAgICAgIGluc3RhbGwucGFja2FnZXMoeCwgZGVwZW5kZW5jaWVzID0gVFJVRSkNCiAgICAgICAgICAgIGxpYnJhcnkoeCwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKQ0KICAgICAgICB9DQogICAgfSkNCn0NCg0KZnNhdmUgPSBmdW5jdGlvbih4LCBmaWxlID0gTlVMTCwgbG9jYXRpb24gPSAiLi9kYXRhL3Byb2Nlc3NlZC8iKSB7DQogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhL3Byb2Nlc3NlZCIpLCBkaXIuY3JlYXRlKCJkYXRhL3Byb2Nlc3NlZCIpLCBGQUxTRSkNCiAgICBpZiAoaXMubnVsbChmaWxlKSkNCiAgICAgICAgZmlsZSA9IGRlcGFyc2Uoc3Vic3RpdHV0ZSh4KSkNCiAgICBkYXRlbmFtZSA9IHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICAgIHRvdGFsbmFtZSA9IHBhc3RlKGxvY2F0aW9uLCBkYXRlbmFtZSwgZmlsZSwgIi5yZGEiLCBzZXAgPSAiIikNCiAgICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkID0gZnVuY3Rpb24oZmlsZW5hbWUpIHsNCiAgICBsb2FkKGZpbGVuYW1lKQ0KICAgIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPSBmdW5jdGlvbih4LCAuLi4pIHsNCiAgICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pIHw+DQogICAgICAgIGthYmxlRXh0cmE6OmthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIikpIHw+DQogICAgICAgIGthYmxlRXh0cmE6OnNjcm9sbF9ib3god2lkdGggPSAiMTAwJSIsIGhlaWdodCA9ICIzMDBweCIpDQp9DQoNCg0KDQoNCmZjb2xuZXQgPSBmdW5jdGlvbihkYXRhID0gc2Nob2xhcnMsIHVuaXZlcnNpdHkgPSBjKCJSVSIsICJWVSIsIlVVIiwgIlV2VCIsICJSVUciLCAiRVVSIiwgIlV2QSIpLCBkaXNjaXBsaW5lID0gIlNvY2lvbG9naWUiLCB3YXZlcyA9IGxpc3QoYygyMDE1LA0KICAgIDIwMTgpLCBjKDIwMTksIDIwMjMpLCBjKDIwMjQsIDIwMjUpKSwgdHlwZSA9IGMoImZpcnN0IikpIHsNCg0KICAgIHVuaXZlcnNpdHkgPSBwYXN0ZTAoJygnLCBwYXN0ZTAodW5pdmVyc2l0eSwgY29sbGFwc2U9J3wnICksICcpJykNCiAgICBkaXNjaXBsaW5lID0gcGFzdGUwKCcoJywgcGFzdGUwKGRpc2NpcGxpbmUsIGNvbGxhcHNlPSd8JyApLCAnKScpDQoNCiAgICAjIHN0ZXAgMQ0KICAgIGRlbW9ncmFwaGljcyA9IGRhdGEkZGVtb2dyYXBoaWNzDQogICAgc2FtcGxlID0gd2hpY2goDQogICAgICAgIChzdHJfZGV0ZWN0KGRlbW9ncmFwaGljcyR1bml2ZXJzaXRlaXQuMjIsIHVuaXZlcnNpdHkpDQogICAgICAgICAgICB8IHN0cl9kZXRlY3QoZGVtb2dyYXBoaWNzJHVuaXZlcnNpdGVpdC4yNCwgdW5pdmVyc2l0eSkNCiAgICAgICAgICAgIHwgc3RyX2RldGVjdChkZW1vZ3JhcGhpY3MkdW5pdmVyc2l0ZWl0LjI1LCB1bml2ZXJzaXR5KQ0KICAgICAgICApICYgKA0KICAgICAgICAgICAgc3RyX2RldGVjdChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yMiwgZGlzY2lwbGluZSkNCiAgICAgICAgICAgIHwgc3RyX2RldGVjdChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNCwgZGlzY2lwbGluZSkNCiAgICAgICAgICAgIHwgc3RyX2RldGVjdChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNSwgZGlzY2lwbGluZSkNCiAgICAgICAgKSB8PiByZXBsYWNlX25hKEZBTFNFKSkNCg0KICAgIGRlbW9ncmFwaGljc19zb2MgPSBkZW1vZ3JhcGhpY3Nbc2FtcGxlLCBdIHw+IGRyb3BfbmEoaWQpDQoNCiAgICAjIHN0ZXAgMg0KICAgIGlkcyA9IGRlbW9ncmFwaGljc19zb2MkaWQgfD4gdW5pcXVlKCkNCg0KDQogICAgc2Nob2xhcnNfc2VsID0gbGlzdCgpIA0KICAgIGZvciAoaWRfIGluIGlkcyl7DQogICAgICAgIHNjaG9sYXJzX3NlbFtbaWRfXV0gPSBiaW5kX3Jvd3Moc2Nob2xhcnMkd29ya3MpIHw+DQogICAgICAgICAgICBmaWx0ZXIoYXV0aG9yX2lkID09IGlkXykNCiAgICB9DQogICAgc2Nob2xhcnNfc2VsID0gYmluZF9yb3dzKHNjaG9sYXJzJHdvcmtzKSANCiAgICANCg0KICAgIG53YXZlcyA9IGxlbmd0aCh3YXZlcykNCiAgICBuZXRzID0gYXJyYXkoMCwgZGltID0gYyhud2F2ZXMsIGxlbmd0aChpZHMpLCBsZW5ndGgoaWRzKSksIGRpbW5hbWVzID0gbGlzdCh3YXZlID0gMTpud2F2ZXMsIGlkcywNCiAgICAgICAgaWRzKSkNCiAgICBkaW1uYW1lcyhuZXRzKQ0KDQogICAgIyBzdGVwIDMNCiAgICBkZl93b3JrcyA9IHRpYmJsZSgNCiAgICAgICAgICAgIHdvcmtzX2lkID0gc2Nob2xhcnNfc2VsJGlkLCANCiAgICAgICAgICAgIHdvcmtzX2F1dGhvciA9IHNjaG9sYXJzX3NlbCRhdXRob3JzaGlwcywgDQogICAgICAgICAgICB3b3Jrc195ZWFyID0gc2Nob2xhcnNfc2VsJHB1YmxpY2F0aW9uX3llYXINCiAgICAgICAgKQ0KDQoNCiAgICBkZl93b3JrcyA9IGRmX3dvcmtzWyFkdXBsaWNhdGVkKGRmX3dvcmtzKSwgXQ0KDQogICAgIyBzdGVwIDQNCiAgICBpZiAodHlwZSA9PSAiZmlyc3QiKSB7DQogICAgICAgIGZvciAoaiBpbiAxOmxlbmd0aCh3YXZlcykpIHsNCiAgICAgICAgICAgIGRmX3dvcmtzX3cgPSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICAgICAgICAgICAgXQ0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICAgICAgICAgIGVnbyA9IGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kaWRbMV0NCiAgICAgICAgICAgICAgICBhbHRlcnMgPSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGlkWy0xXQ0KICAgICAgICAgICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvKSA+IDAgJiBzdW0oaWRzICVpbiUgYWx0ZXJzKSA+IDApIHsNCiAgICAgICAgICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPSAxDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfQ0KDQogICAgaWYgKHR5cGUgPT0gImxhc3QiKSB7DQogICAgICAgIGZvciAoaiBpbiAxOmxlbmd0aCh3YXZlcykpIHsNCiAgICAgICAgICAgIGRmX3dvcmtzX3cgPSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICAgICAgICAgICAgXQ0KICAgICAgICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICAgICAgICAgIGVnbyA9IHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGlkWzFdKQ0KICAgICAgICAgICAgICAgIGFsdGVycyA9IHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGlkWy0xXSkNCiAgICAgICAgICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7DQogICAgICAgICAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnbyksIHdoaWNoKGlkcyAlaW4lIGFsdGVycyldID0gMQ0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIH0NCiAgICAgICAgfQ0KICAgIH0NCiAgICBpZiAodHlwZSA9PSAiYWxsIikgew0KICAgICAgICBmb3IgKGogaW4gMTpsZW5ndGgod2F2ZXMpKSB7DQogICAgICAgICAgICBkZl93b3Jrc193ID0gZGZfd29ya3NbZGZfd29ya3Mkd29ya3NfeWVhciA+PSB3YXZlc1tbal1dWzFdICYgZGZfd29ya3Mkd29ya3NfeWVhciA8PSB3YXZlc1tbal1dWzJdLA0KICAgICAgICAgICAgICAgIF0NCiAgICAgICAgICAgIGZvciAoaSBpbiAxOm5yb3coZGZfd29ya3NfdykpIHsNCiAgICAgICAgICAgICAgICBlZ29zID0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRpZA0KICAgICAgICAgICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvcykgPiAwKSB7DQogICAgICAgICAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnb3MpLCB3aGljaChpZHMgJWluJSBlZ29zKV0gPSAxDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgfQ0KICAgICAgICAgICAgZGlhZyhuZXRzW2osLF0pID0gMA0KICAgICAgICB9DQogICAgfQ0KDQogICAgb3V0cHV0ID0gbGlzdCgpDQogICAgb3V0cHV0JGRhdGEgPSBkZW1vZ3JhcGhpY3Nfc29jDQogICAgb3V0cHV0JG5ldHMgPSBuZXRzDQogICAgcmV0dXJuKG91dHB1dCkNCn0NCg0KcGFja2FnZXMgPSBjKA0KICAgICJSU2llbmEiLCAidGlkeXZlcnNlIiwNCiAgICAiZHBseXIiLCAic3RyaW5nciIsICJzY2hvbGFyIiwgIm9wZW5hbGV4UiIsICJydmVzdCIsICJqc29ubGl0ZSIgIyB0aGVzZSBwYWNrYWdlcyB3ZXJlIGFkZGVkIHRvIG1ha2UgdGhlIGNvZGUgcnVuDQopDQoNCg0KDQpsaWJyYXJ5KGlncmFwaCkNCg0KDQpmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCnNjaG9sYXJzID0gZmxvYWQoIkM6L1VzZXJzL2hhbm5lL0Rvd25sb2Fkcy8yMDI1MTAxN3NjaG9sYXJzLlJkYSIpDQpgYGANCg0KYGBge3IsIHJlc3VsdHM9J2hpZGUnfQ0KIyBCdWlsZCB0aGUgbmV0d29yaw0KdGVzdCA8LSBmY29sbmV0KGRhdGEgPSBzY2hvbGFycywgDQogICAgICAgICAgICAgICAgdW5pdmVyc2l0eSA9IGMoIlJVIiwgJ1V2QScsICJSVUciLCAiVVUiKSwgDQogICAgICAgICAgICAgICAgZGlzY2lwbGluZSA9IGMoIlNvY2lvbG9naWUiLCAiUG9saXRpY29sb2dpZSIpLCANCiAgICAgICAgICAgICAgICB3YXZlcyA9IGxpc3QoYygyMDE1LCAyMDE4KSwgYygyMDE5LCAyMDIzKSwgYygyMDI0LCAyMDI1KSksDQogICAgICAgICAgICAgICAgdHlwZSA9IGMoImFsbCIpKQ0KDQojIC0tLSBQcmVwYXJlIGVnby1sZXZlbCBkYXRhIGZvciBsYXRlciB1c2UgLS0tDQpkZl9lZ28gPC0gdGVzdCRkYXRhDQoNCiMgRmlyc3Qgd2F2ZQ0KdGVzdF93MSA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgNCiAgdGVzdCRuZXRzWzEsLF0sDQogIG1vZGUgPSAidW5kaXJlY3RlZCIsDQogIHdlaWdodGVkID0gTlVMTCwNCiAgZGlhZyA9IEZBTFNFLA0KICBhZGQuY29sbmFtZXMgPSBOVUxMDQopDQojIFNlY29uZCB3YXZlDQp0ZXN0X3cyIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICB0ZXN0JG5ldHNbMiwsXSwNCiAgbW9kZSA9ICJ1bmRpcmVjdGVkIiwNCiAgd2VpZ2h0ZWQgPSBOVUxMLA0KICBkaWFnID0gRkFMU0UsDQogIGFkZC5jb2xuYW1lcyA9IE5VTEwNCikNCg0KIyB0aHJpcmQgd2F2ZQ0KdGVzdF93MyA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgNCiAgdGVzdCRuZXRzWzMsLF0sDQogIG1vZGUgPSAidW5kaXJlY3RlZCIsDQogIHdlaWdodGVkID0gTlVMTCwNCiAgZGlhZyA9IEZBTFNFLA0KICBhZGQuY29sbmFtZXMgPSBOVUxMDQopDQoNCiMgTWFrZSBpdCBhbiBhcnJheQ0KDQpuZXRzX2NvcnJlY3QgPC0gYXBlcm0odGVzdCRuZXRzLCBjKDIsIDMsIDEpKQ0KDQpkaW0obmV0c19jb3JyZWN0KQ0KDQpuZXRfc2llbmEgPC0gc2llbmFEZXBlbmRlbnQobmV0c19jb3JyZWN0KQ0KYGBgDQoNCmBgYHtyLCByZXN1bHRzPSdoaWRlJ30NCiMgLS0tLS0tLS0tLSBCZXJla2VuIGNyb3NzLWRlcGFydG1lbnQgdmFyaWFiZWxlIHZvb3IgYWxsZSB3YXZlcyAtLS0tLS0tLS0tDQoNCiMgVmVyZWlzdDogbmV0c19jb3JyZWN0IChhcnJheSB2YW4gZGltIFthY3RvcnMgeCBhY3RvcnMgeCB3YXZlc10pDQojICAgICAgICAgICBkZl9lZ28gbWV0IGtvbG9tIGRpc2NpcGxpbmUuMjINCg0KIyAxLiBEaXNjaXBsaW5ldmVjdG9yIHZvb3JiZXJlaWRlbg0KZGVwdF9udW0gPC0gYXMubnVtZXJpYyhhcy5mYWN0b3IoZGZfZWdvJGRpc2NpcGxpbmUuMjIpKQ0KZGVwdF9udW1baXMubmEoZGVwdF9udW0pXSA8LSA5OSAgIyB2ZXJ2YW5nIG1pc3NlbmRlIHdhYXJkZW4gZG9vciBuZXV0cmFsZSBjb2RlDQoNCiMgMi4gRnVuY3RpZSBvbSBjcm9zcy1zY29yZSBwZXIgd2F2ZSB0ZSBiZXJla2VuZW4NCmdldF9jcm9zc19zY29yZSA8LSBmdW5jdGlvbih3YXZlX21hdHJpeCwgZGVwdF9udW0pIHsNCiAgIyBWZXJzY2hpbG1hdHJpeDogVFJVRSBhbHMgYWx0ZXIgYW5kZXJlIGRpc2NpcGxpbmUgaGVlZnQNCiAgZGlmZl9kZXB0X21hdHJpeCA8LSBvdXRlcihkZXB0X251bSwgZGVwdF9udW0sIEZVTiA9IGZ1bmN0aW9uKGksIGopIGkgIT0gaikNCiAgDQogICMgQWFudGFsIGNyb3NzLWRlcGFydG1lbnQgdGllcyBwZXIgZWdvDQogIGNyb3NzX291dF9jb3VudHMgPC0gcm93U3Vtcyh3YXZlX21hdHJpeCAqIGRpZmZfZGVwdF9tYXRyaXgsIG5hLnJtID0gVFJVRSkNCiAgDQogICMgVG90YWxlIG91dGRlZ3JlZSBwZXIgZWdvDQogIGVnb19vdXRkZWcgPC0gcm93U3Vtcyh3YXZlX21hdHJpeCwgbmEucm0gPSBUUlVFKQ0KICANCiAgIyBQcm9wb3J0aWUgY3Jvc3MtZGVwYXJ0bWVudCByZWxhdGllcw0KICBjcm9zc19wcm9wIDwtIGlmZWxzZShlZ29fb3V0ZGVnID4gMCwgY3Jvc3Nfb3V0X2NvdW50cyAvIGVnb19vdXRkZWcsIDApDQogIA0KICAjIEluZGlyZWN0ZSBibG9vdHN0ZWxsaW5nIChhbHRlciBoZWVmdCBjcm9zc19wcm9wID4gMCkNCiAgaW5kaXJlY3RfZmxhZyA8LSByZXAoMCwgbGVuZ3RoKGNyb3NzX3Byb3ApKQ0KICBmb3IgKGkgaW4gc2VxX2Fsb25nKGNyb3NzX3Byb3ApKSB7DQogICAgYWx0ZXJzIDwtIHdoaWNoKHdhdmVfbWF0cml4W2ksIF0gIT0gMCkNCiAgICBpZiAobGVuZ3RoKGFsdGVycykgPiAwKSB7DQogICAgICBpZiAoY3Jvc3NfcHJvcFtpXSA9PSAwICYmIGFueShjcm9zc19wcm9wW2FsdGVyc10gPiAwKSkgew0KICAgICAgICBpbmRpcmVjdF9mbGFnW2ldIDwtIDENCiAgICAgIH0NCiAgICB9DQogIH0NCiAgDQogICMgQ2F0ZWdvcmlzZWVyIHNjb3JlDQogIGNyb3NzX3Njb3JlIDwtIGRwbHlyOjpjYXNlX3doZW4oDQogICAgY3Jvc3NfcHJvcCA9PSAwICYgaW5kaXJlY3RfZmxhZyA9PSAwIH4gMCwNCiAgICBjcm9zc19wcm9wID09IDAgJiBpbmRpcmVjdF9mbGFnID09IDEgfiAxLA0KICAgIGNyb3NzX3Byb3AgPiAwICYgY3Jvc3NfcHJvcCA8PSAwLjI1IH4gMiwNCiAgICBjcm9zc19wcm9wID4gMC4yNSAmIGNyb3NzX3Byb3AgPD0gMC41IH4gMywNCiAgICBjcm9zc19wcm9wID4gMC41IH4gNA0KICApDQogIA0KICByZXR1cm4oY3Jvc3Nfc2NvcmUpDQp9DQoNCiMgMy4gVG9lcGFzc2VuIG9wIGFsbGUgd2F2ZXMNCm53YXZlcyA8LSBkaW0obmV0c19jb3JyZWN0KVszXQ0KDQpjcm9zc19zY29yZXMgPC0gc2FwcGx5KDE6bndhdmVzLCBmdW5jdGlvbih3KSB7DQogIGdldF9jcm9zc19zY29yZShuZXRzX2NvcnJlY3RbLCx3XSwgZGVwdF9udW0pDQp9KQ0KDQojIDQuIFJTaWVuYSB2YXJDb3Zhci1vYmplY3QgYWFubWFrZW4NCmNyb3NzX2NvdiA8LSB2YXJDb3Zhcihjcm9zc19zY29yZXMpDQoNCiNEZXBhcnRtZW50IGNvdmFyDQpkZW1vZ3JhcGhpY3Nfc29jIDwtIHRlc3QkZGF0YQ0KDQojIFJlcGxhY2UgZW1wdHkgLyBtaXNzaW5nIHdpdGggTkENCmRlbW9ncmFwaGljc19zb2MkZGlzY2lwbGluZS4yMltkZW1vZ3JhcGhpY3Nfc29jJGRpc2NpcGxpbmUuMjIgPT0gIm1pc3NpbmciXSA8LSBOQQ0KDQojIEtlZXAgb25seSB0aGUgdHdvIHJlYWwgZGVwYXJ0bWVudHMNCmRlcHRfZmFjdG9yIDwtIGZhY3RvcihkZW1vZ3JhcGhpY3Nfc29jJGRpc2NpcGxpbmUuMjIsDQogICAgICAgICAgICAgICAgICAgICAgbGV2ZWxzID0gYygiUG9saXRpY29sb2dpZSIsICJTb2Npb2xvZ2llIikpDQoNCiMgQ29udmVydCB0byBudW1lcmljIGZvciBSU2llbmENCmRlcHRfbnVtIDwtIGFzLm51bWVyaWMoZGVwdF9mYWN0b3IpDQoNCiMgQ3JlYXRlIGEgY292YXJpYXRlIG9iamVjdCAoUlNpZW5hIGlnbm9yZXMgTkFzIGF1dG9tYXRpY2FsbHkpDQpkZXB0X2NvdiA8LSBjb0NvdmFyKGRlcHRfbnVtKQ0KDQoNCmBgYA0KDQoNCg0KDQojICBgciBjb2xvcml6ZSgiKipBbmFseXNpcyBhbmQgUmVzdWx0cyoqIiwgIm9yYW5nZSIpYA0KDQojIyAgYHIgY29sb3JpemUoIk5ldHdvcmsgZGVzY3JpcHRpdmVzIiwgIm9yYW5nZSIpYA0KDQpUaGUgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBhbmFseXplZCBpbiB0aGlzIHN0dWR5IGNvbnNpc3Qgb2YgNDc0IHNjaG9sYXJzIGFjcm9zcyB0aHJlZSB3YXZlcyAoMjAxNeKAkzIwMTgsIDIwMTnigJMyMDIzLCAyMDI04oCTMjAyNSkuIFRoZSB0YWJsZXMgYmVsb3cgcHJlc2VudCBrZXkgbmV0d29yayBzdGF0aXN0aWNzLCBpbmNsdWRpbmcgdGhlIG51bWJlciBvZiBub2RlcywgZWRnZXMsIGR5YWRzLCB0cmlhZCBjZW5zdXMsIHRyYW5zaXRpdml0eSwgYW5kIHRoZSBwcm9wb3J0aW9uIG9mIGludGVyZGlzY2lwbGluYXJ5IHRpZXMuDQpJbiB3YXZlIDEsIHRoZXJlIHdlcmUgNDc0IG5vZGVzIGFuZCAyMjYgZWRnZXMsIGluZGljYXRpbmcgcmVsYXRpdmVseSBzcGFyc2UgY29ubmVjdGl2aXR5LiBUaGUgbnVtYmVyIG9mIGVkZ2VzIGluY3JlYXNlZCBpbiB3YXZlIDIgdG8gMzgxLCBzdWdnZXN0aW5nIG1vcmUgYWN0aXZlIGNvbGxhYm9yYXRpb24sIGJlZm9yZSBkZWNsaW5pbmcgdG8gMjY1IGluIHdhdmUgMy4gVGhpcyBkZWNsaW5lIGlzIGNvbnNpc3RlbnQgd2l0aCB0aGUgc2hvcnRlciB0aW1lIHBlcmlvZCBvZiB3YXZlIDMsIHdoaWNoIGxpa2VseSBsaW1pdHMgdGhlIG51bWJlciBvZiBjby1hdXRob3JlZCBwYXBlcnMgY2FwdHVyZWQgaW4gdGhlIG5ldHdvcmsuIEFsbCBkeWFkcyBhcmUgZWl0aGVyIG51bGwgKG5vIHRpZSkgb3IgbXV0dWFsICh0aWUgcHJlc2VudCksIHJlZmxlY3RpbmcgdGhlIHVuZGlyZWN0ZWQgbmF0dXJlIG9mIGNvLWF1dGhvcnNoaXAgbmV0d29ya3Mgd2hlcmUgYWxsIHRpZXMgYXJlIHRyZWF0ZWQgYXMgcmVjaXByb2NhbC4NClRyaWFkIGNlbnN1cyBtZWFzdXJlcyByZXZlYWwgdGhlIHByZXZhbGVuY2Ugb2YgdmFyaW91cyB0aHJlZS1ub2RlIGNvbmZpZ3VyYXRpb25zLiBNb3N0IHRyaWFkcyBhcmUgZGlzY29ubmVjdGVkIChUMDAzKSwgcmVmbGVjdGluZyBuZXR3b3JrIHNwYXJzaXR5LCB3aGlsZSBhIHNtYWxsIG51bWJlciBvZiBwYXJ0aWFsbHkgY29ubmVjdGVkIGFuZCBmdWxseSBjb25uZWN0ZWQgdHJpYWRzIGFwcGVhciBhY3Jvc3MgYWxsIHdhdmVzIChUMTAyLCBUMjAxLCBUMzAwKS4gVGhlIHRyYW5zaXRpdml0eSBjb2VmZmljaWVudCwgd2hpY2ggaW5kaWNhdGVzIHRoZSBsaWtlbGlob29kIHRoYXQgdHdvIGNvbGxhYm9yYXRvcnMgb2YgYSBzY2hvbGFyIGFyZSB0aGVtc2VsdmVzIGNvbm5lY3RlZCwgaXMgbW9kZXJhdGUgYnV0IHN0YWJsZSBvdmVyIHRpbWUuIFRoaXMgc3VnZ2VzdHMgdGhhdCB3aGlsZSBjb2xsYWJvcmF0aW9ucyBhcmUgbm90IGhpZ2hseSBjbHVzdGVyZWQsIHRoZXJlIGlzIGEgbW9kZXN0IHRlbmRlbmN5IGZvciBsb2NhbCBjbG9zdXJlLCBjb25zaXN0ZW50IHdpdGggdHJpYWRpYyBwcm9jZXNzZXMgaW4gYWNhZGVtaWMgbmV0d29ya3MuDQpUaGUgcHJvcG9ydGlvbiBvZiBpbnRlcmRpc2NpcGxpbmFyeSB0aWVzLCBjb2xsYWJvcmF0aW9ucyBiZXR3ZWVuIHNjaG9sYXJzIGZyb20gZGlmZmVyZW50IGRlcGFydG1lbnRzLCBpcyByZWxhdGl2ZWx5IGxvdyBidXQgY29uc2lzdGVudCBhY3Jvc3Mgd2F2ZXMuIEluIHJhdyBjb3VudHMsIHdhdmUgMSBoYXMgMTMgaW50ZXJkaXNjaXBsaW5hcnkgdGllcyAoNiUgb2YgdG90YWwgZWRnZXMpLCB3YXZlIDIgaGFzIDE4IHRpZXMgKDUlKSwgYW5kIHdhdmUgMyBoYXMgMTAgdGllcyAoNyUpLiBUaGVzZSByZXN1bHRzIHNob3cgbm93IGNsZWFyIHN1cHBvcnQgZm9yIHRoZSBpbmNyZWFzZSBvZiBpbnRlcmRpc2NpcGxpbmFyeSB0aWVzIG92ZXIgdGltZS4NCk92ZXJhbGwsIHRoZXNlIGRlc2NyaXB0aXZlIHN0YXRpc3RpY3MgcHJvdmlkZSBhIGZvdW5kYXRpb24gZm9yIGV4YW1pbmluZyBib3RoIGFjdG9yLWxldmVsIG1lY2hhbmlzbXMgKGRpc2NpcGxpbmFyeSBhZmZpbGlhdGlvbiwgaW50ZXJkaXNjaXBsaW5hcml0eSkgYW5kIHN0cnVjdHVyYWwgbWVjaGFuaXNtcyAodHJpYWRpYyBjbG9zdXJlLCB0cmFuc2l0aXZpdHkpIGluIHRoZSBldm9sdXRpb24gb2Ygc2Nob2xhcmx5IGNvbGxhYm9yYXRpb24gbmV0d29ya3MuIA0KDQoNCiMjIyBFZGdlcyBhbmQgdGllcyBmb3IgYWxsIHdhdmVzDQoNCmBgYHtyfQ0KDQojIFN1cHBvc2UgeW91IGhhdmUgYSBsaXN0IG9mIGdyYXBocyBmb3IgZWFjaCB3YXZlDQpncmFwaHMgPC0gbGlzdCh0ZXN0X3cxLCB0ZXN0X3cyLCB0ZXN0X3czKQ0KDQojIENyZWF0ZSBhIGRhdGEgZnJhbWUgd2l0aCBub2RlcyBhbmQgZWRnZXMgZm9yIGVhY2ggd2F2ZQ0KbmV0d29ya19ub2Rlc19lZGdlcyA8LSBkYXRhLmZyYW1lKA0KICB3YXZlID0gc2VxX2Fsb25nKGdyYXBocyksDQogIG5vZGVzID0gc2FwcGx5KGdyYXBocywgdmNvdW50KSwgICMgY291bnQgdmVydGljZXMNCiAgZWRnZXMgPSBzYXBwbHkoZ3JhcGhzLCBlY291bnQpICAgIyBjb3VudCBlZGdlcw0KKQ0KDQojIFZpZXcgdGhlIHRhYmxlDQpmc2hvd2RmKG5ldHdvcmtfbm9kZXNfZWRnZXMpDQoNCg0KYGBgDQojIyMgRHlhZCBDZW5zdXMgDQoNCmBgYHtyfQ0KDQojIExpc3Qgb2YgZ3JhcGhzICh3YXZlcykNCmdyYXBocyA8LSBsaXN0KHRlc3RfdzEsIHRlc3RfdzIsIHRlc3RfdzMpDQoNCiMgRnVuY3Rpb24gdG8gY29tcHV0ZSBkeWFkIGNlbnN1cyBmb3IgYSBncmFwaA0KZHlhZF9zdW1tYXJ5IDwtIGZ1bmN0aW9uKGcpIHsNCiAgZHlhZHMgPC0gZHlhZF9jZW5zdXMoZykgICMgcmV0dXJucyBudWxsLCBhc3ltbWV0cmljLCBtdXR1YWwNCiAgZGF0YS5mcmFtZSgNCiAgICB3YXZlID0gTkEsDQogICAgbnVsbF9keWFkcyA9IGR5YWRzJG51bGwsDQogICAgYXN5bW1ldHJpY19keWFkcyA9IGR5YWRzJGFzeW0sDQogICAgbXV0dWFsX2R5YWRzID0gZHlhZHMkbXV0DQogICkNCn0NCg0KIyBBcHBseSB0byBhbGwgd2F2ZXMNCmR5YWRfY2Vuc3VzX3RhYmxlIDwtIGJpbmRfcm93cyhsYXBwbHkoc2VxX2Fsb25nKGdyYXBocyksIGZ1bmN0aW9uKGkpIHsNCiAgZGYgPC0gZHlhZF9zdW1tYXJ5KGdyYXBoc1tbaV1dKQ0KICBkZiR3YXZlIDwtIGkNCiAgZGYNCn0pKQ0KDQojIFJlb3JkZXIgY29sdW1ucyBmb3IgcmVhZGFiaWxpdHkNCmR5YWRfY2Vuc3VzX3RhYmxlIDwtIGR5YWRfY2Vuc3VzX3RhYmxlICU+JSBzZWxlY3Qod2F2ZSwgZXZlcnl0aGluZygpKQ0KDQojIFNob3cgdGhlIHRhYmxlDQpmc2hvd2RmKGR5YWRfY2Vuc3VzX3RhYmxlKQ0KDQpgYGANCg0KIyMjIFRyeWFkIENlbnN1cw0KDQpgYGB7cn0NCg0KIyBMaXN0IG9mIGdyYXBocyAod2F2ZXMpDQpncmFwaHMgPC0gbGlzdCh0ZXN0X3cxLCB0ZXN0X3cyLCB0ZXN0X3czKQ0KDQojIEZ1bmN0aW9uIHRvIGNvbXB1dGUgdHJpYWQgY2Vuc3VzIGZvciBhIGdyYXBoDQp0cmlhZF9zdW1tYXJ5IDwtIGZ1bmN0aW9uKGcpIHsNCiAgdHJpYWRzIDwtIHRyaWFkX2NlbnN1cyhnKSAgIyByZXR1cm5zIDE2IHRyaWFkIGNvdW50cw0KICBkYXRhLmZyYW1lKA0KICAgIHdhdmUgPSBOQSwNCiAgICBUMDAzID0gdHJpYWRzWzFdLA0KICAgIFQwMTIgPSB0cmlhZHNbMl0sDQogICAgVDEwMiA9IHRyaWFkc1szXSwNCiAgICBUMDIxRCA9IHRyaWFkc1s0XSwNCiAgICBUMDIxVSA9IHRyaWFkc1s1XSwNCiAgICBUMDIxQyA9IHRyaWFkc1s2XSwNCiAgICBUMTExRCA9IHRyaWFkc1s3XSwNCiAgICBUMTExVSA9IHRyaWFkc1s4XSwNCiAgICBUMDMwVCA9IHRyaWFkc1s5XSwNCiAgICBUMDMwQyA9IHRyaWFkc1sxMF0sDQogICAgVDIwMSA9IHRyaWFkc1sxMV0sDQogICAgVDEyMEQgPSB0cmlhZHNbMTJdLA0KICAgIFQxMjBVID0gdHJpYWRzWzEzXSwNCiAgICBUMTIwQyA9IHRyaWFkc1sxNF0sDQogICAgVDIxMCA9IHRyaWFkc1sxNV0sDQogICAgVDMwMCA9IHRyaWFkc1sxNl0NCiAgKQ0KfQ0KDQojIEFwcGx5IHRvIGFsbCB3YXZlcw0KdHJpYWRfY2Vuc3VzX3RhYmxlIDwtIGJpbmRfcm93cyhsYXBwbHkoc2VxX2Fsb25nKGdyYXBocyksIGZ1bmN0aW9uKGkpIHsNCiAgZGYgPC0gdHJpYWRfc3VtbWFyeShncmFwaHNbW2ldXSkNCiAgZGYkd2F2ZSA8LSBpDQogIGRmDQp9KSkNCg0KIyBSZW9yZGVyIGNvbHVtbnMgZm9yIHJlYWRhYmlsaXR5DQp0cmlhZF9jZW5zdXNfdGFibGUgPC0gdHJpYWRfY2Vuc3VzX3RhYmxlICU+JSBzZWxlY3Qod2F2ZSwgZXZlcnl0aGluZygpKQ0KDQojIFNob3cgdGhlIHRhYmxlDQpzaG93KHRyaWFkX2NlbnN1c190YWJsZSkNCg0KYGBgDQojIyMgVHJhbnNpdGl2aXR5DQoNCmBgYHtyfQ0KbmV0d29ya190cmFucyA8LSBkYXRhLmZyYW1lKA0KICB0cmFuc193MSA9IHRyYW5zaXRpdml0eSh0ZXN0X3cxKSwNCiAgdHJhbnNfdzIgPSB0cmFuc2l0aXZpdHkodGVzdF93MiksDQogIHRyYW5zX3czID0gdHJhbnNpdGl2aXR5KHRlc3RfdzMpDQopDQoNCmZzaG93ZGYobmV0d29ya190cmFucykNCmBgYA0KIyMjIHByb3BvcnRpb24gaW50ZXJkaXNjaXBsaW5hcnkgdGllcyANCg0KYGBge3J9DQoNCiMgLS0tIEZ1bmN0aW9uIHRvIGNvdW50IGludGVyZGlzY2lwbGluYXJ5IHRpZXMgZm9yIHVuZGlyZWN0ZWQgbmV0d29ya3MgLS0tDQpjb3VudF9pbnRlcmRpc2NpcCA8LSBmdW5jdGlvbihhZGpfbWF0cml4LCBkaXNjaXBsaW5lX3ZlYykgew0KICAjIE9ubHkgY29uc2lkZXIgdXBwZXIgdHJpYW5nbGUgdG8gYXZvaWQgZG91YmxlIGNvdW50aW5nDQogIGVkZ2VzIDwtIHdoaWNoKHVwcGVyLnRyaShhZGpfbWF0cml4KSAmIGFkal9tYXRyaXggIT0gMCwgYXJyLmluZCA9IFRSVUUpDQogIA0KICAjIENvdW50IGludGVyZGlzY2lwbGluYXJ5IHRpZXMNCiAgaW50ZXJkaXNjaXBfY291bnQgPC0gc3VtKA0KICAgIChkaXNjaXBsaW5lX3ZlY1tlZGdlc1ssMV1dID09ICJTb2Npb2xvZ2llIiAmIGRpc2NpcGxpbmVfdmVjW2VkZ2VzWywyXV0gPT0gIlBvbGl0aWNvbG9naWUiKSB8DQogICAgKGRpc2NpcGxpbmVfdmVjW2VkZ2VzWywxXV0gPT0gIlBvbGl0aWNvbG9naWUiICYgZGlzY2lwbGluZV92ZWNbZWRnZXNbLDJdXSA9PSAiU29jaW9sb2dpZSIpDQogICkNCiAgDQogICMgVG90YWwgbnVtYmVyIG9mIGVkZ2VzIGluIHVwcGVyIHRyaWFuZ2xlDQogIHRvdGFsX2VkZ2VzIDwtIG5yb3coZWRnZXMpDQogIA0KICAjIFByb3BvcnRpb24gb2YgaW50ZXJkaXNjaXBsaW5hcnkgdGllcw0KICBwcm9wb3J0aW9uIDwtIGlmZWxzZSh0b3RhbF9lZGdlcyA+IDAsIGludGVyZGlzY2lwX2NvdW50IC8gdG90YWxfZWRnZXMsIE5BKQ0KICANCiAgcmV0dXJuKGMoaW50ZXJkaXNjaXBfY291bnQgPSBpbnRlcmRpc2NpcF9jb3VudCwgcHJvcG9ydGlvbiA9IHByb3BvcnRpb24pKQ0KfQ0KDQojIC0tLSBXYXZlIDEgLS0tDQp2YWxpZF9ub2Rlc193MSA8LSB3aGljaCghaXMubmEoZGZfZWdvJGRpc2NpcGxpbmUuMjIpKQ0KYWRqX3cxX2NsZWFuIDwtIHRlc3QkbmV0c1sxLCB2YWxpZF9ub2Rlc193MSwgdmFsaWRfbm9kZXNfdzFdDQpkaXNjaXBsaW5lX3cxX2NsZWFuIDwtIGRmX2VnbyRkaXNjaXBsaW5lLjIyW3ZhbGlkX25vZGVzX3cxXQ0KaW50ZXJkaXNjaXBfdzEgPC0gY291bnRfaW50ZXJkaXNjaXAoYWRqX3cxX2NsZWFuLCBkaXNjaXBsaW5lX3cxX2NsZWFuKQ0KDQojIC0tLSBXYXZlIDIgLS0tDQp2YWxpZF9ub2Rlc193MiA8LSB3aGljaCghaXMubmEoZGZfZWdvJGRpc2NpcGxpbmUuMjQpKQ0KYWRqX3cyX2NsZWFuIDwtIHRlc3QkbmV0c1syLCB2YWxpZF9ub2Rlc193MiwgdmFsaWRfbm9kZXNfdzJdDQpkaXNjaXBsaW5lX3cyX2NsZWFuIDwtIGRmX2VnbyRkaXNjaXBsaW5lLjI0W3ZhbGlkX25vZGVzX3cyXQ0KaW50ZXJkaXNjaXBfdzIgPC0gY291bnRfaW50ZXJkaXNjaXAoYWRqX3cyX2NsZWFuLCBkaXNjaXBsaW5lX3cyX2NsZWFuKQ0KDQojIC0tLSBXYXZlIDMgLS0tDQp2YWxpZF9ub2Rlc193MyA8LSB3aGljaCghaXMubmEoZGZfZWdvJGRpc2NpcGxpbmUuMjUpKQ0KYWRqX3czX2NsZWFuIDwtIHRlc3QkbmV0c1szLCB2YWxpZF9ub2Rlc193MywgdmFsaWRfbm9kZXNfdzNdDQpkaXNjaXBsaW5lX3czX2NsZWFuIDwtIGRmX2VnbyRkaXNjaXBsaW5lLjI1W3ZhbGlkX25vZGVzX3czXQ0KaW50ZXJkaXNjaXBfdzMgPC0gY291bnRfaW50ZXJkaXNjaXAoYWRqX3czX2NsZWFuLCBkaXNjaXBsaW5lX3czX2NsZWFuKQ0KDQojIC0tLSBDcmVhdGUgc3VtbWFyeSB0YWJsZSAtLS0NCmludGVyZGlzY2lwX3RhYmxlIDwtIGRhdGEuZnJhbWUoDQogIHdhdmUgPSBjKDEsIDIsIDMpLA0KICBpbnRlcmRpc2NpcGxpbmFyeV90aWVzID0gYyhpbnRlcmRpc2NpcF93MVsiaW50ZXJkaXNjaXBfY291bnQiXSwgaW50ZXJkaXNjaXBfdzJbImludGVyZGlzY2lwX2NvdW50Il0sIGludGVyZGlzY2lwX3czWyJpbnRlcmRpc2NpcF9jb3VudCJdKSwNCiAgcHJvcG9ydGlvbiA9IGMoaW50ZXJkaXNjaXBfdzFbInByb3BvcnRpb24iXSwgaW50ZXJkaXNjaXBfdzJbInByb3BvcnRpb24iXSwgaW50ZXJkaXNjaXBfdzNbInByb3BvcnRpb24iXSkNCikNCg0KIyAtLS0gU2hvdyByZXN1bHRzIC0tLQ0KZnNob3dkZihpbnRlcmRpc2NpcF90YWJsZSkNCg0KYGBgDQojIyAgYHIgY29sb3JpemUoIk1vZGVsIHZpc3VhbGlzYXRpb25zIiwgIm9yYW5nZSIpYA0KDQpGaWd1cmVzIDHigJMzIGRpc3BsYXkgdGhlIGNvLWF1dGhvcnNoaXAgbmV0d29ya3MgYWNyb3NzIHRocmVlIHBlcmlvZHMgKDIwMTXigJMyMDE5LCAyMDE54oCTMjAyMywgYW5kIDIwMjTigJMyMDI1KS4gSXNvbGF0ZXPigJRhdXRob3JzIHdpdGhvdXQgYW55IGNvbGxhYm9yYXRpb25zIGluIHRoZSByZXNwZWN0aXZlIHBlcmlvZOKAlHdlcmUgcmVtb3ZlZCwgd2hpY2ggbWFrZXMgdGhlIG5ldHdvcmtzIGFwcGVhciB2aXN1YWxseSBkZW5zZXIgdGhhbiB0aGV5IGFyZSBpbiByZWFsaXR5LiBTdGlsbCwgc29tZSBjbGVhciB0cmVuZHMgZW1lcmdlLiBDb2xsYWJvcmF0aW9uIHJlbWFpbnMgc3Ryb25nbHkgZGlzY2lwbGluZS1ib3VuZDogc29jaW9sb2dpc3RzIChjaXJjbGVzKSBhbmQgcG9saXRpY2FsIHNjaWVudGlzdHMgKHNxdWFyZXMpIG1vc3RseSBjbHVzdGVyIHdpdGhpbiB0aGVpciBvd24gZGlzY2lwbGluYXJ5IGdyb3Vwcywgd2l0aCBvbmx5IGxpbWl0ZWQgY3Jvc3MtZGlzY2lwbGluYXJ5IGNvbm5lY3Rpb25zLiBUaGVyZSBpcyBsaXR0bGUgdmlzdWFsIGluZGljYXRpb24gb2YgYSBzdXN0YWluZWQgaW5jcmVhc2UgaW4gaW50ZXJkaXNjaXBsaW5hcnkgY29sbGFib3JhdGlvbiBvdmVyIHRpbWUsIHRoZSBkaXNjaXBsaW5hcnkgY2x1c3RlcnMgcmVtYWluIGxhcmdlbHkgZGlzdGluY3QsIHdpdGggb25seSBhIGZldyBicmlkZ2luZyB0aWVzIGFwcGVhcmluZyBhbmQgZGlzYXBwZWFyaW5nIGFjcm9zcyB3YXZlcy4NCg0KSG93ZXZlciwgdGhlIG5ldHdvcmtzIGRvIHNob3cgc3RydWN0dXJhbCBldm9sdXRpb24uIEZyb20gV2F2ZSAxIHRvIFdhdmUgMiwgdGhlIHZpc3VhbGl6YXRpb25zIHJldmVhbCBkZW5zZXIgbG9jYWwgZ3JvdXBpbmdzIGFuZCBtb3JlIHRpZ2h0bHkgY29ubmVjdGVkIHN1Ym5ldHdvcmtzLCBzdWdnZXN0aW5nIGhpZ2hlciBjbHVzdGVyaW5nIGFuZCB0cmFuc2l0aXZpdHkuIEJ5IFdhdmUgMywgdGhlIG5ldHdvcmsgZXhwYW5kcyBidXQgcmVtYWlucyBvcmdhbml6ZWQgYXJvdW5kIHNpbWlsYXIgY2x1c3RlcmVkIGNvcmVzLCBpbXBseWluZyB0aGF0IGV4aXN0aW5nIGNvbGxhYm9yYXRpdmUgc3RydWN0dXJlcyBwZXJzaXN0IHJhdGhlciB0aGFuIGRpdmVyc2lmeS4gVGhlIHZpc3VhbGl6YXRpb24gYWxnb3JpdGhtIHNvbWV3aGF0IOKAnHN1cHByZXNzZXPigJ0gdGhlIHJlYWwgbWFnbml0dWRlIG9mIHRoZXNlIGRpZmZlcmVuY2VzIGJlY2F1c2UgaXNvbGF0ZXMgYXJlIGV4Y2x1ZGVk4oCUbWVhbmluZyB0aGF0IGluIHRoZSBmdWxsIG5ldHdvcmtzLCB0aGUgY29udHJhc3QgYmV0d2VlbiB3YXZlcyB3b3VsZCBsaWtlbHkgYmUgZXZlbiBzdHJvbmdlci4NCg0KRmlndXJlIDQgdmlzdWFsaXplcyB0aGUgc2FtZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzIGNvbG9yZWQgYnkgaW50ZXJkaXNjaXBsaW5hcml0eSBzY29yZXMgKDDigJM0KSwgYWxsb3dpbmcgZm9yIGEgbW9yZSBkaXJlY3QgYXNzZXNzbWVudCBvZiB0aGUgcmVsYXRpb25zaGlwIGJldHdlZW4gaW50ZXJkaXNjaXBsaW5hcml0eSBhbmQgY29sbGFib3JhdGlvbiBhY3Rpdml0eS4gSW50ZXJlc3RpbmdseSwgdGhlIG1vc3QgaW50ZXJkaXNjaXBsaW5hcnkgc2Nob2xhcnMgKHNjb3JlcyAz4oCTNCwgaW4gZGFya2VyIG9yYW5nZSBhbmQgcmVkKSBhcmUgbm90IG5lY2Vzc2FyaWx5IHRob3NlIHdpdGggdGhlIGxhcmdlc3QgbnVtYmVyIG9mIGNvbm5lY3Rpb25zIG9yIHRoZSBtb3N0IGNlbnRyYWwgcG9zaXRpb25zIGluIHRoZSBuZXR3b3JrLiBJbnN0ZWFkLCByZXNlYXJjaGVycyB3aXRoIG1vZGVyYXRlIGludGVyZGlzY2lwbGluYXJpdHkgKHNjb3JlcyAx4oCTMikgYXBwZWFyIG1vcmUgZnJlcXVlbnRseSBhdCB0aGUgY29yZSBvZiBjb2xsYWJvcmF0aXZlIGNsdXN0ZXJzLCBzdWdnZXN0aW5nIHRoYXQgdGhlc2Ugc2Nob2xhcnMgYXJlIG1vcmUgYWN0aXZlIG9yIHBvcHVsYXIgYXMgY29sbGFib3JhdG9ycy4NCg0KDQoNCmBgYHtyfQ0KDQoNCmxpYnJhcnkoaWdyYXBoKSAgIyBpZ3JhcGggZnVuY3Rpb25zIHdpbGwgb3ZlcnJpZGUNCg0KDQojIC0tLSBXYXZlIDEgLS0tDQppc29sYXRlc193MSA8LSB3aGljaChpZ3JhcGg6OmRlZ3JlZSh0ZXN0X3cxKSA9PSAwKQ0Kbm9faXNvbGF0ZXN3MSA8LSBpZ3JhcGg6OmRlbGV0ZV92ZXJ0aWNlcyh0ZXN0X3cxLCBpc29sYXRlc193MSkNCg0KDQojIFZlcnRleCBzaGFwZXMNCnZlcnRleF9zaGFwZXMxIDwtIGlmZWxzZShkZl9lZ28kZGlzY2lwbGluZS4yMiA9PSAiU29jaW9sb2dpZSIsICJjaXJjbGUiLCAic3F1YXJlIikNCnZlcnRleF9zaGFwZXMxW2lzLm5hKHZlcnRleF9zaGFwZXMxKV0gPC0gInJlY3RhbmdsZSINCnZlcnRleF9zaGFwZXMxIDwtIHZlcnRleF9zaGFwZXMxWy1pc29sYXRlc193MV0NCg0KIyBWZXJ0ZXggY29sb3JzDQp2ZXJ0ZXhfY29sb3IxIDwtIGlmZWxzZShkZl9lZ28kdW5pdmVyc2l0ZWl0LjIyID09ICJSVSIsICJicm93bjMiLA0KICAgICAgICAgICAgICAgICAgaWZlbHNlKGRmX2VnbyR1bml2ZXJzaXRlaXQuMjIgPT0gIlVVIiwgImdvbGQiLA0KICAgICAgICAgICAgICAgICAgaWZlbHNlKGRmX2VnbyR1bml2ZXJzaXRlaXQuMjIgPT0gIlJVRyIsICJvcmFuZ2UiLA0KICAgICAgICAgICAgICAgICAgaWZlbHNlKGRmX2VnbyR1bml2ZXJzaXRlaXQuMjIgPT0gIlV2QSIsICJkYXJrY3lhbiIsICJncmV5IikpKSkNCg0KdmVydGV4X2NvbG9yMSA8LSB2ZXJ0ZXhfY29sb3IxWy1pc29sYXRlc193MV0NCg0KIyAtLS0gV2F2ZSAyIC0tLQ0KaXNvbGF0ZXNfdzIgPC0gd2hpY2goaWdyYXBoOjpkZWdyZWUodGVzdF93MikgPT0gMCkNCm5vX2lzb2xhdGVzdzIgPC0gaWdyYXBoOjpkZWxldGVfdmVydGljZXModGVzdF93MiwgaXNvbGF0ZXNfdzIpDQoNCg0KIyBWZXJ0ZXggc2hhcGVzDQp2ZXJ0ZXhfc2hhcGVzMiA8LSBpZmVsc2UoZGZfZWdvJGRpc2NpcGxpbmUuMjQgPT0gIlNvY2lvbG9naWUiLCAiY2lyY2xlIiwgInNxdWFyZSIpDQp2ZXJ0ZXhfc2hhcGVzMltpcy5uYSh2ZXJ0ZXhfc2hhcGVzMildIDwtICJyZWN0YW5nbGUiDQp2ZXJ0ZXhfc2hhcGVzMiA8LSB2ZXJ0ZXhfc2hhcGVzMlstaXNvbGF0ZXNfdzJdDQoNCiMgVmVydGV4IGNvbG9ycw0KdmVydGV4X2NvbG9yMiA8LSBpZmVsc2UoZGZfZWdvJHVuaXZlcnNpdGVpdC4yNCA9PSAiUlUiLCAiYnJvd24zIiwNCiAgICAgICAgICAgICAgICAgIGlmZWxzZShkZl9lZ28kdW5pdmVyc2l0ZWl0LjI0ID09ICJVVSIsICJnb2xkIiwNCiAgICAgICAgICAgICAgICAgIGlmZWxzZShkZl9lZ28kdW5pdmVyc2l0ZWl0LjI0ID09ICJSVUciLCAib3JhbmdlIiwNCiAgICAgICAgICAgICAgICAgIGlmZWxzZShkZl9lZ28kdW5pdmVyc2l0ZWl0LjI0ID09ICJVdkEiLCAiZGFya2N5YW4iLCAiZ3JleSIpKSkpDQp2ZXJ0ZXhfY29sb3IyIDwtIHZlcnRleF9jb2xvcjJbLWlzb2xhdGVzX3cyXQ0KDQojIC0tLSBXYXZlIDMgLS0tDQppc29sYXRlc193MyA8LSB3aGljaChpZ3JhcGg6OmRlZ3JlZSh0ZXN0X3czKSA9PSAwKQ0Kbm9faXNvbGF0ZXN3MyA8LSBpZ3JhcGg6OmRlbGV0ZV92ZXJ0aWNlcyh0ZXN0X3czLCBpc29sYXRlc193MykNCg0KDQojIFZlcnRleCBzaGFwZXMNCnZlcnRleF9zaGFwZXMzIDwtIGlmZWxzZShkZl9lZ28kZGlzY2lwbGluZS4yNSA9PSAiU29jaW9sb2dpZSIsICJjaXJjbGUiLCAic3F1YXJlIikNCnZlcnRleF9zaGFwZXMzW2lzLm5hKHZlcnRleF9zaGFwZXMzKV0gPC0gInJlY3RhbmdsZSINCnZlcnRleF9zaGFwZXMzIDwtIHZlcnRleF9zaGFwZXMzWy1pc29sYXRlc193M10NCg0KIyBWZXJ0ZXggY29sb3JzDQp2ZXJ0ZXhfY29sb3IzIDwtIGlmZWxzZShkZl9lZ28kdW5pdmVyc2l0ZWl0LjI1ID09ICJSVSIsICJicm93bjMiLA0KICAgICAgICAgICAgICAgICAgaWZlbHNlKGRmX2VnbyR1bml2ZXJzaXRlaXQuMjUgPT0gIlVVIiwgImdvbGQiLA0KICAgICAgICAgICAgICAgICAgaWZlbHNlKGRmX2VnbyR1bml2ZXJzaXRlaXQuMjUgPT0gIlJVRyIsICJvcmFuZ2UiLA0KICAgICAgICAgICAgICAgICAgaWZlbHNlKGRmX2VnbyR1bml2ZXJzaXRlaXQuMjUgPT0gIlV2QSIsICJkYXJrY3lhbiIsICJncmV5IikpKSkNCg0KdmVydGV4X2NvbG9yMyA8LSB2ZXJ0ZXhfY29sb3IzWy1pc29sYXRlc193M10NCg0KIyBaZWxmZGUgbGF5b3V0IHZvb3IgYmVpZGUgbmV0d2Vya2VuDQpzZXQuc2VlZCgxMjMpDQpsYXlvdXRfZnIgPC0gaWdyYXBoOjpsYXlvdXRfd2l0aF9mcih0ZXN0X3cxKQ0KYGBgDQoNCmBgYHtyfQ0KIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KIyAxLiBOaWV1d2UgbGVnZSBwbG90cnVpbXRlDQojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpwbG90Lm5ldygpDQoNCiMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiMgMi4gTGVnZW5kYSB1bml2ZXJzaXRlaXQgKGtsZXVyZW4pDQojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpsZWdlbmQoInRvcCIsDQogICAgICAgbGVnZW5kID0gYygiUlUiLCAiVVUiLCAiUlVHIiwgIlV2QSIsICJPdGhlciIpLA0KICAgICAgIGNvbCA9IGMoImJyb3duMyIsICJnb2xkIiwgIm9yYW5nZSIsICJkYXJrY3lhbiIsICJncmV5IiksDQogICAgICAgcGNoID0gMTksDQogICAgICAgcHQuY2V4ID0gMiwNCiAgICAgICBob3JpeiA9IFRSVUUsDQogICAgICAgYnR5ID0gIm4iLA0KICAgICAgIHRpdGxlID0gIlVuaXZlcnNpdHkiLA0KICAgICAgIGluc2V0ID0gYygwLCAwLjIpDQopDQoNCiMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiMgMy4gTGVnZW5kYSBkaXNjaXBsaW5lICh2b3JtZW4pDQojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpsZWdlbmQoImJvdHRvbSIsDQogICAgICAgbGVnZW5kID0gYygiU29jaW9sb2d5IiwgIlBvbGl0aWNhbCBzY2llbmNlIiksDQogICAgICAgcGNoID0gYygxOSwgMTUpLCAgICAjIDE5ID0gY2lyY2xlLCAxNSA9IHNxdWFyZQ0KICAgICAgIGNvbCA9ICJibGFjayIsDQogICAgICAgcHQuY2V4ID0gMiwNCiAgICAgICBob3JpeiA9IFRSVUUsDQogICAgICAgYnR5ID0gIm4iLA0KICAgICAgIHRpdGxlID0gIkRpc2NpcGxpbmUiLA0KICAgICAgIGluc2V0ID0gYygwLCAwLjEpDQopDQoNCmBgYA0KDQoNCmBgYHtyfQ0KIyBQbG90IFdhdmUgMQ0Kc2V0LnNlZWQoMTIzKSAgIyBmb3IgcmVwcm9kdWNpYmxlIGxheW91dA0KbGF5b3V0MSA8LSBsYXlvdXRfd2l0aF9mcihub19pc29sYXRlc3cxKSAgIyBGcnVjaHRlcm1hbi1SZWluZ29sZCBsYXlvdXQNCnBsb3Qobm9faXNvbGF0ZXN3MSwNCiAgICAgbGF5b3V0ID0gbGF5b3V0MSwNCiAgICAgdmVydGV4LmNvbG9yID0gdmVydGV4X2NvbG9yMSwNCiAgICAgdmVydGV4LnNoYXBlID0gdmVydGV4X3NoYXBlczEsDQogICAgIHZlcnRleC5zaXplID0gNiwNCiAgICAgdmVydGV4LmZyYW1lLmNvbG9yID0gImdyYXkiLA0KICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgZWRnZS5jdXJ2ZWQgPSAwLjIsDQogICAgIGVkZ2UuYXJyb3cuc2l6ZSA9IDAuMSwNCiAgICAgbWFpbiA9ICJXYXZlIDE6IDIwMTXigJMyMDE5Ig0KKQ0KYGBgDQoNCg0KYGBge3J9DQojIFBsb3QgV2F2ZSAyDQpzZXQuc2VlZCgxMjMpDQpsYXlvdXQyIDwtIGxheW91dF93aXRoX2ZyKG5vX2lzb2xhdGVzdzIpDQpwbG90KG5vX2lzb2xhdGVzdzIsDQogICAgIGxheW91dCA9IGxheW91dDIsDQogICAgIHZlcnRleC5jb2xvciA9IHZlcnRleF9jb2xvcjIsDQogICAgIHZlcnRleC5zaGFwZSA9IHZlcnRleF9zaGFwZXMyLA0KICAgICB2ZXJ0ZXguc2l6ZSA9IDYsDQogICAgIHZlcnRleC5mcmFtZS5jb2xvciA9ICJncmF5IiwNCiAgICAgdmVydGV4LmxhYmVsID0gTkEsDQogICAgIGVkZ2UuY3VydmVkID0gMC4yLA0KICAgICBlZGdlLmFycm93LnNpemUgPSAwLjEsDQogICAgIG1haW4gPSAiV2F2ZSAyOiAyMDE54oCTMjAyMyINCikNCmBgYA0KDQpgYGB7cn0NCiMgUGxvdCBXYXZlIDMNCnNldC5zZWVkKDEyMykNCmxheW91dDMgPC0gbGF5b3V0X3dpdGhfZnIobm9faXNvbGF0ZXN3MykNCnBsb3Qobm9faXNvbGF0ZXN3MywNCiAgICAgbGF5b3V0ID0gbGF5b3V0MywNCiAgICAgdmVydGV4LmNvbG9yID0gdmVydGV4X2NvbG9yMywNCiAgICAgdmVydGV4LnNoYXBlID0gdmVydGV4X3NoYXBlczMsDQogICAgIHZlcnRleC5zaXplID0gNiwNCiAgICAgdmVydGV4LmZyYW1lLmNvbG9yID0gImdyYXkiLA0KICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgZWRnZS5jdXJ2ZWQgPSAwLjIsDQogICAgIGVkZ2UuYXJyb3cuc2l6ZSA9IDAuMSwNCiAgICAgbWFpbiA9ICJXYXZlIDM6IDIwMjTigJMyMDI1Ig0KKQ0KYGBgDQoNCg0KDQpgYGB7cn0NCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQojIDEuIExvYWQgcGFja2FnZXMNCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQpsaWJyYXJ5KGlncmFwaCkNCmxpYnJhcnkoc2NhbGVzKQ0KbGlicmFyeShncmlkRXh0cmEpDQpsaWJyYXJ5KGdyaWQpDQoNCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQojIDIuIENvbG9yIGFuZCBzaXplIHNldHRpbmdzDQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0Kc2V0LnNlZWQoMTIzKQ0KY29sb3JfcGFsZXR0ZSA8LSBjb2xvclJhbXBQYWxldHRlKGMoImxpZ2h0Ymx1ZSIsICJvcmFuZ2UiLCAicmVkIikpKDUpDQoNCiMgVmVydGV4IHNpemUgZnVuY3Rpb24gKGJhc2VkIG9uIGRlZ3JlZSkNCmdldF92ZXJ0ZXhfc2l6ZSA8LSBmdW5jdGlvbihnKSB7DQogIHNjYWxlczo6cmVzY2FsZShpZ3JhcGg6OmRlZ3JlZShnLCBtb2RlID0gImFsbCIpLCB0byA9IGMoNSwgMjApKQ0KfQ0KDQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KIyAzLiBQbG90IGZ1bmN0aW9uIGZvciBhIHNpbmdsZSB3YXZlDQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KcGxvdF93YXZlIDwtIGZ1bmN0aW9uKGdyYXBoX29iaiwgd2F2ZV9pZHgsIGNyb3NzX3Njb3Jlcywgd2F2ZV9sYWJlbCkgew0KICAjIFJlbW92ZSBpc29sYXRlcw0KICBub19pc28gPC0gaWdyYXBoOjpkZWxldGUudmVydGljZXMoZ3JhcGhfb2JqLCB3aGljaChpZ3JhcGg6OmRlZ3JlZShncmFwaF9vYmopID09IDApKQ0KICANCiAgIyBHZW5lcmF0ZSBsYXlvdXQNCiAgbGF5b3V0X3VzZSA8LSBpZ3JhcGg6OmxheW91dF93aXRoX2ZyKG5vX2lzbykNCiAgDQogICMgTWFwIGludGVyZGlzY2lwbGluYXJpdHkgKGNyb3NzX3Njb3JlcykgdG8gY29sb3INCiAgdmVydGV4X2NvbG9ycyA8LSBjb2xvcl9wYWxldHRlW2Nyb3NzX3Njb3Jlc1ssIHdhdmVfaWR4XSArIDFdDQogIA0KICAjIENvbXB1dGUgdmVydGV4IHNpemVzIGJhc2VkIG9uIGRlZ3JlZQ0KICB2ZXJ0ZXhfc2l6ZXMgPC0gZ2V0X3ZlcnRleF9zaXplKG5vX2lzbykNCiAgDQogICMgUGxvdCB0aGUgbmV0d29yaw0KICBwbG90KG5vX2lzbywNCiAgICAgICBsYXlvdXQgPSBsYXlvdXRfdXNlLA0KICAgICAgIHZlcnRleC5jb2xvciA9IHZlcnRleF9jb2xvcnNbaWdyYXBoOjpWKG5vX2lzbyldLA0KICAgICAgIHZlcnRleC5zaXplID0gdmVydGV4X3NpemVzW2lncmFwaDo6Vihub19pc28pXSwNCiAgICAgICB2ZXJ0ZXguc2hhcGUgPSAiY2lyY2xlIiwNCiAgICAgICB2ZXJ0ZXguZnJhbWUuY29sb3IgPSAiZ3JheTcwIiwNCiAgICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgICBlZGdlLmN1cnZlZCA9IDAuMiwNCiAgICAgICBlZGdlLndpZHRoID0gMC41LA0KICAgICAgIG1haW4gPSB3YXZlX2xhYmVsDQogICkNCn0NCg0KDQoNCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQojIDUuIEFkZCBjb21iaW5lZCBsZWdlbmRzIChpbnRlcmRpc2NpcGxpbmFyaXR5ICsgZGVncmVlKQ0KIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCiMgTmV3IHBsb3Qgc3BhY2UgZm9yIGxlZ2VuZA0KcGxvdC5uZXcoKQ0KDQojIChhKSBMZWdlbmQ6IGludGVyZGlzY2lwbGluYXJpdHkNCmxlZ2VuZCgiYm90dG9tIiwNCiAgICAgICBsZWdlbmQgPSBwYXN0ZSgiU2NvcmUiLCAwOjQpLA0KICAgICAgIGNvbCA9IGNvbG9yX3BhbGV0dGUsDQogICAgICAgcGNoID0gMTksDQogICAgICAgcHQuY2V4ID0gMiwNCiAgICAgICBob3JpeiA9IFRSVUUsDQogICAgICAgYnR5ID0gIm4iLA0KICAgICAgIHRpdGxlID0gIkludGVyZGlzY2lwbGluYXJpdHkiLA0KICAgICAgIGluc2V0ID0gYygwLCAwLjM1KQ0KKQ0KDQojIChiKSBMZWdlbmQ6IGRlZ3JlZQ0KbGVnZW5kX3NpemVzIDwtIGMoNSwgMTAsIDIwKQ0KbGVnZW5kX2xhYmVscyA8LSBjKCJMb3cgZGVncmVlIiwgIk1lZGl1bSIsICJIaWdoIikNCmxlZ2VuZCgiYm90dG9tIiwNCiAgICAgICBsZWdlbmQgPSBsZWdlbmRfbGFiZWxzLA0KICAgICAgIHB0LmNleCA9IGxlZ2VuZF9zaXplcyAvIDYsDQogICAgICAgcGNoID0gMjEsDQogICAgICAgY29sID0gImdyYXkzMCIsDQogICAgICAgcHQuYmcgPSAid2hpdGUiLA0KICAgICAgIGhvcml6ID0gVFJVRSwNCiAgICAgICBidHkgPSAibiIsDQogICAgICAgdGl0bGUgPSAiQ29sbGFib3JhdGlvbnMiLA0KICAgICAgIGluc2V0ID0gYygwLCAwKQ0KKQ0KDQoNCmBgYA0KYGBge3J9DQpwbG90X3dhdmUodGVzdF93MSwgMSwgY3Jvc3Nfc2NvcmVzLCAiV2F2ZSAxOiAyMDE14oCTMjAxOCIpDQpgYGANCg0KYGBge3J9DQpwbG90X3dhdmUodGVzdF93MiwgMiwgY3Jvc3Nfc2NvcmVzLCAiV2F2ZSAyOiAyMDE54oCTMjAyMyIpDQpgYGANCg0KYGBge3J9DQpwbG90X3dhdmUodGVzdF93MywgMywgY3Jvc3Nfc2NvcmVzLCAiV2F2ZSAzOiAyMDI04oCTMjAyNSIpDQpgYGANCg0KDQojIyAgYHIgY29sb3JpemUoIlJTaWVuYSBNb2RlbHMiLCAib3JhbmdlIilgDQoNClRoZSBiYXNlbGluZSBzdHJ1Y3R1cmFsIG1vZGVsIChNb2RlbCAxKSB3YXMgZXN0aW1hdGVkIHVzaW5nIFJTaWVuYSB3aXRoIGFuIHVuZGlyZWN0ZWQgbmV0d29yayBzcGVjaWZpY2F0aW9uLiBBbGwgbW9kZWxzIGFzc3VtZSB1bmlsYXRlcmFsIGluaXRpYXRpdmUgd2l0aCByZWNpcHJvY2FsIGNvbmZpcm1hdGlvbjogb25lIGFjdG9yIHByb3Bvc2VzIGEgbmV3IHRpZSBvciBkaXNzb2x2ZXMgYW4gZXhpc3Rpbmcgb25lLCBhbmQgYSBuZXcgdGllIGlzIG9ubHkgY3JlYXRlZCBpZiB0aGUgcGFydG5lciBjb25maXJtcyAoUmlwbGV5ICYgUHJlY2lhZG8sIDIwMTEpLiBUaGUgY29uZmlybWF0aW9uIHByb2Nlc3MgaXMgY29udHJvbGxlZCBieSBhIGZpeGVkIG9mZnNldCwgd2hpY2ggYWRqdXN0cyBmb3IgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBiaW5hcnkgYW5kIG11bHRpbm9taWFsIGNob2ljZSBwcm9iYWJpbGl0aWVzLg0KDQoNCiMjIyBNb2RlbCAxDQoNClRoZSBtb2RlbCBpbmNsdWRlcyB0aHJlZSBzdHJ1Y3R1cmFsIGVmZmVjdHM6IG92ZXJhbGwgbmV0d29yayBkZW5zaXR5LCB0cmFuc2l0aXZlIHRyaWFkcywgYW5kIGEgY29tYmluZWQgZGVncmVlLXJlbGF0ZWQgYWN0aXZpdHkgYW5kIHBvcHVsYXJpdHkgdGVybSAoZGVnUGx1cykuIFRoZSBkZW5zaXR5IGVmZmVjdCAoIOKAkzIuMzcsIFNFID0gMC4wNCApIHdhcyBzdHJvbmdseSBuZWdhdGl2ZSwgc3VnZ2VzdGluZyB0aGF0IHNjaG9sYXJzIGdlbmVyYWxseSBldmFsdWF0ZSB0aWUgZm9ybWF0aW9uIGFzIHVuZGVzaXJhYmxlIGluIHRoZSBhYnNlbmNlIG9mIHNwZWNpZmljIGluY2VudGl2ZXMuIEluIG90aGVyIHdvcmRzLCByZXNlYXJjaGVycyBkbyBub3QgY29sbGFib3JhdGUgcmFuZG9tbHkgYnV0IHJhdGhlciBzZWxlY3RpdmVseSwgdGhleSDigJhkaXNsaWtl4oCZIGluaXRpYXRpbmcgbmV3IGNvbGxhYm9yYXRpb25zIHVubGVzcyBvdGhlciBmYWN0b3JzLCBzdWNoIGFzIGV4aXN0aW5nIGNvbm5lY3Rpb25zIG9yIGRpc2NpcGxpbmFyeSBzaW1pbGFyaXR5LCBtYWtlIHN1Y2ggdGllcyBtb3JlIGF0dHJhY3RpdmUuLiBUaGUgdHJhbnNpdGl2ZSB0cmlhZHMgZWZmZWN0ICggMC44MCwgU0UgPSAwLjA1ICkgd2FzIHBvc2l0aXZlIGFuZCBzaWduaWZpY2FudCwgY29uc2lzdGVudCB3aXRoIGluY3JlYXNpbmcgY2xvc3VyZTogc2Nob2xhcnMgYXJlIG1vcmUgbGlrZWx5IHRvIGNvbGxhYm9yYXRlIHdpdGggY29sbGVhZ3VlcyBvZiB0aGVpciBjb2xsYWJvcmF0b3JzLiBUaGUgZGVncmVlIGFjdGl2aXR5ICsgcG9wdWxhcml0eSBlZmZlY3QgKCAwLjAzLCBTRSA9IDAuMDA0ICkgd2FzIGFsc28gcG9zaXRpdmUsIGltcGx5aW5nIGEgbWlsZCB0ZW5kZW5jeSBmb3IgYWxyZWFkeSB3ZWxsLWNvbm5lY3RlZCBzY2hvbGFycyB0byBhdHRyYWN0IGFkZGl0aW9uYWwgdGllcy4gT3ZlcmFsbCwgdGhlIGJhc2VsaW5lIG1vZGVsIGluZGljYXRlcyBhIGhpZ2hseSBjbHVzdGVyZWQgYW5kIHByZWZlcmVudGlhbGx5IGF0dGFjaGVkIG5ldHdvcmsgc3RydWN0dXJlLg0KDQpgYGB7ciwgZWNobz1GQUxTRX0NCiMgQmFzZWxpbmUgc3RydWN0dXJhbCBtb2RlbA0KbXlkYXRhIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXRfc2llbmEpDQoNCm15ZWZmIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIGRlbnNpdHkpDQpteWVmZiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZiwgdHJhbnNUcmlhZHMpDQpteWVmZiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZiwgZGVnUGx1cykNCg0KbXlBbGdvcml0aG0gPC0gc2llbmFBbGdvcml0aG1DcmVhdGUobW9kZWxUeXBlID1jKG5ldF9zaWVuYT0zKSwgcHJvam5hbWUgPSAiYmFzZWxpbmVfbW9kZWwiKQ0KDQphbnNNMSA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmYsIHJldHVybkRlcHMgPSBUUlVFKQ0Kc3VtbWFyeShhbnNNMSkNCg0KYGBgDQoNCg0KDQojIyMgTW9kZWwgMg0KDQpNb2RlbCAyIGV4dGVuZHMgdGhlIGJhc2VsaW5lIHN0cnVjdHVyYWwgbW9kZWwgYnkgaW5jbHVkaW5nIGEgY292YXJpYXRlIGNhcHR1cmluZyBkZXBhcnRtZW50YWwgc2ltaWxhcml0eSwgYWxsb3dpbmcgZm9yIHRoZSBleGFtaW5hdGlvbiBvZiBkaXNjaXBsaW5hcnkgaG9tb3BoaWx5IHdoaWxlIHJldGFpbmluZyB0aGUgY29yZSBzdHJ1Y3R1cmFsIG1lY2hhbmlzbXMgaWRlbnRpZmllZCBpbiBNb2RlbCAxLiBUaGUgbW9kZWwgYWdhaW4gY29udmVyZ2VkIHdlbGwgKG92ZXJhbGwgbWF4aW11bSBjb252ZXJnZW5jZSByYXRpbyA9IDAuMDI4OCksIGFuZCBhbGwgZXN0aW1hdGVkIGVmZmVjdHMgd2VyZSBzdGF0aXN0aWNhbGx5IHNpZ25pZmljYW50IGFuZCBpbiB0aGUgZXhwZWN0ZWQgZGlyZWN0aW9ucy4NCg0KVGhlIHJlc3VsdHMgc2hvdyB0aGUgZGVwYXJ0bWVudGFsIHNpbWlsYXJpdHkgZWZmZWN0ICjOsiA9IDEuMzIsIFNFID0gMC4xMSksIHdoaWNoIGlzIHBvc2l0aXZlIGFuZCBzaWduaWZpY2FudC4gVGhpcyBmaW5kaW5nIHByb3ZpZGVzIHN0cm9uZyBldmlkZW5jZSBvZiBkaXNjaXBsaW5hcnkgaG9tb3BoaWx5LCBzY2hvbGFycyBhcmUgc3Vic3RhbnRpYWxseSBtb3JlIGxpa2VseSB0byBjb2xsYWJvcmF0ZSB3aXRoIGNvbGxlYWd1ZXMgZnJvbSB0aGVpciBvd24gZGVwYXJ0bWVudCAoZS5nLiwgc29jaW9sb2d5IHdpdGggc29jaW9sb2d5LCBwb2xpdGljYWwgc2NpZW5jZSB3aXRoIHBvbGl0aWNhbCBzY2llbmNlKSB0aGFuIHRvIGVuZ2FnZSBpbiBpbnRlcmRpc2NpcGxpbmFyeSBjb2xsYWJvcmF0aW9ucy4NCg0KTW9kZWwgMiBkZW1vbnN0cmF0ZXMgdGhhdCB0aGUgbmV0d29ya+KAmXMgc3RydWN0dXJlIHJlbWFpbnMgc2hhcGVkIGJ5IGNsdXN0ZXJpbmcgYW5kIGNlbnRyYWxpemF0aW9uLCB3aGlsZSBkaXNjaXBsaW5hcnkgYWZmaWxpYXRpb24gY29udGludWVzIHRvIGV4ZXJ0IGEgc3Ryb25nIG9yZ2FuaXppbmcgZm9yY2Ugb24gY29sbGFib3JhdGlvbiBwYXR0ZXJucy4gVG9nZXRoZXIsIHRoZXNlIHJlc3VsdHMgc3VnZ2VzdCB0aGF0IGV2ZW4gd2l0aGluIGFuIGV2b2x2aW5nIGFjYWRlbWljIGVudmlyb25tZW50LCBkaXNjaXBsaW5hcnkgYm91bmRhcmllcyBwZXJzaXN0IGFzIGEga2V5IGRldGVybWluYW50IG9mIGNvbGxhYm9yYXRpdmUgYmVoYXZpb3IuDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KIyMjIC0tLSBNT0RFTCAyOiBEZXBhcnRtZW50IEhvbW9waGlseSBNb2RlbCAtLS0NCg0KIyAxLiBDcmVhdGUgUlNpZW5hIGRhdGEgb2JqZWN0IHdpdGggdGhlIGRlcGFydG1lbnQgY292YXJpYXRlDQpteWRhdGEgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldF9zaWVuYSwgZGVwdF9jb3YpDQoNCiMgMi4gRGVmaW5lIGVmZmVjdHMNCm15ZWZmIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KDQojIC0tLSBTdHJ1Y3R1cmFsIGVmZmVjdHMgKHNhbWUgYXMgYmFzZWxpbmUpIC0tLQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIGRlbnNpdHkpICAgICAgICAgIyBvdmVyYWxsIG5ldHdvcmsgZGVuc2l0eQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIHRyYW5zVHJpYWRzKSAgICAgIyBjbHVzdGVyaW5nIHRlbmRlbmN5DQpteWVmZiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZiwgZGVnUGx1cykgICAgICAgICAjIGNlbnRyYWxpemF0aW9uIChvcHRpb25hbCBidXQgb2Z0ZW4gdXNlZnVsKQ0KDQojIC0tLSBBZGQgaG9tb3BoaWx5IGVmZmVjdCAtLS0NCm15ZWZmIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmLCBzaW1YLCBpbnRlcmFjdGlvbjEgPSAiZGVwdF9jb3YiKSAgDQojIHNpbVggPSBzaW1pbGFyaXR5IGVmZmVjdCDihpIgY29sbGFib3JhdGlvbiBtb3JlIGxpa2VseSBiZXR3ZWVuIHNhbWUtZGVwYXJ0bWVudCBzY2hvbGFycw0KDQojIDMuIENyZWF0ZSBhbGdvcml0aG0gc2V0dXANCm15QWxnb3JpdGhtIDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKG1vZGVsVHlwZSA9YyhuZXRfc2llbmE9MykscHJvam5hbWUgPSAibW9kZWwyX2RlcHRfaG9tb3BoaWx5IikNCg0KIyA0LiBFc3RpbWF0ZSB0aGUgbW9kZWwNCmFuc00yIDwtIHNpZW5hMDcobXlBbGdvcml0aG0sIGRhdGEgPSBteWRhdGEsIGVmZmVjdHMgPSBteWVmZiwgcmV0dXJuRGVwcyA9IFRSVUUpDQoNCg0KIyA1LiBJbnNwZWN0IHJlc3VsdHMNCnN1bW1hcnkoYW5zTTIpDQoNCmBgYA0KDQoNCg0KIyMjIE1vZGVsIDMNCg0KTW9kZWwgMyByZXByZXNlbnRzIHRoZSBmdWxsIHNwZWNpZmljYXRpb24sIGludGVncmF0aW5nIGJvdGggdGhlIHN0cnVjdHVyYWwgbmV0d29yayBlZmZlY3QsIHRoZSBzdWJzdGFudGl2ZSBjb3ZhcmlhdGUgb2YgZGVwYXJ0bWVudGFsIHNpbWlsYXJpdHkgYW5kIHRoZSB0aW1lLXZhcnlpbmcgY292YXJpYXRlIGludGVyZGlzY2lwbGluYXJpdHkuIFRoaXMgbW9kZWwgYWxsb3dzIGZvciBhIG1vcmUgY29tcHJlaGVuc2l2ZSB1bmRlcnN0YW5kaW5nIG9mIGhvdyBib3RoIGRpc2NpcGxpbmFyeSBib3VuZGFyaWVzIGFuZCBjcm9zcy1kaXNjaXBsaW5hcnkgZW5nYWdlbWVudCBzaGFwZSBjb2xsYWJvcmF0aW9uIHBhdHRlcm5zIG92ZXIgdGltZS4gVGhlIG1vZGVsIGNvbnZlcmdlZCB3ZWxsIChvdmVyYWxsIG1heGltdW0gY29udmVyZ2VuY2UgcmF0aW8gPSAwLjExKSBhZnRlciAxLDM3MCBpdGVyYXRpb25zLg0KDQpJbXBvcnRhbnRseSwgaW50ZXJkaXNjaXBsaW5hcml0eSB3YXMgbW9kZWxsZWQgYXMgYSB0aW1lLXZhcnlpbmcgY292YXJpYXRlLCBhbGxvd2luZyB0aGUgYW5hbHlzaXMgdG8gYWNjb3VudCBmb3IgY2hhbmdlcyBpbiBzY2hvbGFyc+KAmSBjcm9zcy1kZXBhcnRtZW50YWwgY29sbGFib3JhdGlvbnMgYmV0d2VlbiB3YXZlcy4gVGhpcyBkeW5hbWljIHNwZWNpZmljYXRpb24gbWVhbnMgdGhhdCB0aGUgcG9zaXRpdmUgZWZmZWN0IG9mIGludGVyZGlzY2lwbGluYXJpdHkgKM6yID0gMC4wNywgU0UgPSAwLjAxMykgcmVmbGVjdHMgbm90IGp1c3Qgc3RhdGljIGRpZmZlcmVuY2VzIGJldHdlZW4gbW9yZSBhbmQgbGVzcyBpbnRlcmRpc2NpcGxpbmFyeSBzY2hvbGFycywgYnV0IHJhdGhlciB0aGF0IGJlY29taW5nIG1vcmUgaW50ZXJkaXNjaXBsaW5hcnkgb3ZlciB0aW1lIGluY3JlYXNlcyB0aGUgbGlrZWxpaG9vZCBvZiBmb3JtaW5nIG5ldyBjb2xsYWJvcmF0aW9ucy4gSW4gb3RoZXIgd29yZHMsIHNjaG9sYXJzIHdobyBleHBhbmQgdGhlaXIgZGlzY2lwbGluYXJ5IHJhbmdlIGFwcGVhciB0byBnYWluIG5ldyBvcHBvcnR1bml0aWVzIGZvciBjb2xsYWJvcmF0aW9uLCBzdWdnZXN0aW5nIHRoYXQgaW50ZXJkaXNjaXBsaW5hcnkgZW5nYWdlbWVudCBpcyBib3RoIGEgcHJvZHVjdCBhbmQgYSBkcml2ZXIgb2YgbmV0d29yayBldm9sdXRpb24uDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KIyMjIC0tLSBNT0RFTCAzOiBGdWxsIE1vZGVsIC0tLQ0KDQojIDEuIENyZWF0ZSBSU2llbmEgZGF0YSBvYmplY3Qgd2l0aCB0aGUgZGVwYXJ0bWVudCBjb3ZhcmlhdGUNCm15ZGF0YSA8LSBzaWVuYURhdGFDcmVhdGUobmV0X3NpZW5hLCBkZXB0X2NvdiwgY3Jvc3NfY292KQ0KDQojIDIuIERlZmluZSBlZmZlY3RzDQpteWVmZiA8LSBnZXRFZmZlY3RzKG15ZGF0YSkNCg0KIyAtLS0gU3RydWN0dXJhbCBlZmZlY3RzIChzYW1lIGFzIGJhc2VsaW5lKSAtLS0NCm15ZWZmIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmLCBkZW5zaXR5KSAgICAgICAgICMgb3ZlcmFsbCBuZXR3b3JrIGRlbnNpdHkNCm15ZWZmIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmLCB0cmFuc1RyaWFkcykgICAgICMgY2x1c3RlcmluZyB0ZW5kZW5jeQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIGRlZ1BsdXMpICAgICAgICAgIyBjZW50cmFsaXphdGlvbiAob3B0aW9uYWwgYnV0IG9mdGVuIHVzZWZ1bCkNCg0KDQpteWVmZiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZiwgc2ltWCwgaW50ZXJhY3Rpb24xID0gImRlcHRfY292IikgIA0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIGVnb1BsdXNBbHRYLCBpbnRlcmFjdGlvbjEgPSAiY3Jvc3NfY292IikNCg0KIyAzLiBDcmVhdGUgYWxnb3JpdGhtIHNldHVwDQpteUFsZ29yaXRobSA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShtb2RlbFR5cGUgPWMobmV0X3NpZW5hPTMpLHByb2puYW1lID0gIm1vZGVsZnVsbCIpDQoNCiMgNC4gRXN0aW1hdGUgdGhlIG1vZGVsDQphbnNNMyA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmYsIHJldHVybkRlcHMgPSBUUlVFKQ0KDQojIDUuIEluc3BlY3QgcmVzdWx0cw0Kc3VtbWFyeShhbnNNMykNCg0KYGBgDQoNCg0KIyMgIGByIGNvbG9yaXplKCJHb29kbmVzcyBvZiBGaXQiLCAib3JhbmdlIilgDQoNClRoZSBnb29kbmVzcy1vZi1maXQgKEdPRikgdGVzdHMgYmFzZWQgb24gdGhlIGdlb2Rlc2ljIGRpc3RhbmNlIGRpc3RyaWJ1dGlvbiB3ZXJlIHVzZWQgdG8gYXNzZXNzIGhvdyB3ZWxsIGVhY2ggbW9kZWwgcmVwcm9kdWNlZCB0aGUgZW1waXJpY2FsIG5ldHdvcmsgc3RydWN0dXJlLiBJbiB0aGUgY2FzZSBvZiB1bmRpcmVjdGVkIG5ldHdvcmtzLCB0aGUgdHJhZGl0aW9uYWwgb3V0LSBvciBpbmRlZ3JlZSBkaXN0cmlidXRpb25zIGFyZSBsZXNzIG1lYW5pbmdmdWwgKGJlY2F1c2Ugc2VuZGluZyB2cy4gcmVjZWl2aW5nIHRpZXMgYXJlIG5vdCBkaXN0aW5ndWlzaGVkKS4gSW5zdGVhZCwgdGhlIGdlb2Rlc2ljIGRpc3RhbmNlIGRpc3RyaWJ1dGlvbiAoaS5lLiwgZGlzdHJpYnV0aW9uIG9mIHNob3J0ZXN0IHBhdGggbGVuZ3RocyBiZXR3ZWVuIG5vZGUgcGFpcnMpIGJlY29tZSBlc3BlY2lhbGx5IHJlbGV2YW50LiBUaGUgZ2VvZGVzaWMgZGlzdHJpYnV0aW9uIGFzc2Vzc2VzIHdoZXRoZXIgdGhlIG1vZGVsIGFjY3VyYXRlbHkgY2FwdHVyZXMgaG93IOKAnGNvbm5lY3RlZOKAnSB0aGUgbmV0d29yayBpcyAoTG9zcGlub3NvICYgU25pamRlcnMsIDIwMTkpLg0KDQpGb3IgdGhlIGJhc2VsaW5lIHN0cnVjdHVyYWwgbW9kZWwgKE1vZGVsIDEpLCB0aGUgR09GIGhhcyBhIHAtdmFsdWUgPiAwLjA1LCBpbmRpY2F0aW5nIHRoYXQgdGhlIHNpbXVsYXRlZCBnZW9kZXNpYyBkaXN0YW5jZSBkaXN0cmlidXRpb24gZGlmZmVycyBvbmx5IG1hcmdpbmFsbHkgZnJvbSB0aGUgb2JzZXJ2ZWQgb25lLiBJbiBvdGhlciB3b3JkcywgdGhlIGJhc2VsaW5lIG1vZGVsIHByb3ZpZGVzIGFuIGFjY2VwdGFibGUgZml0IHRvIHRoZSBvdmVyYWxsIGNvbm5lY3Rpdml0eSBhbmQgZGlzdGFuY2Ugc3RydWN0dXJlIG9mIHRoZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmsuDQoNCkZvciB0aGUgZXh0ZW5kZWQgbW9kZWxzIChNb2RlbHMgMiBhbmQgMyksIHRoZSBHT0YgdGVzdHMgc2hvdyBwLXZhbHVlcyBiZWxvdyAwLjAwMSwgc3VnZ2VzdGluZyB0aGF0IHRoZXNlIG1vZGVscyBkZXZpYXRlIHNpZ25pZmljYW50bHkgZnJvbSB0aGUgb2JzZXJ2ZWQgZGlzdHJpYnV0aW9uLiBIb3dldmVyLCB2aXN1YWwgaW5zcGVjdGlvbiBvZiB0aGUgR09GIHBsb3RzIHByb3ZpZGVzIGEgbW9yZSBudWFuY2VkIHBpY3R1cmUsIGluIGFsbCBtb2RlbHMsIHRoZSByZWQgbGluZSAocmVwcmVzZW50aW5nIHRoZSBvYnNlcnZlZCB2YWx1ZXMpIGxpZXMgd2l0aGluIHRoZSBncmF5IGJhbmRzIG9mIHNpbXVsYXRlZCBkaXN0cmlidXRpb25zLCBpbmRpY2F0aW5nIHRoYXQgdGhlIHNpbXVsYXRpb25zIGJyb2FkbHkgY2FwdHVyZSB0aGUgbmV0d29ya+KAmXMgc3RydWN0dXJlLg0KDQojIyMjIEdPRiBNb2RlbCAxDQoNCg0KYGBge3J9DQpHZW9kZXNpY0Rpc3RyaWJ1dGlvbiA8LSBmdW5jdGlvbihpLCBkYXRhLCBzaW1zLCBwZXJpb2QsIGdyb3VwTmFtZSwgdmFyTmFtZSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxldmxzID0gYygxOjUsIEluZiksIGN1bXVsYXRpdmUgPSBUUlVFLCAuLi4pIHsNCiAgeCA8LSBuZXR3b3JrRXh0cmFjdGlvbihpLCBkYXRhLCBzaW1zLCBwZXJpb2QsIGdyb3VwTmFtZSwgdmFyTmFtZSkNCiAgcmVxdWlyZShzbmEpDQogIGEgPC0gc25hOjpnZW9kaXN0KHN5bW1ldHJpemUoeCkpJGdkaXN0DQogIGlmIChjdW11bGF0aXZlKSB7DQogICAgZ2RpIDwtIHNhcHBseShsZXZscywgZnVuY3Rpb24oaSkgc3VtKGEgPD0gaSkpDQogIH0gZWxzZSB7DQogICAgZ2RpIDwtIHNhcHBseShsZXZscywgZnVuY3Rpb24oaSkgc3VtKGEgPT0gaSkpDQogIH0NCiAgbmFtZXMoZ2RpKSA8LSBhcy5jaGFyYWN0ZXIobGV2bHMpDQogIGdkaQ0KfQ0KDQoNCmdvZl9nZDEgPC0gc2llbmFHT0YoYW5zTTEsIEdlb2Rlc2ljRGlzdHJpYnV0aW9uLA0KICAgICAgICAgICAgICAgICAgIHZhck5hbWUgPSAibmV0X3NpZW5hIiwNCiAgICAgICAgICAgICAgICAgICBsZXZscyA9IGMoMTo1LCBJbmYpLA0KICAgICAgICAgICAgICAgICAgIGN1bXVsYXRpdmUgPSBGQUxTRSwNCiAgICAgICAgICAgICAgICAgICB2ZXJib3NlID0gRkFMU0UpDQpwbG90KGdvZl9nZDEpDQoNCmBgYA0KDQojIyMgR09GIE1vZGVsIDINCg0KYGBge3J9DQoNCg0KZ29mX2dkMiA8LSBzaWVuYUdPRihhbnNNMiwgR2VvZGVzaWNEaXN0cmlidXRpb24sDQogICAgICAgICAgICAgICAgICAgdmFyTmFtZSA9ICJuZXRfc2llbmEiLA0KICAgICAgICAgICAgICAgICAgIGxldmxzID0gYygxOjUsIEluZiksDQogICAgICAgICAgICAgICAgICAgY3VtdWxhdGl2ZSA9IEZBTFNFLA0KICAgICAgICAgICAgICAgICAgIHZlcmJvc2UgPSBGQUxTRSkNCnBsb3QoZ29mX2dkMikNCg0KYGBgDQoNCiMjIyBHT0YgTW9kZWwgMw0KDQpgYGB7cn0NCg0KDQpnb2ZfZ2QzIDwtIHNpZW5hR09GKGFuc00zLCBHZW9kZXNpY0Rpc3RyaWJ1dGlvbiwNCiAgICAgICAgICAgICAgICAgICB2YXJOYW1lID0gIm5ldF9zaWVuYSIsDQogICAgICAgICAgICAgICAgICAgbGV2bHMgPSBjKDE6NSwgSW5mKSwNCiAgICAgICAgICAgICAgICAgICBjdW11bGF0aXZlID0gRkFMU0UsDQogICAgICAgICAgICAgICAgICAgdmVyYm9zZSA9IEZBTFNFKQ0KcGxvdChnb2ZfZ2QzKQ0KDQpgYGANCg0KIyAgYHIgY29sb3JpemUoIioqUmVmZXJlbmNlcyoqIiwgIm9yYW5nZSIpDQoNCkxvc3Bpbm9zbywgSi4sICYgU25pamRlcnMsIFQuIEEuICgyMDE5KS4gKkdvb2RuZXNzIG9mIGZpdCBmb3Igc3RvY2hhc3RpYyBhY3Rvci1vcmllbnRlZCBtb2RlbHMuIE1ldGhvZG9sb2dpY2FsIElubm92YXRpb25zLCAxMigzKSouIGh0dHBzOi8vZG9pLm9yZy8xMC4xMTc3LzIwNTk3OTkxMTk4ODQyODIgDQoNClJpcGxleSwgUi4gTS4sIFNuaWpkZXJzLCBULiBBLiwgQm9kYSwgWi4sIFbDtnLDtnMsIEEuLCAmIFByZWNpYWRvLCBQLiAoMjAxMSkuICpNYW51YWwgZm9yIFJTSUVOQSouIFVuaXZlcnNpdHkgb2YgT3hmb3JkLCBEZXBhcnRtZW50IG9mIFN0YXRpc3RpY3MsIE51ZmZpZWxkIENvbGxlZ2UsIDEsIDIwMTEuDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("project5.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

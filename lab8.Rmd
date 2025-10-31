@@ -32,7 +32,7 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 
 
-```{r}
+```{r, EVAL = FALSE}
 library(RSiena)
 
 mynet1 <- sienaDependent(array(c(s501, s502, s503), dim=c(50, 50, 3)))
@@ -51,7 +51,7 @@ mydata <- sienaDataCreate(mynet1, mybeh, drinking, smoke)
 print01Report(mydata)
 ```
 
-```{r}
+```{r, EVAL = FALSE}
 myeff <- getEffects(mydata)
 myeff <- includeEffects(myeff, unequalX, name = "mynet1", interaction1 = "smoke")
 
@@ -61,13 +61,14 @@ myeff <- includeEffects(myeff, unequalX, name = "mynet1", interaction1 = "drinki
 algo <- sienaAlgorithmCreate()
 ```
 
-```{r}
+```{r, EVAL = FALSE}
 ans <- siena07(algo, data=mydata, effects = myeff, returnDeps = TRUE)
 ans
 
 
 ```
-```{r}
+
+```{r, EVAL = FALSE}
 gofo0 <- sienaGOF(ans, OutdegreeDistribution, verbose = FALSE, join = TRUE, varName = "mynet1")
 
 

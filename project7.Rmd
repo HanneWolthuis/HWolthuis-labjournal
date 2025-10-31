@@ -1,0 +1,50 @@
+---
+title: "Final project Methods"
+#bibliography: references.bib
+author: "Hanne Wolthuis"
+---
+
+
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'} 
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, eval = FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+#klippy::klippy(color = 'darkred')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+# `r colorize("**Conclusion**", "orange")`
+
+
+This study examined the evolution of scholarly collaboration networks within two social science disciplines—political science and sociology—focusing on the roles of disciplinary homophily, interdisciplinarity, and structural network dynamics. The analysis confirms that disciplinary boundaries remain a dominant organizing force. Scholars show a strong preference for collaborating within their own department, providing support for **Hypothesis 1**. Despite ongoing discussions in the literature about increasing interdisciplinarity, descriptive statistics and network visualizations indicate that cross-department collaborations remain limited, and there is little evidence of a sustained increase in interdisciplinary ties over time, suggesting that **Hypothesis 2** is not supported.Scholars naturally tend to collaborate with others in their own discipline because they share methods, theories, and publication norms. This strong preference may outweigh institutional or systemic pressures toward interdisciplinarity, limiting the growth of cross-department collaborations.
+
+At the same time, longitudinal RSiena models reveal that individual interdisciplinarity facilitates new tie formation. Scholars who engage in cross-department collaborations or who are indirectly exposed to interdisciplinary networks are more likely to expand their collaboration portfolios over time. This supports Hypothesis 3 and highlights interdisciplinarity not only as an outcome of network evolution but also as a mechanism that promotes connectivity and opportunity within the network. Structural effects, including transitivity and preferential attachment, further shape collaboration patterns, local clustering and the attraction of well-connected scholars persist over time, consistent with **Hypotheses 4 and 5**. Interestingly, the most highly interdisciplinary scholars are not always the most central in the network, suggesting that moderate interdisciplinarity may be more strategically advantageous for fostering new collaborations.This pattern aligns with Granovetter’s (1973) strength of weak ties theory, suggesting that having weak ties to another discipline may already be sufficient to access diverse perspectives and foster new collaborations.
+
+Overall, these findings indicate a dual dynamic in academic collaboration network, strong disciplinary homophily maintains cohesive clusters within departments, while interdisciplinary engagement, particularly at moderate levels—acts as a bridge across these clusters, enhancing individual opportunities for collaboration. These results underscore the importance of considering both structural network mechanisms and actor-level attributes when examining the formation and evolution of scholarly collaborations. They also suggest that policies or initiatives aimed at promoting interdisciplinarity may need to target not only individuals but also the broader network context to effectively foster cross-disciplinary connectivity.
+
+One limitation of this study is that the third wave (2024–2025) covers a much shorter time period compared to waves one and two. As a result, scholars had less time to write publications, which likely led to fewer observed co-authorships in this period. This time constraint may have affected the measurement of collaboration dynamics.
+
+Future research could build on these findings by exploring additional dimensions of collaboration and interdisciplinarity. One important extension would be to control for same university. In the present study, sociologists and political scientists often belong to the same university departments, which may reinforce within-discipline collaborations simply through proximity. A valuable next step would be to control for institutional affiliation to examine whether disciplinary homophily persists when scholars collaborate across universities. I wished to do this but my relatively slow learning pace prevented me from having enough time. Also expanding the scope to include more disciplines, could provide a more nuanced understanding of how structural and individual factors shape interdisciplinarity. Additionally, interdisciplinarity could be conceptualized beyond departmental boundaries, for example, by considering whether researchers employ methods or theoretical frameworks from multiple subfields within a discipline, or by tracking publication activity in journals outside their primary field. Such approaches would allow future studies to capture a broader view of interdisciplinary engagement, shedding light on the mechanisms that promote or constrain cross-boundary collaboration in academia.
+
+# `r colorize("**References.**", "orange")`
+
+Granovetter, M. S. (1973). *The Strength of Weak Ties.* *American Journal of Sociology, 78*(6), 1360–1380. [http://www.jstor.org/stable/2776392](http://www.jstor.org/stable/2776392)
+
+

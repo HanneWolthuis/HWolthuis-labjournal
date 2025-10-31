@@ -29,11 +29,13 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 <br>
 
 
-#Introduction
-`r colorize("**Introduction?**", "orange")`
+# `r colorize("**Introduction**", "orange")`
 
-Scientific research increasingly relies on collaboration between scholars across disciplinary boundaries. Interdisciplinary research is widely recognized as essential for addressing complex societal challenges, as it allows for the integration of diverse perspectives, theories, and methodologies (Spence et al., 2024., Haines et al., 2011). At the same time, the formation of collaborative ties is not random. Working interdisciplinary is complex and considerate amount of time is needed to understand multiple approaches and develop skills (Spence et al., 2024). At the same time homophily also has a strong influence on collaboration formation. Homophily entails that individuals have an inherent tendency to bond with others who exhibit similar attributes, in this case similarity in methods, theories and skills (Santos et al., 2024). 
-Despite the growing policy and scientific emphasis on interdisciplinarity, we still know relatively little about the specific mechanisms that shape how interdisciplinary collaborations emerge over time. While many studies examine interdisciplinarity through bibliometric indicators (e.g., co-citation or topical diversity), fewer focus on the dynamic social networks through which collaboration actually occurs (Zheng, Qian, 2023). Understanding these processes requires not only describing how collaborations are structured but also identifying which actor-level and network-level mechanisms explain their evolution. Therefore the main research question of this project is: Which structural and content-based mechanisms explain the formation of scientific collaboration ties over time, and what role does interdisciplinarity play in this process?
+
+Scientific research increasingly relies on collaboration between scholars across disciplinary boundaries. Interdisciplinary research is widely recognized as essential for addressing complex societal challenges, as it allows for the integration of diverse perspectives, theories, and methodologies (Spence et al., 2024; Haines et al., 2011). However, the formation of collaborative ties is not random. Working interdisciplinarily is complex, and a considerable amount of time is needed to understand multiple approaches and develop relevant skills (Spence et al., 2024). In addition, homophily strongly influences collaboration formation. Homophily entails that individuals have an inherent tendency to bond with others who exhibit similar attributes. In this case, similarity in methods, theories, and skills (Santos et al., 2024).
+
+Despite the growing policy and scientific emphasis on interdisciplinarity, we still know relatively little about the specific mechanisms that shape how interdisciplinary collaborations emerge over time. Many studies assess interdisciplinarity indirectly by analyzing publications and citations (e.g., co-citation or topical diversity). By contrast, fewer studies directly examine the social networks through which scholars interact and collaborate (Zheng & Qian, 2023). Understanding these processes requires not only describing how collaborations are structured but also identifying which actor-level and network-level mechanisms explain their evolution. Therefore the main research question of this project is: Which structural and content-based mechanisms explain the formation of scientific collaboration ties over time, and what role does interdisciplinarity play in this process?
+
 In this project in order to better understand collaboration and interdisciplinary collaboration within social sciences I will adopt a social network analysis perspective. Social Network Analysis (SNA) is particularly relevant for studying interdisciplinary collaborations because it explicitly accounts for the relational context in which researchers operate. Rather than treating collaborations as independent events or focusing solely on individual attributes, SNA views researchers as embedded in dynamic networks of relationships, where ties reflect knowledge exchange, trust, and resource flows. This perspective allows us to investigate both the formation mechanisms of collaboration networks, such as homophily, complementary expertise, and bridging across disciplines, and their consequences for individual researchers and the broader scientific community. By applying SNA, this project can move beyond static bibliometric measures to capture the evolving structure of interdisciplinary collaboration networks and identify which actor-level and network-level processes drive their development over time (Tolsma & Hofstra, 2022)
 This study aims to contribute to the literature on scientific collaboration and interdisciplinarity by addressing both descriptive and explanatory research questions.
 
@@ -45,7 +47,7 @@ This study aims to contribute to the literature on scientific collaboration and 
 
 
 
-## References
+# `r colorize("**References**", "orange")`
 
 Haines, V. A., Godley, J., & Hawe, P. (2011). Understanding interdisciplinary collaborations as social networks. *American Journal of Community Psychology, 47*(1–2), 1–11.  
 

@@ -390,6 +390,12 @@ div.tocify {
     <li>
       <a href="project2.html">Methods and analytical strategy</a>
     </li>
+    <li>
+      <a href="project5.html">Analysis and results </a>
+    </li>
+    <li>
+      <a href="project7.html">Conclusion </a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -454,20 +460,20 @@ ans</code></pre>
 #&gt;                                            Estimate   Standard   Convergence 
 #&gt;                                                         Error      t-ratio   
 #&gt; Network Dynamics 
-#&gt;    1. rate constant mynet1 rate (period 1)  5.8149  ( 0.8596   )    0.0218   
-#&gt;    2. rate constant mynet1 rate (period 2)  4.5583  ( 0.6990   )   -0.0449   
-#&gt;    3. eval outdegree (density)             -2.1238  ( 0.1406   )    0.0541   
-#&gt;    4. eval reciprocity                      2.7816  ( 0.1901   )   -0.0186   
-#&gt;    5. eval unequal drinking                -0.1917  ( 0.1389   )    0.0315   
-#&gt;    6. eval unequal smoke                   -0.2009  ( 0.1334   )    0.0358   
+#&gt;    1. rate constant mynet1 rate (period 1)  5.8390  ( 0.9135   )    0.0242   
+#&gt;    2. rate constant mynet1 rate (period 2)  4.6240  ( 0.7063   )    0.0371   
+#&gt;    3. eval outdegree (density)             -2.1330  ( 0.1454   )    0.0122   
+#&gt;    4. eval reciprocity                      2.8015  ( 0.1879   )    0.0611   
+#&gt;    5. eval unequal drinking                -0.1956  ( 0.1318   )   -0.0276   
+#&gt;    6. eval unequal smoke                   -0.2049  ( 0.1364   )   -0.0172   
 #&gt; 
 #&gt; Behavior Dynamics
-#&gt;    7. rate rate mybeh (period 1)            1.1742  ( 0.3156   )   -0.0624   
-#&gt;    8. rate rate mybeh (period 2)            1.6458  ( 0.4185   )   -0.0072   
-#&gt;    9. eval mybeh linear shape               0.3669  ( 0.1493   )    0.0145   
-#&gt;   10. eval mybeh quadratic shape           -0.2006  ( 0.0900   )   -0.0039   
+#&gt;    7. rate rate mybeh (period 1)            1.1812  ( 0.2927   )   -0.0076   
+#&gt;    8. rate rate mybeh (period 2)            1.6515  ( 0.3960   )    0.0336   
+#&gt;    9. eval mybeh linear shape               0.3673  ( 0.1558   )    0.0376   
+#&gt;   10. eval mybeh quadratic shape           -0.2017  ( 0.0950   )    0.0232   
 #&gt; 
-#&gt; Overall maximum convergence ratio:    0.1760 
+#&gt; Overall maximum convergence ratio:    0.1440 
 #&gt; 
 #&gt; 
 #&gt; Total of 2926 iteration steps.</code></pre>
@@ -476,7 +482,7 @@ ans</code></pre>
 
 gofo0 &lt;- sienaGOF(ans, OutdegreeDistribution, verbose = FALSE, join = TRUE, varName = &quot;mynet1&quot;)</code></pre>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIldlZWs4Ig0Kb3V0cHV0OiBodG1sX2RvY3VtZW50DQpkYXRlOiAiMjAyNS0xMC0xMCINCi0tLQ0KDQoNCg0KYGBge3IsIGdsb2JhbHNldHRpbmdzLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdoaWRlJ30NCmxpYnJhcnkoa25pdHIpDQoNCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj0xMDApLHRpZHk9VFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UsY29tbWVudCA9ICIjPiIsIGNhY2hlPVRSVUUsIGNsYXNzLnNvdXJjZT1jKCJ0ZXN0IiksIGNsYXNzLm91dHB1dD1jKCJ0ZXN0MiIpKQ0Kb3B0aW9ucyh3aWR0aCA9IDEwMCkNCnJnbDo6c2V0dXBLbml0cigpDQoNCg0KDQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpgYGANCg0KYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBldmFsID0gRkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQoja2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya3JlZCcpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCg0KDQpgYGB7cn0NCmxpYnJhcnkoUlNpZW5hKQ0KDQpteW5ldDEgPC0gc2llbmFEZXBlbmRlbnQoYXJyYXkoYyhzNTAxLCBzNTAyLCBzNTAzKSwgZGltPWMoNTAsIDUwLCAzKSkpDQpteWJlaCA8LSBzaWVuYURlcGVuZGVudChzNTBhLCB0eXBlPSJiZWhhdmlvciIpDQpzbW9rZSA8LSBzNTBzDQpzbW9rZSA8LSB2YXJDb3ZhcihzNTBzKQ0KDQpkcmlua2luZyA8LSB2YXJDb3ZhcihzNTBhKQ0KDQpteWRhdGEgPC0gc2llbmFEYXRhQ3JlYXRlKG15bmV0MSwgbXliZWgsIGRyaW5raW5nLCBzbW9rZSkNCg0KYGBgDQoNCg0KYGBge3J9DQpwcmludDAxUmVwb3J0KG15ZGF0YSkNCmBgYA0KDQpgYGB7cn0NCm15ZWZmIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIHVuZXF1YWxYLCBuYW1lID0gIm15bmV0MSIsIGludGVyYWN0aW9uMSA9ICJzbW9rZSIpDQoNCm15ZWZmIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmLCB1bmVxdWFsWCwgbmFtZSA9ICJteW5ldDEiLCBpbnRlcmFjdGlvbjEgPSAiZHJpbmtpbmciKQ0KYGBgDQpgYGB7cn0NCmFsZ28gPC0gc2llbmFBbGdvcml0aG1DcmVhdGUoKQ0KYGBgDQoNCmBgYHtyfQ0KYW5zIDwtIHNpZW5hMDcoYWxnbywgZGF0YT1teWRhdGEsIGVmZmVjdHMgPSBteWVmZiwgcmV0dXJuRGVwcyA9IFRSVUUpDQphbnMNCg0KDQpgYGANCmBgYHtyfQ0KZ29mbzAgPC0gc2llbmFHT0YoYW5zLCBPdXRkZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibXluZXQxIikNCg0KDQpnb2ZvMCA8LSBzaWVuYUdPRihhbnMsIE91dGRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJteW5ldDEiKQ0KDQpgYGANCg0KDQoNCg0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIldlZWs4Ig0Kb3V0cHV0OiBodG1sX2RvY3VtZW50DQpkYXRlOiAiMjAyNS0xMC0xMCINCi0tLQ0KDQoNCg0KYGBge3IsIGdsb2JhbHNldHRpbmdzLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdoaWRlJ30NCmxpYnJhcnkoa25pdHIpDQoNCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj0xMDApLHRpZHk9VFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UsY29tbWVudCA9ICIjPiIsIGNhY2hlPVRSVUUsIGNsYXNzLnNvdXJjZT1jKCJ0ZXN0IiksIGNsYXNzLm91dHB1dD1jKCJ0ZXN0MiIpKQ0Kb3B0aW9ucyh3aWR0aCA9IDEwMCkNCnJnbDo6c2V0dXBLbml0cigpDQoNCg0KDQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpgYGANCg0KYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBldmFsID0gRkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQoja2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya3JlZCcpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCg0KDQpgYGB7ciwgRVZBTCA9IEZBTFNFfQ0KbGlicmFyeShSU2llbmEpDQoNCm15bmV0MSA8LSBzaWVuYURlcGVuZGVudChhcnJheShjKHM1MDEsIHM1MDIsIHM1MDMpLCBkaW09Yyg1MCwgNTAsIDMpKSkNCm15YmVoIDwtIHNpZW5hRGVwZW5kZW50KHM1MGEsIHR5cGU9ImJlaGF2aW9yIikNCnNtb2tlIDwtIHM1MHMNCnNtb2tlIDwtIHZhckNvdmFyKHM1MHMpDQoNCmRyaW5raW5nIDwtIHZhckNvdmFyKHM1MGEpDQoNCm15ZGF0YSA8LSBzaWVuYURhdGFDcmVhdGUobXluZXQxLCBteWJlaCwgZHJpbmtpbmcsIHNtb2tlKQ0KDQpgYGANCg0KDQpgYGB7cn0NCnByaW50MDFSZXBvcnQobXlkYXRhKQ0KYGBgDQoNCmBgYHtyLCBFVkFMID0gRkFMU0V9DQpteWVmZiA8LSBnZXRFZmZlY3RzKG15ZGF0YSkNCm15ZWZmIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmLCB1bmVxdWFsWCwgbmFtZSA9ICJteW5ldDEiLCBpbnRlcmFjdGlvbjEgPSAic21va2UiKQ0KDQpteWVmZiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZiwgdW5lcXVhbFgsIG5hbWUgPSAibXluZXQxIiwgaW50ZXJhY3Rpb24xID0gImRyaW5raW5nIikNCmBgYA0KYGBge3J9DQphbGdvIDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKCkNCmBgYA0KDQpgYGB7ciwgRVZBTCA9IEZBTFNFfQ0KYW5zIDwtIHNpZW5hMDcoYWxnbywgZGF0YT1teWRhdGEsIGVmZmVjdHMgPSBteWVmZiwgcmV0dXJuRGVwcyA9IFRSVUUpDQphbnMNCg0KDQpgYGANCg0KYGBge3IsIEVWQUwgPSBGQUxTRX0NCmdvZm8wIDwtIHNpZW5hR09GKGFucywgT3V0ZGVncmVlRGlzdHJpYnV0aW9uLCB2ZXJib3NlID0gRkFMU0UsIGpvaW4gPSBUUlVFLCB2YXJOYW1lID0gIm15bmV0MSIpDQoNCg0KZ29mbzAgPC0gc2llbmFHT0YoYW5zLCBPdXRkZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibXluZXQxIikNCg0KYGBgDQoNCg0KDQoNCg0K</div>
 
 
 </div>

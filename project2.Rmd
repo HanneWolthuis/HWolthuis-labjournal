@@ -33,28 +33,57 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
   
 ----
 
-# Methods and analytical strategy
-`r colorize("**Methods and analytical strategy.**", "orange")` 
+# `r colorize("**Data**", "orange")`
+
+The data used in this study originate from the OpenAlex database, an open-access bibliographic catalogue containing metadata on scholarly publications, authors, and institutional affiliations. The dataset was pre-collected and provided as part of the course materials and includes information on scholars affiliated with Dutch universities, such as name, department, university of employment, and publication history. For this study, a subset of scholars from the departments of Sociology and Political Science at Radboud University (RU) and Utrecht University (UU), University of Groningen (RUG) and Amsterdam (UvA) were selected. This selection was made to allow for a focused comparison of collaboration patterns within and between two closely related social science disciplines.
+Co-authorship data were used to construct longitudinal collaboration networks across three time periods, or “waves,” covering 2015–2018, 2019–2023, and 2024–2025. 
+
+**Dependent variable**
+The dependent variable in this study captures the formation and persistence of collaboration ties between scholars across two time periods. Collaboration is defined as the co-authorship of at least one academic publication. The data were structured as all an undirected network, where a tie between two scholars indicates that they co-authored one or more publications during a given time wave. I decided to include undirected ties between all authors, meaning that every author on a publication is assumed to be equally connected to every other author on that publication, regardless of authorship order. I made this decision because I think that undirected ties better represent shared knowledge exchange.
+
+**Independent variables** 
+Two main actor-level variables are included in the analysis: departmental affiliation and individual interdisciplinarity.
+
+Departmental affiliation represents each scholar’s disciplinary background and serves as a categorical covariate distinguishing members of the political science and sociology departments. This variable allows for the examination of disciplinary homophily, that is, the extent to which researchers preferentially collaborate with colleagues from the same department. In the RSiena model, this variable is included as a constant actor covariate coded as 0 for political science and 1 for sociology.
+
+Individual interdisciplinarity measures the extent to which a scholar engages in collaboration across departmental boundaries. For each wave, a matrix was constructed indicating whether each collaborator (alter) belonged to a different department. For each scholar (ego), the number of cross-department collaborations was divided by their total number of collaborations, producing a proportion of interdisciplinary ties that can vary across waves.
+
+To account for both direct and indirect exposure to interdisciplinarity, scholars who had no cross-department ties themselves but were connected to others with such ties were assigned an indirect exposure score. The resulting variable was then categorized into five ordered levels: 
+
+- 0 = no interdisciplinary exposure
+- 1 = indirect exposure only
+- 2 = ≤ 25% interdisciplinary ties
+- 3 = 25–50% interdisciplinary ties
+- 4 = > 50% interdisciplinary ties
 
 
-For this project the analytical strategy will consist out of 3 step. In the first step I will provide some descriptive statistics of the complete sample. In the second step some descriptive statics of the network will be presented together with multiple different visualizations of the different waves. These descriptives together with the visualizations will be used to capture some of the macro-level changes in the network and to answer hypothesis 1 and 2. Third, the longitudinal network analysis will be conducted using RSiena, a package designed for Stochastic Actor-Oriented Models (SAOMs). This approach assumes that networks evolve as a result of actors’ individual decisions and preferences, influenced by both structural and attribute-based factors. RSiena enables the modeling of micro-level behavioral changes that collectively shape the macro-level structure of the network over time. Through its estimation framework, the method distinguishes between selection processes, where network ties themselves are the dependent variable, and influence processes, where the outcome concerns changes in actor attributes. This makes RSiena particularly suited for examining how collaboration patterns among scholars emerge and transform across time.
+Including indirect exposure captures the idea that researchers’ behaviors and opportunities are shaped not only by their own collaborations but also by those within their immediate social environment. Through colleagues who are themselves interdisciplinary, scholars gain indirect access to diverse epistemic communities, methods, and theoretical perspectives. In this sense, indirect exposure represents the diffusion of interdisciplinary influence through local network structures, extending beyond direct collaboration ties. This aligns with Granovetter’s (1973) theory of the strength of weak ties, which emphasizes the diffusion of novel information through indirect social connections. The resulting measure was entered into RSiena as a time-varying actor covariate (varCovar).
+
+ 
+# `r colorize("**Methods and analytical strategy**", "orange")`
+
+For this project the analytical strategy will consist out of 3 steps. In the first step I will provide some descriptive statistics of the complete sample. In the second step some descriptive statics of the network will be presented together with multiple different visualizations of the different waves. These descriptives together with the visualizations will be used to capture some of the macro-level changes in the network and to answer hypothesis 1 and 2. Third, the longitudinal network analysis will be conducted using RSiena, a package designed for Stochastic Actor-Oriented Models (SAOMs). This approach assumes that networks evolve as a result of actors’ individual decisions and preferences, influenced by both structural and attribute-based factors. RSiena enables the modeling of micro-level behavioral changes that collectively shape the macro-level structure of the network over time. Through its estimation framework, the method distinguishes between selection processes, where network ties themselves are the dependent variable, and influence processes, where the outcome concerns changes in actor attributes. This makes RSiena particularly suited for examining how collaboration patterns among scholars emerge and transform across time.
 Descriptive statistics 
 
-# Descriptives
+# `r colorize("**Descriptives**", "orange")`
 
-blablabla
+The sample includes scholars affiliated with four Dutch universities: Radboud University (RU), the University of Amsterdam (UvA), the University of Groningen (RUG), and Utrecht University (UU). These institutions were selected as they represented the largest groups within the broader dataset. In the first wave, 91 scholars were affiliated with RU, 61 with RUG, 3 with UU, and 149 with UvA. The distributions remained relatively stable across waves, showing only minor fluctuations due to changes in institutional affiliations over time.
 
-# Data preparation
+Regarding disciplinary composition, the sample consists of researchers from sociology and political science, with more sociologist (61%) compared to political scientist (39%).
 
-preparing data
+To assess individual interdisciplinarity, scholars were categorized based on the proportion of their cross-department collaborations, including indirect exposure. Most researchers did not engage in interdisciplinary collaboration (score = 0) across all waves, though a smaller subset showed indirect or moderate levels of exposure.
+
+These patterns indicate that while the majority of scholars have no direct interdisciplinary exposure, a notable proportion experience indirect or partial interdisciplinary collaboration. Over time, there is some diffusion of interdisciplinary ties within the network. One the one hand, there is a modest increase in interdisciplinary ties from wave one tot wave two.On the other hand there is a strong decline in interdisciplinary ties in wave 3. This is contradictory to the expectation in hypothesis two.
 
 
-## Functions and loading data
+
+
+# `r colorize("**Data preperations**", "orange")`
+
+## Functions
 ```{r}
 rm(list = ls())
-```
 
-```{r}
 fpackage.check = function(packages) {
     lapply(packages, FUN = function(x) {
         if (!require(x, character.only = TRUE)) {
@@ -188,25 +217,33 @@ fcolnet = function(data = scholars, university = c("RU", "VU","UU", "UvT", "RUG"
 }
 ```
 
+## Loading data
 ```{r}
 packages = c(
-    "RSiena", "tidyverse",
-    'dplyr', 'stringr' # these packages were added to make the code run
+    "RSiena", "tidyverse","devtools",
+    "dplyr", "stringr", "RsienaTwoStep"
 )
 
 library(igraph)
 library(dplyr)
 
+
 fpackage.check(packages)
 scholars = fload("C:/Users/hanne/Downloads/20251017scholars.Rda")
 ```
+
+## Network
+
 ```{r}
 # Build the network
 test <- fcolnet(data = scholars, 
-                university = c("RU", 'UvA'), 
+                university = c("RU", 'UvA', "RUG","UU"), 
                 discipline = c("Sociologie", "Politicologie"), 
                 waves = list(c(2015, 2018), c(2019, 2023), c(2024, 2025)),
                 type = c("all"))
+
+# --- Prepare ego-level data for later use ---
+df_ego <- test$data
 
 # First wave
 test_w1 <- igraph::graph_from_adjacency_matrix(
@@ -235,89 +272,161 @@ test_w3 <- igraph::graph_from_adjacency_matrix(
 )
 ```
 
-## Descriptives 
-## Table of edges and ties for all waves
-
 ```{r}
+# Make it an array
 
-# Suppose you have a list of graphs for each wave
-graphs <- list(test_w1, test_w2, test_w3)
+nets_correct <- aperm(test$nets, c(2, 3, 1))
 
-# Create a data frame with nodes and edges for each wave
-network_nodes_edges <- data.frame(
-  wave = seq_along(graphs),
-  nodes = sapply(graphs, vcount),  # count vertices
-  edges = sapply(graphs, ecount)   # count edges
-)
+dim(nets_correct)
 
-# View the table
-print(network_nodes_edges)
-
-
+net_siena <- sienaDependent(nets_correct)
 ```
 
+## Constructing Independent varaible interdisciplinarity
 
 ```{r}
+# ---------- Bereken cross-department variabele voor alle waves ----------
 
-```
+# Vereist: nets_correct (array van dim [actors x actors x waves])
+#           df_ego met kolom discipline.22
 
+# 1. Disciplinevector voorbereiden
+dept_num <- as.numeric(as.factor(df_ego$discipline.22))
+dept_num[is.na(dept_num)] <- 99  # vervang missende waarden door neutrale code
 
-
-```{r}
-
-# List of graphs (waves)
-graphs <- list(test_w1, test_w2, test_w3)
-
-# Function to compute triad census for a graph
-triad_summary <- function(g) {
-  triads <- triad_census(g)  # returns 16 triad counts
-  data.frame(
-    wave = NA,
-    T003 = triads[1],
-    T012 = triads[2],
-    T102 = triads[3],
-    T021D = triads[4],
-    T021U = triads[5],
-    T021C = triads[6],
-    T111D = triads[7],
-    T111U = triads[8],
-    T030T = triads[9],
-    T030C = triads[10],
-    T201 = triads[11],
-    T120D = triads[12],
-    T120U = triads[13],
-    T120C = triads[14],
-    T210 = triads[15],
-    T300 = triads[16]
+# 2. Functie om cross-score per wave te berekenen
+get_cross_score <- function(wave_matrix, dept_num) {
+  # Verschilmatrix: TRUE als alter andere discipline heeft
+  diff_dept_matrix <- outer(dept_num, dept_num, FUN = function(i, j) i != j)
+  
+  # Aantal cross-department ties per ego
+  cross_out_counts <- rowSums(wave_matrix * diff_dept_matrix, na.rm = TRUE)
+  
+  # Totale outdegree per ego
+  ego_outdeg <- rowSums(wave_matrix, na.rm = TRUE)
+  
+  # Proportie cross-department relaties
+  cross_prop <- ifelse(ego_outdeg > 0, cross_out_counts / ego_outdeg, 0)
+  
+  # Indirecte blootstelling (alter heeft cross_prop > 0)
+  indirect_flag <- rep(0, length(cross_prop))
+  for (i in seq_along(cross_prop)) {
+    alters <- which(wave_matrix[i, ] != 0)
+    if (length(alters) > 0) {
+      if (cross_prop[i] == 0 && any(cross_prop[alters] > 0)) {
+        indirect_flag[i] <- 1
+      }
+    }
+  }
+  
+  # Categoriseer score
+  cross_score <- dplyr::case_when(
+    cross_prop == 0 & indirect_flag == 0 ~ 0,
+    cross_prop == 0 & indirect_flag == 1 ~ 1,
+    cross_prop > 0 & cross_prop <= 0.25 ~ 2,
+    cross_prop > 0.25 & cross_prop <= 0.5 ~ 3,
+    cross_prop > 0.5 ~ 4
   )
+  
+  return(cross_score)
 }
 
-# Apply to all waves
-triad_census_table <- bind_rows(lapply(seq_along(graphs), function(i) {
-  df <- triad_summary(graphs[[i]])
-  df$wave <- i
-  df
-}))
+# 3. Toepassen op alle waves
+nwaves <- dim(nets_correct)[3]
 
-# Reorder columns for readability
-triad_census_table <- triad_census_table %>% select(wave, everything())
+cross_scores <- sapply(1:nwaves, function(w) {
+  get_cross_score(nets_correct[,,w], dept_num)
+})
 
-# Show the table
-print(triad_census_table)
+# 4. RSiena varCovar-object aanmaken
+cross_cov <- varCovar(cross_scores)
 
+
+
+```
+
+## Constructing Independent varaible department
+
+```{r}
+demographics_soc <- test$data
+
+# Replace empty / missing with NA
+demographics_soc$discipline.22[demographics_soc$discipline.22 == "missing"] <- NA
+
+# Keep only the two real departments
+dept_factor <- factor(demographics_soc$discipline.22,
+                      levels = c("Politicologie", "Sociologie"))
+
+# Convert to numeric for RSiena
+dept_num <- as.numeric(dept_factor)
+
+# Create a covariate object (RSiena ignores NAs automatically)
+dept_cov <- coCovar(dept_num)
 
 
 ```
 
 
 
+#  `r colorize("**Descriptives in R**", "orange")`
+
+## Universities 
+
+```{r, echo=FALSE}
+table(df_ego$universiteit.22)
+
+```
+
+```{r, echo=FALSE}
+table(df_ego$universiteit.22[df_ego$universiteit.22 %in% c("RU", "UvA", "RUG", "UU")])
+```
+
+```{r, echo=FALSE}
+table(df_ego$universiteit.24[df_ego$universiteit.24 %in% c("RU", "UvA", "RUG", "UU")])
+```
+
+```{r, echo=FALSE}
+table(df_ego$universiteit.25[df_ego$universiteit.25 %in% c("RU", "UvA", "RUG", "UU")])
+```
 
 
+## Distribution interdisciplinarity wave 1, 2, 3
+```{r, echo=FALSE}
+table(cross_scores[,1])  # verdeling wave 1
+```
+```{r, echo=FALSE}
+barplot(table(cross_scores[,1]), main = "Distribution of Interdisciplinary Score", xlab = "Score", ylab = "Frequency")
+```
+
+```{r, echo=FALSE}
+table(cross_scores[,2])  # verdeling wave 2
+```
+
+```{r, echo=FALSE}
+barplot(table(cross_scores[,2]), main = "Distribution of Interdisciplinary Score", xlab = "Score", ylab = "Frequency")
+```
+
+```{r, echo=FALSE}
+table(cross_scores[,3])  # verdeling wave 3
+```
+
+```{r, echo=FALSE}
+barplot(table(cross_scores[,3]), main = "Distribution of Interdisciplinary Score", xlab = "Score", ylab = "Frequency")
+```
+
+## Distribution department wave 1
+```{r, echo=FALSE}
+table(dept_cov)
+```
+
+```{r, echo=FALSE}
+barplot(table(dept_cov), main = "Distribution of Department (Political science = 1 and sociology =  2", xlab = "Score", ylab = "Frequency")
+```
 
 
+# `r colorize("**References.**", "orange")`
 
-
-
+Granovetter, M. S. (1973). *The Strength of Weak Ties.* *American Journal of Sociology, 78*(6), 1360–1380. [http://www.jstor.org/stable/2776392](http://www.jstor.org/stable/2776392)
 
 
 

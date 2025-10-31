@@ -267,7 +267,7 @@ mydata <- sienaDataCreate(net_siena, dept_cov, interdisc_weighted_cov)
 
 ```
 
-```{r}
+```{r, EVAL = FALSE}
 myeff <- getEffects(mydata)
 myeff <- includeEffects(myeff, density) 
 myeff <- includeEffects(myeff, simX, interaction1 = "dept_cov") 
@@ -283,11 +283,9 @@ ansM1 <- siena07(myAlgorithm, data = mydata, effects = myeff, returnDeps = TRUE)
 ansM1
 ```
 
-```{r}
 
-```
 
-```{r}
+```{r, EVAL = FALSE}
 myeff <- getEffects(mydata)
 myeff <- includeEffects(myeff, density) 
 #myeff <- includeEffects(myeff, simX, interaction1 = "dept_cov") 

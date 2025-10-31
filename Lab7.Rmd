@@ -402,7 +402,7 @@ dept_cov <- coCovar(dept_num)
 
 ```
 
-```{r}
+```{r, EVAL = FALSE}
 
 # 1. Create the RSiena data object
 mydata <- sienaDataCreate(net_siena, dept_cov)

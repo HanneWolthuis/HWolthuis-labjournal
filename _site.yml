@@ -35,9 +35,14 @@ navbar:
       - text: "Introduction"
         href: project3.html
       - text: "Theory and hypothesis "
-        href: project4.html        
+        href: project4.html  
       - text: "Methods and analytical strategy"
         href: project2.html
+      - text: "Analysis and results "
+        href: project5.html 
+      - text: "Conclusion "
+        href: project7.html 
+
         # here, other .Rmds can be added
 
 
